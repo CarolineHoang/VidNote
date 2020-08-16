@@ -9,10 +9,13 @@ import React from "react";
 import '../Styles/page-container-styles.css'
 
 import test from '../DownloadFolder/testFile.txt'
+import testVideo  from '../Assets/testVid.mp4'
 // import testF from '../DownloadFolder/testFolder.zip'
 
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
+
+// import "https://vjs.zencdn.net/7.8.4/video.js";
 
 
 // this is how to make a file download 
@@ -142,12 +145,43 @@ export default class PageContainer extends React.Component{
         return(
             <div className="tripleColumnContainer" >
                 <div className='videoPlayer' >
+                
+                    {/* <video src={testVideo} autoPlay="true" /> */}
+                    <video
+                        id="my-video"
+                        class="video-js"
+                        controls
+                        preload="auto"
+                        width="640"
+                        height="264"
+                        poster="MY_VIDEO_POSTER.jpg"
+
+                        data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }'
+                        // data-setup="{}"
+                    >
+                        {/* <source src="MY_VIDEO.mp4" type="video/mp4" />
+                        <source src="MY_VIDEO.webm" type="video/webm" /> */}
+                        {/* <source src="../Assets/testVid.mp4" type="video/mp4" /> */}
+
+
+                        <source src={testVideo} type="video/mp4" />
+
+                        {/* <source src="../Assets/testVid.mov" type="video/webm" /> */}
+                        <p class="vjs-no-js">
+                        To view this video please enable JavaScript, and consider upgrading to a
+                        web browser that
+                        <a href="https://videojs.com/html5-video-support/" target="_blank"
+                            >supports HTML5 video</a
+                        >
+                        </p>
+                    </video>
+                    
+                </div>
+                <div className='playList' >
                     {/* this is how to create an HTML a tag that will download a local app file*/}
                     <a href={testFile} download="testFile.txt">{testFile}Hiii</a>
                     <button onClick={downloadNotes}> Click to Download Info </button>
-                    {/* <a href={testFile2} download="testFolder.zip">----Hiii2</a> */}
-                </div>
-                <div className='playList' >Hi</div>
+                    {/* <a href={testFile2} download="testFolder.zip">----Hiii2</a> */}Hi</div>
                 <div className='notes'>Hi</div>
                
             </div>
