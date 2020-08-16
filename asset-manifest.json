@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/VidNote/static/css/main.5f361e03.chunk.css",
+    "main.js": "/VidNote/static/js/main.4f018534.chunk.js",
+    "main.js.map": "/VidNote/static/js/main.4f018534.chunk.js.map",
+    "runtime-main.js": "/VidNote/static/js/runtime-main.ac2d05ea.js",
+    "runtime-main.js.map": "/VidNote/static/js/runtime-main.ac2d05ea.js.map",
+    "static/js/2.2ed74883.chunk.js": "/VidNote/static/js/2.2ed74883.chunk.js",
+    "static/js/2.2ed74883.chunk.js.map": "/VidNote/static/js/2.2ed74883.chunk.js.map",
+    "index.html": "/VidNote/index.html",
+    "precache-manifest.23dcffc06ac749c393a07be344ffa89e.js": "/VidNote/precache-manifest.23dcffc06ac749c393a07be344ffa89e.js",
+    "service-worker.js": "/VidNote/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/VidNote/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.2ed74883.chunk.js.LICENSE.txt": "/VidNote/static/js/2.2ed74883.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/VidNote/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ac2d05ea.js",
+    "static/js/2.2ed74883.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.4f018534.chunk.js"
+  ]
+}
