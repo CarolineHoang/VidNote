@@ -15,6 +15,9 @@ import testVideo  from '../Assets/testVid.mp4'
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 
+// import YoutubeVid from 'videojs-youtube';
+// import 'videojs-youtube';
+
 // import "https://vjs.zencdn.net/7.8.4/video.js";
 
 
@@ -139,42 +142,63 @@ const downloadNotes = () =>{
 
 
 export default class PageContainer extends React.Component{
-    
+    // shouldComponentUpdate(){
+    //     return false
+    // }
     render() {
        
         return(
             <div className="tripleColumnContainer" >
                 <div className='videoPlayer' >
-                
-                    {/* <video src={testVideo} autoPlay="true" /> */}
-                    <video
+                    {/* <video
                         id="my-video"
-                        class="video-js"
+                        className="video-js"
                         controls
                         preload="auto"
                         width="640"
                         height="264"
                         poster="MY_VIDEO_POSTER.jpg"
-
-                        data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }'
-                        // data-setup="{}"
                     >
-                        {/* <source src="MY_VIDEO.mp4" type="video/mp4" />
-                        <source src="MY_VIDEO.webm" type="video/webm" /> */}
-                        {/* <source src="../Assets/testVid.mp4" type="video/mp4" /> */}
-
-
                         <source src={testVideo} type="video/mp4" />
 
-                        {/* <source src="../Assets/testVid.mov" type="video/webm" /> */}
-                        <p class="vjs-no-js">
-                        To view this video please enable JavaScript, and consider upgrading to a
-                        web browser that
-                        <a href="https://videojs.com/html5-video-support/" target="_blank"
-                            >supports HTML5 video</a
+                    </video> */}
+                     {/* <div data-vjs-player>
+                        <video id="example_video_1" 
+                            className="video-js " 
+                            controls
+                            preload="auto" 
+                            width="640"
+                            height="264"
+                            poster="http://ec2-54-227-116-247.compute-1.amazonaws.com/models/site-templates/images/cover_img/ted_cover.jpg" 
+                            data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }'
                         >
-                        </p>
-                    </video>
+                        </video>
+                    </div> */}
+                    <div data-vjs-player>
+                        <video 
+                            id="aksdf" 
+                            className="video-js vjs-default-skin"
+                            controls
+                            data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}], "youtube": { "loop": 0 } }'
+
+                                        
+                            >
+                        {/* <source src="https://www.youtube.com/watch?v=xjS6SftYQaQ" type="video/youtube"></source> */}
+                        </video>
+                    </div>
+                        jhvj
+                    {/* </div> */}
+                    {/* <video src={testVideo} autoPlay="true" /> */}
+
+
+                    {/* <video id="example_video_1" 
+  class="video-js vjs-default-skin" 
+  controls
+  preload="auto" 
+  width="640"
+  height="264"
+  poster="http://ec2-54-227-116-247.compute-1.amazonaws.com/models/site-templates/images/cover_img/ted_cover.jpg" 
+  data-setup='{"techOrder":["youtube"], "src":"http://www.youtube.com/watch?v=xYemnKEKx0c"}'></video> */}
                     
                 </div>
                 <div className='playList' >
