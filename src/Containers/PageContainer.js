@@ -10,12 +10,16 @@ import '../Styles/page-container-styles.css'
 
 import test from '../DownloadFolder/testFile.txt'
 import testVideo  from '../Assets/testVid.mp4'
+import testVideo2  from './testVid.mp4'
 // import testF from '../DownloadFolder/testFolder.zip'
 
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 
-// import YoutubeVid from 'videojs-youtube';
+// import videojs from 'video.js'
+import VideoPlayer from "../Components/VideoPlayer.js";
+
+import YoutubeVid from 'videojs-youtube';
 // import 'videojs-youtube';
 
 // import "https://vjs.zencdn.net/7.8.4/video.js";
@@ -142,10 +146,82 @@ const downloadNotes = () =>{
 
 
 export default class PageContainer extends React.Component{
-    // shouldComponentUpdate(){
-    //     return false
-    // }
+
+    constructor(props){
+        super(props);
+        this.state= {
+            videoRef : null,
+        }
+        this.setVideoRef = this.setVideoRef.bind(this);
+        this.getVideoRef = this.getVideoRef.bind(this);
+    }
+    shouldComponentUpdate(){
+        return false
+    }
+    setVideoRef(ref){
+        this.setState({
+            videoRef : ref
+        })
+    }
+    getVideoRef(){
+        console.log(this.state.videoRef)
+    }
+
+      
     render() {
+        const videoJsOptions = {
+            autoplay: true,
+            controls: true,
+       
+                techOrder: ['youtube'],
+                sources: [
+                  {
+                    type: 'video/youtube',
+                    src: 'https://www.youtube.com/watch?v=TeccAtqd5K8' //note that there will be a benign Youtube server side error saying that the host don't match but there is supposedly nothing to worry about this according to stack overflow: https://stackoverflow.com/questions/47833687/youtube-api-failed-to-execute-postmessage-on-domwindow
+                    // src: 'https://www.youtube.com/embed/HIbAz29L-FA?modestbranding=1&playsinline=0&showinfo=0&enablejsapi=1&origin=http://localhost:3000&widgetid=1',
+                    // enablejsapi:1,
+                    // origin:'https://www.youtube.com'
+                  }
+                ]
+                // techOrder: ['youtube'],
+                // sources: [
+                //   {
+                //     type: 'video/youtube',
+                //     src: 'https://www.youtube.com/watch?v=TeccAtqd5K8'+'&origin=http://localhost:3000',
+                //     origin:'http://localhost:8100'
+                //   }
+                // ]
+            // setup: {
+            //     techOrder: ['youtube'],
+            //     sources: [
+            //       {
+            //         type: 'video/youtube',
+            //         src: 'https://www.youtube.com/watch?v=TeccAtqd5K8'
+            //       }
+            //     ]
+            //   },
+            // data-setup: '{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}], "youtube": { "customVars": { "wmode": "transparent" } } }'
+            // sources: [{
+            //   src: 'https://www.youtube.com/watch?v=Cte1j8R-Whg',
+            //   type: 'video/mp4'
+            // }]
+          }
+        // const videoJsOptions = {
+        //     autoplay: true,
+        //     controls: true,
+        //     sources: [{
+        //       src: 'http://img-ys011.didistatic.com/static/didiglobal/do1_pcUZZjSG7vFlMbdr8fA6',
+        //       type: 'video/mp4'
+        //     }]
+        //   }
+        //   const videoJsOptions = {
+        //     autoplay: true,
+        //     controls: true,
+        //     sources: [{
+        //       src: testVideo2,
+        //       type: 'video/mp4'
+        //     }]
+        //   }
        
         return(
             <div className="tripleColumnContainer" >
@@ -174,18 +250,9 @@ export default class PageContainer extends React.Component{
                         >
                         </video>
                     </div> */}
-                    <div data-vjs-player>
-                        <video 
-                            id="aksdf" 
-                            className="video-js vjs-default-skin"
-                            controls
-                            data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}], "youtube": { "loop": 0 } }'
-
-                                        
-                            >
-                        {/* <source src="https://www.youtube.com/watch?v=xjS6SftYQaQ" type="video/youtube"></source> */}
-                        </video>
-                    </div>
+                    <VideoPlayer { ...videoJsOptions } setVidRef = {this.setVideoRef} test = "hi" />
+                    <button onClick={this.getVideoRef}>getVideoRef</button>
+                   
                         jhvj
                     {/* </div> */}
                     {/* <video src={testVideo} autoPlay="true" /> */}
