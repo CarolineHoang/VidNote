@@ -54,31 +54,30 @@ export default class VideoPlayer extends React.Component {
             type: 'video/youtube'
         }],
         poster: 'http://media.w3.org/2010/05/sintel/poster.png'
-      }, {
+      }, 
+    //   {
+    //     sources: [{
+    //       src: 'https://www.youtube.com/watch?v=U9DyHthJ6LA&feature=emb_rel_pause',
+    //       type: 'video/youtube'
+    //     }],
+    //     poster: 'http://media.w3.org/2010/05/bunny/poster.png'
+    //   }, 
+    ]);
+    console.log("the playlist1: " ,this.player.playlist())
+    var currentPlaylist =  this.player.playlist()
+    currentPlaylist.push( {
         sources: [{
-          src: 'http://media.w3.org/2010/05/bunny/trailer.mp4',
-          type: 'video/mp4'
+          src: 'https://www.youtube.com/watch?v=U9DyHthJ6LA&feature=emb_rel_pause',
+          type: 'video/youtube'
         }],
         poster: 'http://media.w3.org/2010/05/bunny/poster.png'
-      }, {
-        sources: [{
-          src: 'http://vjs.zencdn.net/v/oceans.mp4',
-          type: 'video/mp4'
-        }],
-        poster: 'http://www.videojs.com/img/poster.jpg'
-      }, {
-        sources: [{
-          src: 'http://media.w3.org/2010/05/bunny/movie.mp4',
-          type: 'video/mp4'
-        }],
-        poster: 'http://media.w3.org/2010/05/bunny/poster.png'
-      }, {
-        sources: [{
-          src: 'http://media.w3.org/2010/05/video/movie_300.mp4',
-          type: 'video/mp4'
-        }],
-        poster: 'http://media.w3.org/2010/05/video/poster.png'
-      }]);
+      }
+    )
+    this.player.playlist(currentPlaylist)
+    console.log("the playlist2: " ,this.player.playlist())
+
+    // this.player.playlist(currentPlaylist)
+
        
       // Play through the playlist automatically.
       this.player.playlist.autoadvance(0);
