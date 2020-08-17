@@ -151,9 +151,11 @@ export default class PageContainer extends React.Component{
         super(props);
         this.state= {
             videoRef : null,
+            videoInfo: {}
         }
         this.setVideoRef = this.setVideoRef.bind(this);
         this.getVideoRef = this.getVideoRef.bind(this);
+        this.getCurrVidTime = this.getCurrVidTime.bind(this);
     }
     shouldComponentUpdate(){
         return false
@@ -165,6 +167,11 @@ export default class PageContainer extends React.Component{
     }
     getVideoRef(){
         console.log(this.state.videoRef)
+    }
+    getCurrVidTime(data){
+        // console.log(data)
+        console.log("bhaisdbfalifba" ,this.state.videoRef.currentTime())
+        // console.log("bhaisdbfalifba" )
     }
 
       
@@ -250,8 +257,9 @@ export default class PageContainer extends React.Component{
                         >
                         </video>
                     </div> */}
-                    <VideoPlayer { ...videoJsOptions } setVidRef = {this.setVideoRef} test = "hi" />
+                    <VideoPlayer { ...videoJsOptions } setVidRef = {this.setVideoRef}  test = "hi" />
                     <button onClick={this.getVideoRef}>getVideoRef</button>
+                    <button onClick={this.getCurrVidTime}>Get current Video Time [PC] </button>
                    
                         jhvj
                     {/* </div> */}

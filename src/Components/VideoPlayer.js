@@ -24,8 +24,14 @@ export default class VideoPlayer extends React.Component {
     // this.props.setVidRef(this.player)
     console.log(this.player , this.videoNode , this.player.currentTime())
     console.log("player ref from button:", this.player, "    .... end")
-    // this.setState({currentTime: this.player.currentTime()})
+    this.setState({currentTime: this.player.currentTime()})
   }
+//   getCurrentTime = ()=>{
+//     // this.props.setVidRef(this.player)
+//     console.log(this.player , this.videoNode , this.player.currentTime())
+//     console.log("player ref from button:", this.player, "    .... end")
+//     this.setState({currentTime: this.player.currentTime()})
+//   }
   componentDidMount(props) {
     // instantiate Video.js
     this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
