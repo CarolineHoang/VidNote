@@ -21,6 +21,7 @@ import VideoPlayer from "../Components/VideoPlayer.js";
 
 import YoutubeVid from 'videojs-youtube';
 import NoteContainer from "./NoteContainer";
+import Playlist from "../Components/Playlist";
 // import 'videojs-youtube';
 
 // import "https://vjs.zencdn.net/7.8.4/video.js";
@@ -183,6 +184,7 @@ export default class PageContainer extends React.Component{
     }
     getVideoRef(){
         console.log(this.state.videoRef)
+        return this.state.videoRef
     }
     getCurrVidTime(data){
         // console.log(data)
@@ -293,7 +295,8 @@ export default class PageContainer extends React.Component{
                 //   }
                 // ]
           }
-
+          
+          const playlistJSON = {}
         
           
        
@@ -355,6 +358,10 @@ export default class PageContainer extends React.Component{
                     {/* by including the state variable as a value for the input/textarea field, we make sure it clears out if we set the state variable to be empty because then on the rerender, it repopulates as a empty */}
                     <textarea onChange={(e, note) => this.handleInputChange(e, 'newNote')} className='NoteInputField' value={this.state.newNote} ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
                     <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  ></input> <button onClick={this.addToPlaylist} type='submit' >Add to Playlist</button>
+                
+                    {/* using && conditional logic makes sure that the parent has the ref before we try to render the playlist because the playlist doesn't seem to rerender when the videoRef is updated */}
+                    {/* alternatively, all the starting playlist info can be set up in the video player component but I want to make the playlist div diffinitively in charge of everything relating playlists */}
+                    {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
                 </div>
                 <div>
                     {this.state.info} 
@@ -367,7 +374,9 @@ export default class PageContainer extends React.Component{
 
                     setCurrVidTime = {this.setCurrVidTime}
                     />
+
                     Hi
+
                 </div>
                 {/* {this.setCurrVidTime(180)} */}
                

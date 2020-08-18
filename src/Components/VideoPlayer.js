@@ -6,6 +6,7 @@ import playlistUI from 'videojs-playlist-ui';
 import '../Styles/videoStyles.css';
 
 import '../../node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css';
+import Playlist from './Playlist';
 
 
 //  const getTime = ()=>{
@@ -45,54 +46,55 @@ export default class VideoPlayer extends React.Component {
     //   this.props.setVidRef(this.player)
   
     });
-    // this.testFunc()
-    this.player.playlist([{
-        // sources: [{
-        //   src: 'http://media.w3.org/2010/05/sintel/trailer.mp4',
-        //   type: 'video/mp4'
-        // }],
-        sources: [{
-            src: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
-            type: 'video/youtube'
-        }],
-        poster: 'http://media.w3.org/2010/05/sintel/poster.png' //this is the image that shows while it loads I think
-      }, 
-      {
-        
-        sources: [{
-            src: 'https://www.youtube.com/watch?v=voFRslp8d60&t=17s',
-            type: 'video/youtube'
-        }],
-        poster: 'http://media.w3.org/2010/05/sintel/poster.png'
-      }, 
-    //   {
-    //     sources: [{
-    //       src: 'https://www.youtube.com/watch?v=U9DyHthJ6LA&feature=emb_rel_pause',
-    //       type: 'video/youtube'
-    //     }],
-    //     poster: 'http://media.w3.org/2010/05/bunny/poster.png'
-    //   }, 
-    ]);
-    console.log("the playlist1: " ,this.player.playlist())
-    var currentPlaylist =  this.player.playlist()
-    currentPlaylist.push( {
-        sources: [{
-          src: 'https://www.youtube.com/watch?v=U9DyHthJ6LA&feature=emb_rel_pause',
-          type: 'video/youtube'
-        }],
-        poster: 'http://media.w3.org/2010/05/bunny/poster.png'
-      }
-    )
-    this.player.playlist(currentPlaylist)
-    console.log("the playlist2: " ,this.player.playlist())
+                                // // this.testFunc()
+                                // this.player.playlist([{
+                                //     // sources: [{
+                                //     //   src: 'http://media.w3.org/2010/05/sintel/trailer.mp4',
+                                //     //   type: 'video/mp4'
+                                //     // }],
+                                //     sources: [{
+                                //         src: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
+                                //         type: 'video/youtube'
+                                //     }],
+                                //     poster: 'http://media.w3.org/2010/05/sintel/poster.png' //this is the image that shows while it loads I think
+                                // }, 
+                                // {
+                                    
+                                //     sources: [{
+                                //         src: 'https://www.youtube.com/watch?v=voFRslp8d60&t=17s',
+                                //         type: 'video/youtube'
+                                //     }],
+                                //     poster: 'http://media.w3.org/2010/05/sintel/poster.png'
+                                // }, 
+                                // //   {
+                                // //     sources: [{
+                                // //       src: 'https://www.youtube.com/watch?v=U9DyHthJ6LA&feature=emb_rel_pause',
+                                // //       type: 'video/youtube'
+                                // //     }],
+                                // //     poster: 'http://media.w3.org/2010/05/bunny/poster.png'
+                                // //   }, 
+                                // ]);
+                                // console.log("the playlist1: " ,this.player.playlist())
+                                // var currentPlaylist =  this.player.playlist()
+                                // currentPlaylist.push( {
+                                //     sources: [{
+                                //     src: 'https://www.youtube.com/watch?v=U9DyHthJ6LA&feature=emb_rel_pause',
+                                //     type: 'video/youtube'
+                                //     }],
+                                //     poster: 'http://media.w3.org/2010/05/bunny/poster.png'
+                                // }
+                                // )
+                                // this.player.playlist(currentPlaylist)
+                                // console.log("the playlist2: " ,this.player.playlist())
 
-    // this.player.playlist(currentPlaylist)
+                                // // this.player.playlist(currentPlaylist)
 
-       
-      // Play through the playlist automatically.
-      this.player.playlist.autoadvance(0);
-      this.player.playlistUi();
+                                
+                                // // Play through the playlist automatically.
+                                // this.player.playlist.autoadvance(0);
+                                // this.player.playlistUi();
     this.props.setVidRef(this.player)
+    console.log("player2: ", this.player)
   }
 
    // destroy player on unmount
@@ -109,13 +111,16 @@ export default class VideoPlayer extends React.Component {
   render() {
     // this.props.setVidRef(this.player)
     // console.log("player ref:", this.player)
+
+    console.log("player3: ", this.player)
     
     return (
       <div>	
         <div data-vjs-player>
           <video ref={ node => this.videoNode = node } className="video-js mainVideo"></video>
         </div>
-        <div class="vjs-playlist"></div>
+        {/* <div class="vjs-playlist"></div> */}
+        {/* <Playlist player={this.player} test= 'this should APPEAR' /> */}
         <button onClick={this.getTime}>Get Current Time:</button><span>Time:{this.state.currentTime}</span>
         {/* {this.props.setVidRef(this.player)} */}
         {/* {this.props.test} */}
