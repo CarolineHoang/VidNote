@@ -21,6 +21,7 @@ import FileSaver from 'file-saver';
 import VideoPlayer from "../Components/VideoPlayer.js";
 
 import YoutubeVid from 'videojs-youtube';
+import Note from "../Components/Note";
 // import 'videojs-youtube';
 
 // import "https://vjs.zencdn.net/7.8.4/video.js";
@@ -158,6 +159,7 @@ export default class NoteContainer extends React.Component{
         // this.refs[i].scrollIntoView({block: 'end', behavior: 'smooth'});
         // console.log(this.refs[i].)
         // this.refs[i].attributes.push("centerListItem")
+        console.log('the refs: ', this.refs, this.refs[1] )
         this.refs[i].scrollIntoView({block: 'center', behavior: 'smooth'});
 
         this.setState({index: i})
@@ -182,14 +184,27 @@ export default class NoteContainer extends React.Component{
                     //   if (i == this.state.index){}
                       if (i == this.state.index){
                         return (
-                            // <li ref={i} className='centerListItem' >{item}</li>
-                            <pre ref={i} className='centerListItem ListItem' >{item.text}</pre>
-                          )
+                            // <li ref={i} className='centerListItem' >{item.text}</li>
+                            // <Note _ref={i} item={item} additionalClasses='centerListItem' ></Note>
+                            // <pre ref={i} className='ListItem centerListItem' >{item.text}<br/>{item.startTime}</pre>
+                            <div ref={i}>
+                                <Note _ref={i} item={item} additionalClasses='centerListItem' ></Note>
+                                {/* <pre className='ListItem centerListItem' >{item.text}<br/>{item.startTime}</pre> */}
+                            </div>
+                            
+                        
+                        )
                       }
                       else{
                         return (
-                            // <li ref={i}>{item}</li>
-                            <pre ref={i} className='ListItem' >{item.text}</pre>
+                            // <li ref={i}>{item.text}</li>
+                            // <Note _ref={i} item={item} ></Note>
+                            // <pre ref={i} className='ListItem' >{item.text}<br/>{item.startTime}</pre>
+                            <div ref={i}>
+                                <Note _ref={i} item={item} additionalClasses='' ></Note>
+                                {/* <pre className='ListItem' >{item.text}<br/>{item.startTime}</pre> */}
+                            </div>
+
 
                           )
                       }

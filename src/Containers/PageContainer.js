@@ -65,7 +65,7 @@ const Meta = {
             [   
                 {
                     noteId: 0,
-                    startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
+                    startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
                     text: "This is a test message111",
                     bookmarked: false,
@@ -74,7 +74,7 @@ const Meta = {
                 },
                 {   
                     noteId: 1,
-                    startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
+                    startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
                     text: "This is a test message222",
                     bookmarked: false,
@@ -164,6 +164,7 @@ export default class PageContainer extends React.Component{
         this.setVideoRef = this.setVideoRef.bind(this);
         this.getVideoRef = this.getVideoRef.bind(this);
         this.getCurrVidTime = this.getCurrVidTime.bind(this);
+        this.setCurrVidTime = this.setCurrVidTime.bind(this);
 
         this.addNote = this.addNote.bind(this);
         this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
@@ -181,7 +182,20 @@ export default class PageContainer extends React.Component{
     }
     getCurrVidTime(data){
         // console.log(data)
-        console.log("bhaisdbfalifba" ,this.state.videoRef.currentTime())
+        var currentTime = this.state.videoRef.currentTime()
+        console.log("bhaisdbfalifba" , currentTime)
+        return currentTime
+        // console.log("bhaisdbfalifba" )
+    }
+    setCurrVidTime(secs){
+        console.log(secs )
+        // this.setState
+        if (this.state.videoRef != null){
+            this.state.videoRef.currentTime(secs)
+        }
+        
+        // console.log("bhaisdbfalifba" , currentTime)
+        // return currentTime
         // console.log("bhaisdbfalifba" )
     }
 
@@ -191,11 +205,11 @@ export default class PageContainer extends React.Component{
     // maxNoteId:  3,
         // this.state
         var metaCopy = this.state.meta;
-
+        var currentTime  = this.getCurrVidTime()
         metaCopy.noteData[0].notes.push(
             {   
                 noteId: Meta.maxNoteId+1,
-                startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
+                startTime: currentTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
                 endTime: null,
                 text: this.state.newNote,
                 bookmarked: false,
@@ -247,7 +261,7 @@ export default class PageContainer extends React.Component{
                   }
                 ]
           }
-       
+          
        
         return(
             <div className="tripleColumnContainer" >
@@ -279,6 +293,7 @@ export default class PageContainer extends React.Component{
                     <VideoPlayer { ...videoJsOptions } setVidRef = {this.setVideoRef}  test = "hi" />
                     <button onClick={this.getVideoRef}>getVideoRef</button>
                     <button onClick={this.getCurrVidTime}>Get current Video Time [PC] </button>
+                    <button onClick={ () => this.setCurrVidTime(180)}>Set current Video Time to 3 min[PC] </button>
                    
                         jhvj
                     {/* </div> */}
@@ -313,6 +328,7 @@ export default class PageContainer extends React.Component{
                     />
                     Hi
                 </div>
+                {/* {this.setCurrVidTime(180)} */}
                
             </div>
         

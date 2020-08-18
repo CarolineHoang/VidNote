@@ -10,8 +10,8 @@ import React from "react";
 import '../Styles/page-container-styles.css'
 
 import test from '../DownloadFolder/testFile.txt'
-import testVideo  from '../Assets/testVid.mp4'
-import testVideo2  from './testVid.mp4'
+// import testVideo  from '../Assets/testVid.mp4'
+// import testVideo2  from './testVid.mp4'
 // import testF from '../DownloadFolder/testFolder.zip'
 
 import JSZip from 'jszip';
@@ -163,12 +163,16 @@ export default class Note extends React.Component{
 
       
     render() {
-      
+        var ts = Math.round((this.props.item.startTime + Number.EPSILON) * 100) / 100
        
         return(
-                <div className='ListItem' >
-                  hello
-                </div>
+                // <div className='ListItem' >
+                    <pre ref={this.props._ref} className={'ListItem '+ this.props.additionalClasses} >
+                        <div>{ts} | Note Title <br/></div>
+                        {this.props.item.text}<br/>{ts}
+                    </pre>
+                  
+                // </div>
         
         );
     }
