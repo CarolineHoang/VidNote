@@ -48,7 +48,7 @@ const videoTime =0; //this value should update every half second and is the time
                     //if the note happens to have an end time  (and we cannot set this time to overlap with the next one's start time) then we make sure that the current time is less than that end time
 
 
-
+                    
 const Meta = {
     // fileNames: [],  //this will be an array in the order of the playlist
     //                 // every Youtube video will have the 
@@ -144,6 +144,10 @@ const downloadNotes = () =>{
     }); 
 }
 
+var items = [];
+for (var i = 0; i < 100; i++) {
+  items.push(i+'d');
+}
 
 
 export default class PageContainer extends React.Component{
@@ -152,11 +156,15 @@ export default class PageContainer extends React.Component{
         super(props);
         this.state= {
             videoRef : null,
-            videoInfo: {}
+            videoInfo: {},
+            newNote: ''
         }
         this.setVideoRef = this.setVideoRef.bind(this);
         this.getVideoRef = this.getVideoRef.bind(this);
         this.getCurrVidTime = this.getCurrVidTime.bind(this);
+
+        this.addNote = this.addNote.bind(this);
+        this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
     }
     shouldComponentUpdate(){
         return false
@@ -175,6 +183,13 @@ export default class PageContainer extends React.Component{
         // console.log("bhaisdbfalifba" )
     }
 
+    addNote(e){
+        console.log(this.state.newNote)
+        // console.log(e.target)
+    }
+    handleNoteInputChange(e){
+        this.setState({newNote: e.target.value})
+    }
       
     render() {
         const videoJsOptions = {
@@ -191,45 +206,8 @@ export default class PageContainer extends React.Component{
                     // origin:'https://www.youtube.com'
                   }
                 ]
-                // techOrder: ['youtube'],
-                // sources: [
-                //   {
-                //     type: 'video/youtube',
-                //     src: 'https://www.youtube.com/watch?v=TeccAtqd5K8'+'&origin=http://localhost:3000',
-                //     origin:'http://localhost:8100'
-                //   }
-                // ]
-            // setup: {
-            //     techOrder: ['youtube'],
-            //     sources: [
-            //       {
-            //         type: 'video/youtube',
-            //         src: 'https://www.youtube.com/watch?v=TeccAtqd5K8'
-            //       }
-            //     ]
-            //   },
-            // data-setup: '{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}], "youtube": { "customVars": { "wmode": "transparent" } } }'
-            // sources: [{
-            //   src: 'https://www.youtube.com/watch?v=Cte1j8R-Whg',
-            //   type: 'video/mp4'
-            // }]
           }
-        // const videoJsOptions = {
-        //     autoplay: true,
-        //     controls: true,
-        //     sources: [{
-        //       src: 'http://img-ys011.didistatic.com/static/didiglobal/do1_pcUZZjSG7vFlMbdr8fA6',
-        //       type: 'video/mp4'
-        //     }]
-        //   }
-        //   const videoJsOptions = {
-        //     autoplay: true,
-        //     controls: true,
-        //     sources: [{
-        //       src: testVideo2,
-        //       type: 'video/mp4'
-        //     }]
-        //   }
+       
        
         return(
             <div className="tripleColumnContainer" >
@@ -281,9 +259,15 @@ export default class PageContainer extends React.Component{
                     {/* this is how to create an HTML a tag that will download a local app file*/}
                     <a href={testFile} download="testFile.txt">{testFile}Hiii</a>
                     <button onClick={downloadNotes}> Click to Download Info </button>
-                    {/* <a href={testFile2} download="testFolder.zip">----Hiii2</a> */}Hi</div>
+                    {/* <a href={testFile2} download="testFolder.zip">----Hiii2</a> */}Hi
+                    <textarea onChange={this.handleNoteInputChange} ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
+                </div>
+                    
                 <div className='notes'>
-                    <NoteContainer  id="list"/>
+                    <NoteContainer id="list" 
+                    itemList={items} 
+                    // itemList = {Meta.noteData[0]} 
+                    />
                     Hi
                 </div>
                

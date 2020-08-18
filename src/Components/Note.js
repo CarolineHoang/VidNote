@@ -133,19 +133,19 @@ const downloadNotes = () =>{
     }); 
 }
 
-// var items = [];
-// for (var i = 0; i < 100; i++) {
-//   items.push(i+'d');
-// }
+var items = [];
+for (var i = 0; i < 100; i++) {
+  items.push(i+'d');
+}
 
-export default class NoteContainer extends React.Component{
+export default class Note extends React.Component{
 
     constructor(props){
         super(props);
         this.state= {
-            index: 0
+            // index: 0
         }
-        this.handleShow = this.handleShow.bind(this);
+        // this.handleShow = this.handleShow.bind(this);
  
     }
     handleShow(i) {
@@ -164,40 +164,10 @@ export default class NoteContainer extends React.Component{
       
     render() {
       
-        // props = this.props
-
-        // (itemss) = this.props
-        // let { id, itemss } =  this.props;
-        // console.log("ITEMMMMS", itemss)
-        // console.log("ITEMMMMS2", this.props)
-        var items = this.props.itemList
+       
         return(
-                <div>
-                    {this.state.index}
-                    {/* this must be a arrow function in order to bind the this so that we can use state in the map function  */}
-                  <ul>{items.map((item, i) => {
-                    //   if (i == this.state.index){}
-                      if (i == this.state.index){
-                        return (
-                            // <li ref={i} className='centerListItem' >{item}</li>
-                            <div ref={i} className='centerListItem ListItem' >{item}</div>
-                          )
-                      }
-                      else{
-                        return (
-                            // <li ref={i}>{item}</li>
-                            <div ref={i} className='ListItem' >{item}</div>
-
-                          )
-                      }
-                      
-                    })}
-                  </ul>
-                  <button onClick={this.handleShow.bind(this, 0)}>0</button>
-                  <button onClick={this.handleShow.bind(this, 2)}>2</button>
-                  <button onClick={this.handleShow.bind(this, 50)}>50</button>
-                  <button onClick={this.handleShow.bind(this, 99)}>99</button>
-                  {this.state.index}
+                <div className='ListItem' >
+                  hello
                 </div>
         
         );

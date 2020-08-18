@@ -79,8 +79,19 @@
   ul {
     overflow: auto;
     height: 80vh;
+    padding: 0;
   }
 
   .centerListItem {
     color: red;
+  }
+
+
+  .ListItem {
+    height: fit-content;
+    min-height: 20vh;
+    width: 100%;
+    border: 1px solid black;
+
+
   }
