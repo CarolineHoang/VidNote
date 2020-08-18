@@ -58,9 +58,39 @@ const Meta = {
     noteData:[
         {
             videoId: 0,
-            type: 'web', //  web = youtube, vimero. etc, local = files
-            source: 'YouTube',
-            url: '',
+            category: 'web', //  web = youtube, vimero. etc, local = files
+            type: 'video/youtube',
+            url: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
+            fileName: null,
+            notes: 
+            [   
+                {
+                    noteId: 0,
+                    startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
+                    endTime: null,
+                    text: "This is a test message111",
+                    bookmarked: false,
+                    drawn: false,
+                    images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+                },
+                {   
+                    noteId: 1,
+                    startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
+                    endTime: null,
+                    text: "This is a test message222",
+                    bookmarked: false,
+                    drawn: false,
+                    images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+                }
+            ]
+            
+    
+        },
+        {
+            videoId: 0,
+            category: 'web', //  web = youtube, vimero. etc, local = files
+            type: 'video/youtube',
+            url: 'https://www.youtube.com/watch?v=voFRslp8d60&t=17s',
             fileName: null,
             notes: 
             [   
@@ -88,8 +118,8 @@ const Meta = {
         },
         {
             videoId: 1,
-            type: 'local', //  web = youtube, vimero. etc, local = files
-            source: null,
+            category: 'local', //  web = youtube, vimero. etc, local = files
+            type: 'video/mp4',
             url: null,
             fileName: "testVid.mp4",
             notes: 
@@ -161,7 +191,8 @@ export default class PageContainer extends React.Component{
             newNote: '',
             newVideoLink: '',
             meta: Meta,
-            info: 'asdf'
+            info: 'asdf',
+            uploadedVideos: []
         }
         this.setVideoRef = this.setVideoRef.bind(this);
         this.getVideoRef = this.getVideoRef.bind(this);
@@ -169,6 +200,7 @@ export default class PageContainer extends React.Component{
         this.setCurrVidTime = this.setCurrVidTime.bind(this);
 
         this.addNote = this.addNote.bind(this);
+        this.uploadFile = this.uploadFile.bind(this);
         this.addToPlaylist = this.addToPlaylist.bind(this);
         // this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -250,11 +282,129 @@ export default class PageContainer extends React.Component{
     }
 
 
-    addToPlaylist(){
+// {
+//             videoId: 0,
+//             category: 'web', //  web = youtube, vimero. etc, local = files
+//             type: 'video/youtube',
+//             url: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
+//             fileName: null,
+//             notes: 
+//             [   
+//                 {
+//                     noteId: 0,
+//                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
+//                     endTime: null,
+//                     text: "This is a test message111",
+//                     bookmarked: false,
+//                     drawn: false,
+//                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+//                 },
+//                 {   
+//                     noteId: 1,
+//                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
+//                     endTime: null,
+//                     text: "This is a test message222",
+//                     bookmarked: false,
+//                     drawn: false,
+//                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+//                 }
+//             ]
+            
+    
+//         },
+
+    addToPlaylist(e, category, fileTarget ){
+
+
+        // let fileName = e.target.value.split('\\').pop();
+
+        //   console.log('fileName :', fileName, e.target.value)
+        //   var ext = fileName.substr(fileName.lastIndexOf('.') + 1);
+        
+        //   console.log('fileName :', fileName, e.target.value, ext)
+
+        console.log("ADD TO PLAYLIST: " ,category ,this.state.newVideoLink)
+
+        var type = ''
+        var src = ''
+        if (category == 'web'){
+            type = 'video/youtube'
+            src = this.state.newVideoLink
+        }
+        else if (category == 'local'){
+            // let fileName = fileTarget.value.split('\\').pop();
+            var ext = e.target.value.substr(e.target.value.lastIndexOf('.') + 1);
+            type = 'video/'+ext
+            // src = this.state.newVideoLink
+
+            src = URL.createObjectURL(e.target.files[0])
+            console.log("LOCAL vars: ", type,src)
+
+            // src = e.target.files[0]
+        }
+    
+        // else if (category == 'local'){
+        //     // let fileName = fileTarget.value.split('\\').pop();
+        //     var ext = fileTarget.value.substr(fileTarget.value.lastIndexOf('.') + 1);
+        //     type = 'video/'+ext
+        //     src = this.state.newVideoLink
+
+        //     // src = URL.createObjectURL(fileTarget.files[0])
+        //     console.log("LOCAL vars: ", type,src)
+
+        //     // src = e.target.files[0]
+        // }
+        console.log(this.state.newNote)
+        //     maxVideoId: 1,
+        // maxNoteId:  3,
+            // this.state
+            var metaCopy = this.state.meta;
+            var currentTime  = this.getCurrVidTime()
+            metaCopy.noteData.push(
+                {
+                    videoId: parseInt(metaCopy.videoId)+1,
+                    category: category, //  web = youtube, vimero. etc, local = files
+                    type: type,
+                    url: src,
+                    fileName: null,
+                    notes: []
+                }
+
+                // {
+                //     videoId: parseInt(metaCopy.videoId)+1,
+                //     category: 'web', //  web = youtube, vimero. etc, local = files
+                //     type: 'video/youtube',
+                //     url: this.state.newVideoLink,
+                //     fileName: null,
+                //     notes: []
+                // }
+
+                // {   
+                //     noteId: Meta.maxNoteId+1,
+                //     startTime: currentTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
+                //     endTime: null,
+                //     text: this.state.newNote,
+                //     bookmarked: false,
+                //     drawn: false,
+                //     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+                // }
+            )
+            metaCopy.videoId = parseInt(metaCopy.videoId)+1;
+    
+    
+    
+            this.setState({
+                meta: metaCopy,
+                newVideoLink : ''
+            }, ()=>{console.log(this.state.meta)} )
+
+            
+
         console.log("video added: ", this.state.newVideoLink )
-        this.setState({
-            newVideoLink : ''
-        } )
+        // this.setState({
+        //     newVideoLink : ''
+        // } )
+        
 
         //figure out if it's a youtube video or proper url
         //if it is a proper url, add it to the Meta playlist
@@ -269,6 +419,53 @@ export default class PageContainer extends React.Component{
     // handlePlaylistInputChange(){
 
     // }
+    
+    uploadFile(e){
+        console.log("heeeeeelllllooo")
+        console.log("UPLOADING:", e.target.value, typeof e.target.value)
+        if (e.target.value !== ""){ //if a file is uploaded and user did not cancel
+          // Extract file name from path
+          let fileName = e.target.value.split('\\').pop();
+
+          console.log('fileName :', fileName, e.target.value)
+          var ext = fileName.substr(fileName.lastIndexOf('.') + 1);
+        
+          console.log('fileName :', fileName, e.target.value, ext)
+
+          let rowNum = e.target.id.split('-').pop();
+          
+          // Get row num from end of id to select this row's label to for filename
+        //   let labelTxt = document.querySelector(`[for="uploader-${rowNum}"] > .filePreview`);
+        //   labelTxt.innerHTML = fileName;
+          // Get track data for processing
+          let arrayBuffer = e.target.files[0].arrayBuffer();
+
+        this.addToPlaylist(e , 'local' , e.target )
+        //   var currentVideos = this.state.uploadedVideos
+        //   currentVideos.push(e.target.files[0])
+        //   this.setState({ uploadedVideos: currentVideos }, this.addToPlaylist(e , 'local' , e.target ))
+
+          
+        //   console.log(e.target.files)
+
+        //   URL.createObjectURL(uploadedFiles[0])
+          
+        //   let ctx = this.$store.state.mixer.master.ctx;
+        //   let vue = this;
+          
+          // decode array buffer
+        //   arrayBuffer.then(function(buffer) {
+        //     ctx.decodeAudioData(buffer, function(decodedData) {
+        //       // add sound to store
+        //       vue.$store.dispatch('addSound', {
+        //         index: rowNum,
+        //         sound: decodedData,
+        //         fileName: fileName
+        //       });
+        //     });
+        //   });
+        }
+    }
 
     handleInputChange(e, stateVal){
         // var eVal = e.target.value
@@ -296,7 +493,79 @@ export default class PageContainer extends React.Component{
                 // ]
           }
           
-          const playlistJSON = {}
+        var playlistJSON = [];
+        this.state.meta.noteData.forEach((videoJSON) => {
+                // if (videoJSON.category === 'web'){
+                    console.log("web index: ", i)
+                    playlistJSON.push({
+    
+                        sources: [{
+                            src: videoJSON.url,
+                            type: videoJSON.type
+                        }],
+                        poster: 'http://media.w3.org/2010/05/sintel/poster.png'
+                    
+                    
+                    })
+                // }
+                // else if (videoJSON.category === 'local')
+            }
+        )
+       
+
+        // playlistJSON  = this.state.meta.noteData.reduce((videoJSON, i) => {
+        //     if (videoJSON.category === 'web'){
+        //         console.log("web index: ", i)
+        //         return({
+  
+        //             sources: [{
+        //                 src: videoJSON.url,
+        //                 type: videoJSON.type
+        //             }],
+        //             poster: 'http://media.w3.org/2010/05/sintel/poster.png'
+                
+                
+        //         })
+        //     }
+           
+              
+        // })
+
+        console.log("playlistJSON:", playlistJSON)
+        // this.state.meta.noteData.forEach( videoJSON , i){
+        //     if (videoJSON.category === 'web'){
+        //         playlistJSON.push({
+  
+        //             sources: [{
+        //                 src: videoJSON.url,
+        //                 type: videoJSON.type
+        //             }],
+        //             poster: 'http://media.w3.org/2010/05/sintel/poster.png'
+                
+                
+        //         })
+        //     }
+           
+        // };
+        //   const playlistJSON = [{
+        //     // sources: [{
+        //     //   src: 'http://media.w3.org/2010/05/sintel/trailer.mp4',
+        //     //   type: 'video/mp4'
+        //     // }],
+        //     sources: [{
+        //         src: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
+        //         type: 'video/youtube'
+        //     }],
+        //     poster: 'http://media.w3.org/2010/05/sintel/poster.png' //this is the image that shows while it loads I think
+        //   }, 
+        //   {
+            
+        //     sources: [{
+        //         src: 'https://www.youtube.com/watch?v=voFRslp8d60&t=17s',
+        //         type: 'video/youtube'
+        //     }],
+        //     poster: 'http://media.w3.org/2010/05/sintel/poster.png'
+        //   }]
         
           
        
@@ -357,11 +626,15 @@ export default class PageContainer extends React.Component{
 
                     {/* by including the state variable as a value for the input/textarea field, we make sure it clears out if we set the state variable to be empty because then on the rerender, it repopulates as a empty */}
                     <textarea onChange={(e, note) => this.handleInputChange(e, 'newNote')} className='NoteInputField' value={this.state.newNote} ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
-                    <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  ></input> <button onClick={this.addToPlaylist} type='submit' >Add to Playlist</button>
+                    <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  ></input> <button onClick={(e , type) => this.addToPlaylist(e , 'web')} type='submit' >Add to Playlist</button>
                 
                     {/* using && conditional logic makes sure that the parent has the ref before we try to render the playlist because the playlist doesn't seem to rerender when the videoRef is updated */}
                     {/* alternatively, all the starting playlist info can be set up in the video player component but I want to make the playlist div diffinitively in charge of everything relating playlists */}
-                    {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
+                    {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
+
+                    {/* <input onChange='upload' type='file' accept='.wav, audio/wav'> */}
+                    <input  onChange={(e , type) => this.addToPlaylist(e , 'local')}  type='file' accept='.mp4, video/mp4'></input>
+
                 </div>
                 <div>
                     {this.state.info} 
