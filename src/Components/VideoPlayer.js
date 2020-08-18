@@ -2,8 +2,10 @@ import React from 'react';
 import videojs from 'video.js';
 import YoutubeVid from 'videojs-youtube';
 import playlistJS from 'videojs-playlist';
+import playlistUI from 'videojs-playlist-ui';
+import '../Styles/videoStyles.css';
 
-import '../Styles/videoStyles.css'
+import '../../node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css';
 
 
 //  const getTime = ()=>{
@@ -81,6 +83,7 @@ export default class VideoPlayer extends React.Component {
        
       // Play through the playlist automatically.
       this.player.playlist.autoadvance(0);
+      this.player.playlistUi();
     this.props.setVidRef(this.player)
   }
 
@@ -104,6 +107,7 @@ export default class VideoPlayer extends React.Component {
         <div data-vjs-player>
           <video ref={ node => this.videoNode = node } className="video-js mainVideo"></video>
         </div>
+        <div class="vjs-playlist"></div>
         <button onClick={this.getTime}>Get Current Time:</button><span>Time:{this.state.currentTime}</span>
         {/* {this.props.setVidRef(this.player)} */}
         {/* {this.props.test} */}
