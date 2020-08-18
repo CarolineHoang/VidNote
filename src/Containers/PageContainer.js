@@ -168,6 +168,7 @@ export default class PageContainer extends React.Component{
         this.setCurrVidTime = this.setCurrVidTime.bind(this);
 
         this.addNote = this.addNote.bind(this);
+        this.addToPlaylist = this.addToPlaylist.bind(this);
         // this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
 
@@ -226,8 +227,9 @@ export default class PageContainer extends React.Component{
 
         this.setState({
             meta: metaCopy,
+            newNote: '',
             info: this.state.newNote
-        }, console.log(this.state.meta) )
+        }, ()=>{console.log(this.state.meta)} )
 
         // this.state.meta.noteData[0].notes.push(
         //     {   
@@ -243,6 +245,20 @@ export default class PageContainer extends React.Component{
         // Meta.maxNoteId = Meta.maxNoteId+1;
 
         // console.log(e.target)
+    }
+
+
+    addToPlaylist(){
+        console.log("video added: ", this.state.newVideoLink )
+        this.setState({
+            newVideoLink : ''
+        } )
+
+        //figure out if it's a youtube video or proper url
+        //if it is a proper url, add it to the Meta playlist
+        //make sure that all the video source info is included by using the youtube api to get the info
+        //make sure that trickles down to the individual playlist that we see (make sure it's inhertiing from state)
+
     }
     // handleNoteInputChange(e){
     //     this.setState({newNote: e.target.value})
@@ -335,8 +351,10 @@ export default class PageContainer extends React.Component{
                     <button onClick={downloadNotes}> Click to Download Info </button>
                     {/* <a href={testFile2} download="testFolder.zip">----Hiii2</a> */}Hi
                     {/* <textarea onChange={this.handleNoteInputChange} className='NoteInputField' ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button> */}
-                    <textarea onChange={(e, note) => this.handleInputChange(e, 'newNote')} className='NoteInputField' ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
-                    <textarea onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' ></textarea> <button onClick={this.addToPlaylist} type='submit' >Add to Playlist</button>
+
+                    {/* by including the state variable as a value for the input/textarea field, we make sure it clears out if we set the state variable to be empty because then on the rerender, it repopulates as a empty */}
+                    <textarea onChange={(e, note) => this.handleInputChange(e, 'newNote')} className='NoteInputField' value={this.state.newNote} ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
+                    <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  ></input> <button onClick={this.addToPlaylist} type='submit' >Add to Playlist</button>
                 </div>
                 <div>
                     {this.state.info} 
