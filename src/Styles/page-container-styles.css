@@ -66,3 +66,21 @@
 }
 /* give a height minus the navbar once i design it */
 /* mobile should be a collapsible thing that kinda resembles youtube playlist except, instead of comments and recs, you get your notetaking station */
+
+
+
+
+
+/* #list ul {
+    overflow: auto;
+    height: 128px;
+  } */
+
+  ul {
+    overflow: auto;
+    height: 80vh;
+  }
+
+  .centerListItem {
+    color: red;
+  }

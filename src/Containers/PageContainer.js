@@ -20,6 +20,7 @@ import FileSaver from 'file-saver';
 import VideoPlayer from "../Components/VideoPlayer.js";
 
 import YoutubeVid from 'videojs-youtube';
+import NoteContainer from "./NoteContainer";
 // import 'videojs-youtube';
 
 // import "https://vjs.zencdn.net/7.8.4/video.js";
@@ -281,7 +282,10 @@ export default class PageContainer extends React.Component{
                     <a href={testFile} download="testFile.txt">{testFile}Hiii</a>
                     <button onClick={downloadNotes}> Click to Download Info </button>
                     {/* <a href={testFile2} download="testFolder.zip">----Hiii2</a> */}Hi</div>
-                <div className='notes'>Hi</div>
+                <div className='notes'>
+                    <NoteContainer  id="list"/>
+                    Hi
+                </div>
                
             </div>
         
