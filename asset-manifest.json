@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/VidNote/static/css/main.dea8cb5a.chunk.css",
-    "main.js": "/VidNote/static/js/main.fdbf9f0d.chunk.js",
-    "main.js.map": "/VidNote/static/js/main.fdbf9f0d.chunk.js.map",
+    "main.css": "/VidNote/static/css/main.f17a7e32.chunk.css",
+    "main.js": "/VidNote/static/js/main.f2aec6dd.chunk.js",
+    "main.js.map": "/VidNote/static/js/main.f2aec6dd.chunk.js.map",
     "runtime-main.js": "/VidNote/static/js/runtime-main.ac2d05ea.js",
     "runtime-main.js.map": "/VidNote/static/js/runtime-main.ac2d05ea.js.map",
     "static/css/2.d6dc7f54.chunk.css": "/VidNote/static/css/2.d6dc7f54.chunk.css",
-    "static/js/2.35db4a85.chunk.js": "/VidNote/static/js/2.35db4a85.chunk.js",
-    "static/js/2.35db4a85.chunk.js.map": "/VidNote/static/js/2.35db4a85.chunk.js.map",
+    "static/js/2.61144335.chunk.js": "/VidNote/static/js/2.61144335.chunk.js",
+    "static/js/2.61144335.chunk.js.map": "/VidNote/static/js/2.61144335.chunk.js.map",
     "index.html": "/VidNote/index.html",
-    "precache-manifest.0a952c9fe02efcf2fd0ded1a6e641656.js": "/VidNote/precache-manifest.0a952c9fe02efcf2fd0ded1a6e641656.js",
+    "precache-manifest.540237d18683817b37d37eba53ada911.js": "/VidNote/precache-manifest.540237d18683817b37d37eba53ada911.js",
     "service-worker.js": "/VidNote/service-worker.js",
     "static/css/2.d6dc7f54.chunk.css.map": "/VidNote/static/css/2.d6dc7f54.chunk.css.map",
-    "static/css/main.dea8cb5a.chunk.css.map": "/VidNote/static/css/main.dea8cb5a.chunk.css.map",
-    "static/js/2.35db4a85.chunk.js.LICENSE.txt": "/VidNote/static/js/2.35db4a85.chunk.js.LICENSE.txt",
+    "static/css/main.f17a7e32.chunk.css.map": "/VidNote/static/css/main.f17a7e32.chunk.css.map",
+    "static/js/2.61144335.chunk.js.LICENSE.txt": "/VidNote/static/js/2.61144335.chunk.js.LICENSE.txt",
     "static/media/logo.svg": "/VidNote/static/media/logo.5d5d9eef.svg",
     "static/media/testFile.txt": "/VidNote/static/media/testFile.a8f4de44.txt",
     "static/media/testVid.mp4": "/VidNote/static/media/testVid.b60f6e67.mp4"
@@ -21,8 +21,8 @@
   "entrypoints": [
     "static/js/runtime-main.ac2d05ea.js",
     "static/css/2.d6dc7f54.chunk.css",
-    "static/js/2.35db4a85.chunk.js",
-    "static/css/main.dea8cb5a.chunk.css",
-    "static/js/main.fdbf9f0d.chunk.js"
+    "static/js/2.61144335.chunk.js",
+    "static/css/main.f17a7e32.chunk.css",
+    "static/js/main.f2aec6dd.chunk.js"
   ]
 }
