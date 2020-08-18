@@ -158,6 +158,7 @@ export default class PageContainer extends React.Component{
             videoRef : null,
             videoInfo: {},
             newNote: '',
+            newVideoLink: '',
             meta: Meta,
             info: 'asdf'
         }
@@ -167,7 +168,9 @@ export default class PageContainer extends React.Component{
         this.setCurrVidTime = this.setCurrVidTime.bind(this);
 
         this.addNote = this.addNote.bind(this);
-        this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
+        // this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+
     }
     // shouldComponentUpdate(){
     //     return false
@@ -241,26 +244,41 @@ export default class PageContainer extends React.Component{
 
         // console.log(e.target)
     }
-    handleNoteInputChange(e){
-        this.setState({newNote: e.target.value})
+    // handleNoteInputChange(e){
+    //     this.setState({newNote: e.target.value})
+    // }
+
+    // handlePlaylistInputChange(){
+
+    // }
+
+    handleInputChange(e, stateVal){
+        // var eVal = e.target.value
+        // in order to see the most current change in printing, you must include the print statment in the setState function and there must be in an anonymnous arrow function    >>> https://forum.freecodecamp.org/t/solved-this-setstate-is-updating-state-after-console-log/206985/2
+        //if we use []around the property name, we can use ES6 computed property names >>> https://stackoverflow.com/questions/29280445/reactjs-setstate-with-a-dynamic-key-name
+        this.setState({[stateVal]: e.target.value},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
+
     }
       
     render() {
         const videoJsOptions = {
             autoplay: true,
             controls: true,
+            //
        
-                techOrder: ['youtube'],
-                sources: [
-                  {
-                    type: 'video/youtube',
-                    src: 'https://www.youtube.com/watch?v=TeccAtqd5K8' //note that there will be a benign Youtube server side error saying that the host don't match but there is supposedly nothing to worry about this according to stack overflow: https://stackoverflow.com/questions/47833687/youtube-api-failed-to-execute-postmessage-on-domwindow
-                    // src: 'https://www.youtube.com/embed/HIbAz29L-FA?modestbranding=1&playsinline=0&showinfo=0&enablejsapi=1&origin=http://localhost:3000&widgetid=1',
-                    // enablejsapi:1,
-                    // origin:'https://www.youtube.com'
-                  }
-                ]
+                // techOrder: ['youtube'],
+                // sources: [
+                //   {
+                //     type: 'video/youtube',
+                //     src: 'https://www.youtube.com/watch?v=TeccAtqd5K8' //note that there will be a benign Youtube server side error saying that the host don't match but there is supposedly nothing to worry about this according to stack overflow: https://stackoverflow.com/questions/47833687/youtube-api-failed-to-execute-postmessage-on-domwindow
+                //     // src: 'https://www.youtube.com/embed/HIbAz29L-FA?modestbranding=1&playsinline=0&showinfo=0&enablejsapi=1&origin=http://localhost:3000&widgetid=1',
+                //     // enablejsapi:1,
+                //     // origin:'https://www.youtube.com'
+                //   }
+                // ]
           }
+
+        
           
        
         return(
@@ -290,6 +308,7 @@ export default class PageContainer extends React.Component{
                         >
                         </video>
                     </div> */}
+                    {/* <VideoPlayer { ...videoJsOptions } setVidRef = {this.setVideoRef}  test = "hi" /> */}
                     <VideoPlayer { ...videoJsOptions } setVidRef = {this.setVideoRef}  test = "hi" />
                     <button onClick={this.getVideoRef}>getVideoRef</button>
                     <button onClick={this.getCurrVidTime}>Get current Video Time [PC] </button>
@@ -315,7 +334,9 @@ export default class PageContainer extends React.Component{
                     <a href={testFile} download="testFile.txt">{testFile}Hiii</a>
                     <button onClick={downloadNotes}> Click to Download Info </button>
                     {/* <a href={testFile2} download="testFolder.zip">----Hiii2</a> */}Hi
-                    <textarea onChange={this.handleNoteInputChange} className='NoteInputField' ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
+                    {/* <textarea onChange={this.handleNoteInputChange} className='NoteInputField' ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button> */}
+                    <textarea onChange={(e, note) => this.handleInputChange(e, 'newNote')} className='NoteInputField' ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
+                    <textarea onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' ></textarea> <button onClick={this.addToPlaylist} type='submit' >Add to Playlist</button>
                 </div>
                 <div>
                     {this.state.info} 
