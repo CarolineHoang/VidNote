@@ -95,3 +95,11 @@
 
 
   }
+
+
+  .noteInputField{
+    /* white-space: pre-line;  */
+    /* whitespace trimmed to single whitespace */
+    white-space: pre-wrap;
+    /* all whitespace preserved */
+  }

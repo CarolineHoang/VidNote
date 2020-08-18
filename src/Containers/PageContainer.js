@@ -67,7 +67,7 @@ const Meta = {
                     noteId: 0,
                     startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
-                    text: "This is a test message1",
+                    text: "This is a test message111",
                     bookmarked: false,
                     drawn: false,
                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
@@ -76,7 +76,7 @@ const Meta = {
                     noteId: 1,
                     startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
-                    text: "This is a test message2",
+                    text: "This is a test message222",
                     bookmarked: false,
                     drawn: false,
                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
@@ -157,7 +157,9 @@ export default class PageContainer extends React.Component{
         this.state= {
             videoRef : null,
             videoInfo: {},
-            newNote: ''
+            newNote: '',
+            meta: Meta,
+            info: 'asdf'
         }
         this.setVideoRef = this.setVideoRef.bind(this);
         this.getVideoRef = this.getVideoRef.bind(this);
@@ -166,9 +168,9 @@ export default class PageContainer extends React.Component{
         this.addNote = this.addNote.bind(this);
         this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
     }
-    shouldComponentUpdate(){
-        return false
-    }
+    // shouldComponentUpdate(){
+    //     return false
+    // }
     setVideoRef(ref){
         this.setState({
             videoRef : ref
@@ -185,6 +187,44 @@ export default class PageContainer extends React.Component{
 
     addNote(e){
         console.log(this.state.newNote)
+    //     maxVideoId: 1,
+    // maxNoteId:  3,
+        // this.state
+        var metaCopy = this.state.meta;
+
+        metaCopy.noteData[0].notes.push(
+            {   
+                noteId: Meta.maxNoteId+1,
+                startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
+                endTime: null,
+                text: this.state.newNote,
+                bookmarked: false,
+                drawn: false,
+                images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+            }
+        )
+        metaCopy.maxNoteId = metaCopy.maxNoteId+1;
+
+
+
+        this.setState({
+            meta: metaCopy,
+            info: this.state.newNote
+        }, console.log(this.state.meta) )
+
+        // this.state.meta.noteData[0].notes.push(
+        //     {   
+        //         noteId: Meta.maxNoteId+1,
+        //         startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
+        //         endTime: null,
+        //         text: this.state.newNote,
+        //         bookmarked: false,
+        //         drawn: false,
+        //         images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+        //     }
+        // )
+        // Meta.maxNoteId = Meta.maxNoteId+1;
+
         // console.log(e.target)
     }
     handleNoteInputChange(e){
@@ -260,13 +300,16 @@ export default class PageContainer extends React.Component{
                     <a href={testFile} download="testFile.txt">{testFile}Hiii</a>
                     <button onClick={downloadNotes}> Click to Download Info </button>
                     {/* <a href={testFile2} download="testFolder.zip">----Hiii2</a> */}Hi
-                    <textarea onChange={this.handleNoteInputChange} ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
+                    <textarea onChange={this.handleNoteInputChange} className='NoteInputField' ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
+                </div>
+                <div>
+                    {this.state.info} 
                 </div>
                     
                 <div className='notes'>
                     <NoteContainer id="list" 
-                    itemList={items} 
-                    // itemList = {Meta.noteData[0]} 
+                    // itemList={items} 
+                    itemList = {this.state.meta.noteData[0]} 
                     />
                     Hi
                 </div>

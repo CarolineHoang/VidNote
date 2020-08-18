@@ -56,7 +56,7 @@ const Meta = {
                     noteId: 0,
                     startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
-                    text: "This is a test message1",
+                    text: "This is a test message111",
                     bookmarked: false,
                     drawn: false,
                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
@@ -65,7 +65,7 @@ const Meta = {
                     noteId: 1,
                     startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
-                    text: "This is a test message2",
+                    text: "This is a test message222",
                     bookmarked: false,
                     drawn: false,
                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
@@ -86,7 +86,7 @@ const Meta = {
                     noteId: 2,
                     startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
-                    text: "This is a test message1",
+                    text: "This is a test message3",
                     bookmarked: false,
                     drawn: false,
                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
@@ -95,7 +95,7 @@ const Meta = {
                     noteId: 3,
                     startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
-                    text: "This is a test message2",
+                    text: "This is a test message4",
                     bookmarked: false,
                     drawn: false,
                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
@@ -144,6 +144,8 @@ export default class NoteContainer extends React.Component{
         super(props);
         this.state= {
             index: 0
+
+            // notes:
         }
         this.handleShow = this.handleShow.bind(this);
  
@@ -171,22 +173,23 @@ export default class NoteContainer extends React.Component{
         // console.log("ITEMMMMS", itemss)
         // console.log("ITEMMMMS2", this.props)
         var items = this.props.itemList
+        console.log("ITEMMMMS", items.notes)
         return(
                 <div>
                     {this.state.index}
                     {/* this must be a arrow function in order to bind the this so that we can use state in the map function  */}
-                  <ul>{items.map((item, i) => {
+                  <ul>{items.notes.map((item, i) => {
                     //   if (i == this.state.index){}
                       if (i == this.state.index){
                         return (
                             // <li ref={i} className='centerListItem' >{item}</li>
-                            <div ref={i} className='centerListItem ListItem' >{item}</div>
+                            <pre ref={i} className='centerListItem ListItem' >{item.text}</pre>
                           )
                       }
                       else{
                         return (
                             // <li ref={i}>{item}</li>
-                            <div ref={i} className='ListItem' >{item}</div>
+                            <pre ref={i} className='ListItem' >{item.text}</pre>
 
                           )
                       }

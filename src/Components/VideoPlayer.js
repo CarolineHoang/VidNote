@@ -52,6 +52,14 @@ export default class VideoPlayer extends React.Component {
         //   type: 'video/mp4'
         // }],
         sources: [{
+            src: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
+            type: 'video/youtube'
+        }],
+        poster: 'http://media.w3.org/2010/05/sintel/poster.png'
+      }, 
+      {
+        
+        sources: [{
             src: 'https://www.youtube.com/watch?v=voFRslp8d60&t=17s',
             type: 'video/youtube'
         }],
