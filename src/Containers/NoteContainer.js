@@ -188,11 +188,9 @@ export default class NoteContainer extends React.Component{
                             // <Note _ref={i} item={item} additionalClasses='centerListItem' ></Note>
                             // <pre ref={i} className='ListItem centerListItem' >{item.text}<br/>{item.startTime}</pre>
                             <div ref={i}>
-                                <Note _ref={i} item={item} additionalClasses='centerListItem' ></Note>
+                                <Note _ref={i} item={item} additionalClasses='centerListItem' setCurrVidTime = {this.props.setCurrVidTime } ></Note>
                                 {/* <pre className='ListItem centerListItem' >{item.text}<br/>{item.startTime}</pre> */}
                             </div>
-                            
-                        
                         )
                       }
                       else{
@@ -201,7 +199,7 @@ export default class NoteContainer extends React.Component{
                             // <Note _ref={i} item={item} ></Note>
                             // <pre ref={i} className='ListItem' >{item.text}<br/>{item.startTime}</pre>
                             <div ref={i}>
-                                <Note _ref={i} item={item} additionalClasses='' ></Note>
+                                <Note _ref={i} item={item} additionalClasses='' setCurrVidTime = {this.props.setCurrVidTime }  ></Note>
                                 {/* <pre className='ListItem' >{item.text}<br/>{item.startTime}</pre> */}
                             </div>
 

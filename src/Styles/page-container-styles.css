@@ -103,3 +103,11 @@
     white-space: pre-wrap;
     /* all whitespace preserved */
   }
+
+
+  .noteTitle{
+      color: rgb(87, 178, 206);
+  }
+  .noteTitle:hover{
+      color: blue;
+  }

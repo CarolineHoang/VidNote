@@ -325,6 +325,8 @@ export default class PageContainer extends React.Component{
                     <NoteContainer id="list" 
                     // itemList={items} 
                     itemList = {this.state.meta.noteData[0]} 
+
+                    setCurrVidTime = {this.setCurrVidTime}
                     />
                     Hi
                 </div>

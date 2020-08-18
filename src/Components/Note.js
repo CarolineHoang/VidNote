@@ -168,11 +168,12 @@ export default class Note extends React.Component{
         return(
                 // <div className='ListItem' >
                     <pre ref={this.props._ref} className={'ListItem '+ this.props.additionalClasses} >
-                        <div>{ts} | Note Title <br/></div>
+                        <div onClick={() => this.props.setCurrVidTime(ts) } className="noteTitle" >{ts} | Note Title <br/></div>
                         {this.props.item.text}<br/>{ts}
                     </pre>
                   
-                // </div>
+                // </div> setCurrentTime(seconds)
+
         
         );
     }
