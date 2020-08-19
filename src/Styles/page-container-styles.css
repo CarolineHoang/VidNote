@@ -3,8 +3,9 @@
     /* padding: 0 20vw; */
     width: 100%;
     /* height: 100vh; */
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
+    display: block;
     /* align-items: center;
     justify-content: center; */
     
@@ -19,6 +20,9 @@
     .notes{
         /* background-color: rgb(183, 236, 238); */
         width: 100%;
+        float: none;
+        overflow-y: visible;
+        display: block;
         /* height:100%; */
         /* grid-area:notes; */
     }
@@ -122,6 +126,14 @@
   }
 
   @media print {
+    ul {
+        overflow-y: visible;
+        height: fit-content;
+        display: block;
+
+        /* height: 80vh; */
+        /* padding: 0; */
+      }
     .ListItem {
         height: fit-content;
         min-height: 20vh;
@@ -130,6 +142,8 @@
         border: 1px solid black;
         margin: 1rem auto;
         border-radius: 10px;
+        display: block;
+        
       }
   }
 

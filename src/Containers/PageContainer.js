@@ -711,9 +711,9 @@ export default class PageContainer extends React.Component{
                     <input  onChange={(e , type) => this.addToPlaylist(e , 'local')}  type='file' accept='.mp4, video/mp4'></input>
 
                 </div>
-                <div>
+                {/* <div>
                     {this.state.info} 
-                </div>
+                </div> */}
                     
                 <div className='notes'>
                     <NoteContainer id="list" 
