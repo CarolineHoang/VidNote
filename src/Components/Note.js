@@ -143,10 +143,14 @@ export default class Note extends React.Component{
     constructor(props){
         super(props);
         this.state= {
+            editing: false,
+            textarea_disabled: true,
+            textareaValue: this.props.note.text
+            
             // index: 0
         }
         // this.handleShow = this.handleShow.bind(this);
- 
+        this.handleToggleState = this.handleToggleState.bind(this);
     }
     handleShow(i) {
         console.log(this.refs, i)
@@ -161,15 +165,46 @@ export default class Note extends React.Component{
         this.setState({index: i})
       }
 
+    handleToggleState(e, state){
+        this.setState(
+            {
+            [state]: !this.state[state]
+            }, 
+            ()=>{
+                console.log("Toggling "+state, this.state[state])
+            }
+        )
+    }
+    handleInputChange(e, stateVal){
+        // var eVal = e.target.value
+        // in order to see the most current change in printing, you must include the print statment in the setState function and there must be in an anonymnous arrow function    >>> https://forum.freecodecamp.org/t/solved-this-setstate-is-updating-state-after-console-log/206985/2
+        //if we use []around the property name, we can use ES6 computed property names >>> https://stackoverflow.com/questions/29280445/reactjs-setstate-with-a-dynamic-key-name
+        this.setState({[stateVal]: e.target.value},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
+
+    }
       
     render() {
-        var ts = Math.round((this.props.item.startTime + Number.EPSILON) * 100) / 100
+        var noteInfo = this.props.note
+        var ts = Math.round((noteInfo.startTime + Number.EPSILON) * 100) / 100
        
         return(
                 // <div className='ListItem' >
                     <pre ref={this.props._ref} className={'ListItem '+ this.props.additionalClasses} >
-                        <div onClick={() => this.props.setCurrVidTime(ts) } className="noteTitle" >{ts} | Note Title <br/></div>
-                        {this.props.item.text}<br/>{ts}
+                        <div onClick={() => this.props.setCurrVidTime(ts) } className="noteTitleContainer" >
+                            <div className= "timestamp" >{ts}</div>
+                            &nbsp;|&nbsp;
+                            <div className= "noteTitle" >
+                                {noteInfo.noteTitle != null ? noteInfo.noteTitle : noteInfo.text} 
+                            </div> 
+                            <br/>
+                        </div>
+                        <textarea disabled={this.state.textarea_disabled} onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} value={this.state.textareaValue} className="noteContent"></textarea>
+
+                        {/* {noteInfo.text}<br/>{ts} */}
+                        <button onClick={( e, state ) => this.handleToggleState( e, 'editing')}>Edit</button>
+                        <button onClick={( e, state ) => this.handleToggleState( e, 'textarea_disabled')}>Toggle TextArea</button>
+                        
+
                     </pre>
                   
                 // </div> setCurrentTime(seconds)

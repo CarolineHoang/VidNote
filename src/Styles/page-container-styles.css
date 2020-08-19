@@ -63,6 +63,7 @@
     .notes{
         background-color: rgb(183, 236, 238);
         width: 100%; /* this will probably eventually need to be changed such that it's an explicit width unit like vw so that the ellipsis cut off on videoTitle will work */
+        max-width: 40vw;
         height:100%;
         /* grid-area:notes; */
     }
@@ -165,8 +166,26 @@
   .ListItem {
     height: fit-content;
     min-height: 20vh;
-    width: 100%;
+    /* width: 100%; */
+    width: calc(100% -  (1px * 2 ));
     border: 1px solid black;
+    /* word-wrap: normal; */
+    word-wrap: break-word;
+    /*  <pre> tag defines preformatted text. 
+        It is used to display code blocks since it preserves spaces and line breaks.
+        If the line is large, then the <pre> tag won’t wrap it by default. 
+        To wrap it, we need to use CSS.
+        Source: https://www.tutorialspoint.com/How-do-I-wrap-text-in-a-pre-tag-in-HTML    */
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+  }
+  .ListItem button{
+      width: 5vw;
   }
 
   @media print {
@@ -202,9 +221,40 @@
   }
 
 
-  .noteTitle{
+  .noteTitleContainer{
       color: rgb(87, 178, 206);
   }
-  .noteTitle:hover{
+  .noteTitleContainer .noteTitle{
+    max-width: 60%;
+    /* max-width: 20vw;  */
+    /* I will make this explicit for now so that the div doesn't stretch too large. This must change when the note section gets a determined width */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* text-align: center; */
+    display: inline-block;
+    vertical-align: middle;
+
+  }
+  .noteTitleContainer .timestamp{
+    /* max-width: 70%; */
+    width: fit-content;
+    /* text-align: center; */
+    display: inline-block;
+    vertical-align: middle;
+
+  }
+  .noteTitleContainer:hover{
       color: blue;
+  }
+
+
+  .noteContent{
+    resize: none;
+    
+    width: calc(100% - (1.5rem * 2) - (1px * 2 ));
+    margin: 0;
+    flex: 1;
+    font-size: 1.2rem;
+    padding: .5rem 1.5rem;
   }

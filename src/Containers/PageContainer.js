@@ -70,6 +70,7 @@ const Meta = {
                     noteId: 0,
                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
+                    noteTitle: null,
                     text: "This is a test message111",
                     bookmarked: false,
                     created : Date.now(),
@@ -81,6 +82,7 @@ const Meta = {
                     noteId: 1,
                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
+                    noteTitle: null,
                     text: "This is a test message222",
                     bookmarked: false,
                     created : Date.now(),
@@ -105,6 +107,7 @@ const Meta = {
                     noteId: 0,
                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
+                    noteTitle: null,
                     text: "This is a test message333",
                     bookmarked: false,
                     created : Date.now(),
@@ -116,6 +119,7 @@ const Meta = {
                     noteId: 1,
                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
+                    noteTitle: null,
                     text: "This is a test message444",
                     bookmarked: false,
                     created : Date.now(),
@@ -139,6 +143,7 @@ const Meta = {
                     noteId: 2,
                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
+                    noteTitle: null,
                     text: "This is a test message444",
                     bookmarked: false,
                     created : Date.now(),
@@ -150,6 +155,7 @@ const Meta = {
                     noteId: 3,
                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
+                    noteTitle: null,
                     text: "This is a test message555",
                     bookmarked: false,
                     created : Date.now(),
@@ -298,6 +304,7 @@ export default class PageContainer extends React.Component{
                 noteId: Meta.maxNoteId+1,
                 startTime: currentTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
                 endTime: null,
+                noteTitle: null,
                 text: this.state.newNote,
                 bookmarked: false,
                 created : Date.now(),
