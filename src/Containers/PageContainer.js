@@ -507,8 +507,30 @@ export default class PageContainer extends React.Component{
                             src: videoJSON.url,
                             type: videoJSON.type
                         }],
-                        poster: 'http://media.w3.org/2010/05/sintel/poster.png'
-                    
+                        poster: 'http://media.w3.org/2010/05/sintel/poster.png',
+                        thumbnail: [
+                            {
+                              srcset: 'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search-v2_297x176.jpg',
+                              type: 'image/jpeg',
+                              media: '(min-width: 400px;)'
+                            //   media: 'max-width: 40px;'
+                            },
+                            {
+                              src: 'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search-v2_297x176.jpg'
+                            }
+                          ]
+                        //   thumbnail: [
+                        //     {
+                        //       srcset: 'test/example/oceans.jpg',
+                        //       type: 'image/jpeg',
+                        //       media: '(min-width: 400px;)'
+                        //     },
+                        //     {
+                        //       src: 'test/example/oceans-low.jpg'
+                        //     }
+                        //   ]
+                          
+                          
                     
                     })
                 // }

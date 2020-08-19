@@ -5,7 +5,7 @@ import playlistJS from 'videojs-playlist';
 import playlistUI from 'videojs-playlist-ui';
 import '../Styles/videoStyles.css';
 
-import '../../node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css';
+// import '../../node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css';
 import Playlist from './Playlist';
 
 
