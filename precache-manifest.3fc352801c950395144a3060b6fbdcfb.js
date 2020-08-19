@@ -1,27 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "bdf40af5710c5e49f6799f11323ce5d0",
+    "revision": "93979175d89c4b7b592789695bfb6859",
     "url": "/VidNote/index.html"
   },
   {
-    "revision": "4a36ded9266e281af11d",
-    "url": "/VidNote/static/css/2.d6dc7f54.chunk.css"
+    "revision": "2acdee9cfa34c6ed8a2a",
+    "url": "/VidNote/static/css/main.a468e14b.chunk.css"
   },
   {
-    "revision": "75d2aa265d5bd1fd5d0b",
-    "url": "/VidNote/static/css/main.f17a7e32.chunk.css"
-  },
-  {
-    "revision": "4a36ded9266e281af11d",
-    "url": "/VidNote/static/js/2.61144335.chunk.js"
+    "revision": "95e9390c4fc86e53ef63",
+    "url": "/VidNote/static/js/2.a51344e9.chunk.js"
   },
   {
     "revision": "d533a93dd8a3d3d8c06cb5a22f293d77",
-    "url": "/VidNote/static/js/2.61144335.chunk.js.LICENSE.txt"
+    "url": "/VidNote/static/js/2.a51344e9.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "75d2aa265d5bd1fd5d0b",
-    "url": "/VidNote/static/js/main.f2aec6dd.chunk.js"
+    "revision": "2acdee9cfa34c6ed8a2a",
+    "url": "/VidNote/static/js/main.57476484.chunk.js"
   },
   {
     "revision": "38b3b05932bd96f2b86f",

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/VidNote/precache-manifest.540237d18683817b37d37eba53ada911.js"
+  "/VidNote/precache-manifest.3fc352801c950395144a3060b6fbdcfb.js"
 );
 
 self.addEventListener('message', (event) => {
