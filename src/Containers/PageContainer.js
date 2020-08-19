@@ -192,7 +192,9 @@ export default class PageContainer extends React.Component{
             newVideoLink: '',
             meta: Meta,
             info: 'asdf',
-            uploadedVideos: []
+            uploadedVideos: [],
+            currPlayingVid : {}
+            // current
         }
         this.setVideoRef = this.setVideoRef.bind(this);
         this.getVideoRef = this.getVideoRef.bind(this);
@@ -210,9 +212,35 @@ export default class PageContainer extends React.Component{
     //     return false
     // }
     setVideoRef(ref){
+        console.log("setting the ref")
+        // ref.on('playlistchange', function() {
+        //     // ref.playlist();
+        //     console.log("The playlist has changed!")
+          
+        // });
+        ref.on('playlistitem', ()=> {
+            // ref.playlist();
+            console.log("Playing next video!", ref.playlist()[ref.playlist.currentIndex()])
+            this.setState({
+                currPlayingVid : ref.playlist()[ref.playlist.currentIndex()]
+            },
+            ()=> {console.log("hiiii", this.state.currPlayingVid)}
+            )
+          
+        });
+        // playlistitem
         this.setState({
             videoRef : ref
-        })
+        }
+        // , 
+        // ()=>{
+        //     ref.on('playlistchange', function() {
+        //         // ref.playlist();
+        //         console.log("The playlist has changed!")
+              
+        //     });
+        // }
+        )
     }
     getVideoRef(){
         console.log(this.state.videoRef)
@@ -222,6 +250,7 @@ export default class PageContainer extends React.Component{
         // console.log(data)
         var currentTime = this.state.videoRef.currentTime()
         console.log("bhaisdbfalifba" , currentTime)
+        console.log("Current Video Info" , this.state.currPlayingVid)
         return currentTime
         // console.log("bhaisdbfalifba" )
     }
