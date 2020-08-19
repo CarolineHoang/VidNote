@@ -151,6 +151,7 @@ export default class Note extends React.Component{
         }
         // this.handleShow = this.handleShow.bind(this);
         this.handleToggleState = this.handleToggleState.bind(this);
+        this.handleSave = this.handleSave.bind(this);
     }
     handleShow(i) {
         console.log(this.refs, i)
@@ -175,6 +176,13 @@ export default class Note extends React.Component{
             }
         )
     }
+    handleSave(){
+        // this.props.changeNote("changing note")
+        this.props.changeNote(this.props.note, this.state.textareaValue , this.props.videoId )
+        // this.setState({
+        //     textarea_disabled: true
+        // })
+    }
     handleInputChange(e, stateVal){
         // var eVal = e.target.value
         // in order to see the most current change in printing, you must include the print statment in the setState function and there must be in an anonymnous arrow function    >>> https://forum.freecodecamp.org/t/solved-this-setstate-is-updating-state-after-console-log/206985/2
@@ -198,11 +206,16 @@ export default class Note extends React.Component{
                             </div> 
                             <br/>
                         </div>
-                        <textarea disabled={this.state.textarea_disabled} onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} value={this.state.textareaValue} className="noteContent"></textarea>
+                        {/* <textarea disabled={this.state.textarea_disabled} onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} value={this.state.textareaValue} className="noteContent"></textarea> */}
+                        <span hidden={!this.state.textarea_disabled} >{noteInfo.text}</span> 
+                        <textarea hidden={this.state.textarea_disabled} onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} value={this.state.textareaValue} className="noteContent"></textarea>
+                        
 
                         {/* {noteInfo.text}<br/>{ts} */}
                         <button onClick={( e, state ) => this.handleToggleState( e, 'editing')}>Edit</button>
                         <button onClick={( e, state ) => this.handleToggleState( e, 'textarea_disabled')}>Toggle TextArea</button>
+                        <button hidden={this.state.textarea_disabled} onClick={this.handleSave}>Save</button>
+
                         
 
                     </pre>

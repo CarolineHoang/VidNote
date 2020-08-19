@@ -224,6 +224,7 @@ export default class PageContainer extends React.Component{
         this.setCurrVidTime = this.setCurrVidTime.bind(this);
 
         this.addNote = this.addNote.bind(this);
+        this.changeNote = this.changeNote.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         this.addToPlaylist = this.addToPlaylist.bind(this);
         // this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
@@ -338,6 +339,13 @@ export default class PageContainer extends React.Component{
 
         // console.log(e.target)
     }
+    changeNote(noteInfo, newText , videoId ){
+        console.log(noteInfo, newText, videoId )
+
+
+
+        
+    }
 
 
 // {
@@ -424,7 +432,7 @@ export default class PageContainer extends React.Component{
             var currentTime  = this.getCurrVidTime()
             metaCopy.noteData.push(
                 {
-                    videoId: parseInt(metaCopy.videoId)+1,
+                    videoId: parseInt(metaCopy.maxVideoId)+1,
                     category: category, //  web = youtube, vimero. etc, local = files
                     type: type,
                     url: src,
@@ -451,14 +459,17 @@ export default class PageContainer extends React.Component{
                 //     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
                 // }
             )
-            metaCopy.videoId = parseInt(metaCopy.videoId)+1;
-    
+            console.log("meta before1: ", this.state.meta , metaCopy.maxVideoId)
+
+            metaCopy.maxVideoId = parseInt(metaCopy.maxVideoId)+1;
+            console.log("meta before2: ", this.state.meta , metaCopy.maxVideoId)
+
     
     
             this.setState({
                 meta: metaCopy,
                 newVideoLink : ''
-            }, ()=>{console.log(this.state.meta)} )
+            }, ()=>{console.log( "meta after: ",  this.state.meta)} )
 
             
 
@@ -738,6 +749,7 @@ export default class PageContainer extends React.Component{
                     
 
                     setCurrVidTime = {this.setCurrVidTime}
+                    changeNote = {this.changeNote}
                     />
 
                     Hi
