@@ -229,10 +229,14 @@ export default class PageContainer extends React.Component{
         this.addToPlaylist = this.addToPlaylist.bind(this);
         // this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        // this.resetNoteState = this.resetNoteState.bind(this);
 
     }
     // shouldComponentUpdate(){
     //     return false
+    // }
+    // resetNoteState(reset = false){
+    //     return reset
     // }
     setVideoRef(ref){
         console.log("setting the ref")

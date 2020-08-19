@@ -185,7 +185,7 @@
     flex-direction: column;
   }
   .ListItem button{
-      width: 5vw;
+      width: fit-content;
   }
 
   @media print {

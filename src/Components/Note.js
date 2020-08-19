@@ -145,7 +145,8 @@ export default class Note extends React.Component{
         this.state= {
             editing: false,
             textarea_disabled: true,
-            textareaValue: this.props.note.text
+            textareaValue: this.props.note.text,
+            noteSectionVideoId : this.props.videoId
             
             // index: 0
         }
@@ -153,6 +154,18 @@ export default class Note extends React.Component{
         this.handleToggleState = this.handleToggleState.bind(this);
         this.handleSave = this.handleSave.bind(this);
     }
+    componentDidUpdate(nextProps){
+        if (nextProps.videoId != this.props.videoId){
+            this.setState({textarea_disabled: true})
+            console.log("updating...")
+        }
+        else{
+            console.log("not updating...")
+        }
+    }
+    // componentDidMount(){
+
+    // }
     handleShow(i) {
         console.log(this.refs, i)
         console.log(this.refs[toString(i)])
