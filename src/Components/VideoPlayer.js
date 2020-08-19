@@ -24,6 +24,9 @@ export default class VideoPlayer extends React.Component {
 //   testFunc(){
 //       console.log("lol")
 //   }
+shouldComponentUpdate(){
+    return false
+}
   getTime = ()=>{
     // this.props.setVidRef(this.player)
     console.log(this.player , this.videoNode , this.player.currentTime())
@@ -44,6 +47,7 @@ export default class VideoPlayer extends React.Component {
     //   this.getTime()
     
     //   this.props.setVidRef(this.player)
+
   
     });
                                 // // this.testFunc()
@@ -93,6 +97,7 @@ export default class VideoPlayer extends React.Component {
                                 // // Play through the playlist automatically.
                                 // this.player.playlist.autoadvance(0);
                                 // this.player.playlistUi();
+
     this.props.setVidRef(this.player)
     console.log("player2: ", this.player)
   }

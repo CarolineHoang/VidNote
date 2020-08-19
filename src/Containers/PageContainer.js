@@ -61,7 +61,7 @@ const Meta = {
             category: 'web', //  web = youtube, vimero. etc, local = files
             type: 'video/youtube',
             url: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
-            fileName: null,
+            videoName: null,
             notes: 
             [   
                 {
@@ -91,7 +91,7 @@ const Meta = {
             category: 'web', //  web = youtube, vimero. etc, local = files
             type: 'video/youtube',
             url: 'https://www.youtube.com/watch?v=voFRslp8d60&t=17s',
-            fileName: null,
+            videoName: null,
             notes: 
             [   
                 {
@@ -121,7 +121,7 @@ const Meta = {
             category: 'local', //  web = youtube, vimero. etc, local = files
             type: 'video/mp4',
             url: null,
-            fileName: "testVid.mp4",
+            videoName: "testVid.mp4",
             notes: 
             [   
                 {
@@ -327,18 +327,22 @@ export default class PageContainer extends React.Component{
 
         var type = ''
         var src = ''
+        var vidName = ''
         if (category == 'web'){
             type = 'video/youtube'
             src = this.state.newVideoLink
+            vidName = src
+
         }
         else if (category == 'local'){
-            // let fileName = fileTarget.value.split('\\').pop();
+            let fileName = e.target.value.split('\\').pop();
             var ext = e.target.value.substr(e.target.value.lastIndexOf('.') + 1);
             type = 'video/'+ext
             // src = this.state.newVideoLink
 
             src = URL.createObjectURL(e.target.files[0])
             console.log("LOCAL vars: ", type,src)
+            vidName = fileName
 
             // src = e.target.files[0]
         }
@@ -366,7 +370,7 @@ export default class PageContainer extends React.Component{
                     category: category, //  web = youtube, vimero. etc, local = files
                     type: type,
                     url: src,
-                    fileName: null,
+                    videoName: vidName,
                     notes: []
                 }
 
@@ -498,7 +502,7 @@ export default class PageContainer extends React.Component{
                 // if (videoJSON.category === 'web'){
                     console.log("web index: ", i)
                     playlistJSON.push({
-    
+                        name: videoJSON.videoName,
                         sources: [{
                             src: videoJSON.url,
                             type: videoJSON.type
