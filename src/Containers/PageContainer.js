@@ -302,7 +302,7 @@ export default class PageContainer extends React.Component{
         // metaCopy.noteData[0].notes.push(
         metaCopy.noteData[this.state.currPlayingVidId].notes.push(
             {   
-                noteId: Meta.maxNoteId+1,
+                noteId: metaCopy.maxNoteId+1,
                 startTime: currentTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
                 endTime: null,
                 noteTitle: null,
@@ -342,6 +342,27 @@ export default class PageContainer extends React.Component{
     changeNote(noteInfo, newText , videoId ){
         console.log(noteInfo, newText, videoId )
 
+
+                var metaCopy = this.state.meta;
+                // metaCopy.noteData[0].notes.push(
+                metaCopy.noteData[videoId].notes[noteInfo.noteId] = {   
+                    noteId:         noteInfo.noteId,
+                    startTime:      noteInfo.startTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
+                    endTime:        noteInfo.endTime,
+                    noteTitle:      noteInfo.noteTitle,
+                    text:           newText,
+                    bookmarked:     noteInfo.bookmarked,
+                    created:        noteInfo.created,
+                    lastUpdated:    Date.now(),
+                    drawn:          noteInfo.drawn,
+                    images:         noteInfo.images //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+                }
+
+
+
+                this.setState({
+                    meta: metaCopy,
+                }, ()=>{console.log(this.state.meta)} )
 
 
         

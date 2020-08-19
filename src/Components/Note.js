@@ -178,7 +178,11 @@ export default class Note extends React.Component{
     }
     handleSave(){
         // this.props.changeNote("changing note")
-        this.props.changeNote(this.props.note, this.state.textareaValue , this.props.videoId )
+        this.setState({textarea_disabled: true},  ()=>{
+            console.log(`textarea_disabled: `, this.state.textarea_disabled)
+            this.props.changeNote(this.props.note, this.state.textareaValue , this.props.videoId )
+
+        } )
         // this.setState({
         //     textarea_disabled: true
         // })
