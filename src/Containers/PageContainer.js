@@ -10,6 +10,7 @@ import '../Styles/page-container-styles.css'
 
 import test from '../DownloadFolder/testFile.txt'
 import testVideo  from '../Assets/testVid.mp4'
+import testVideo1  from './testVid.mp4'
 import testVideo2  from './testVid.mp4'
 // import testF from '../DownloadFolder/testFolder.zip'
 
@@ -53,7 +54,7 @@ const videoTime =0; //this value should update every half second and is the time
 const Meta = {
     // fileNames: [],  //this will be an array in the order of the playlist
     //                 // every Youtube video will have the 
-    maxVideoId: 1,
+    maxVideoId: 3,
     maxNoteId:  3,
     noteData:[
         {
@@ -70,6 +71,8 @@ const Meta = {
                     endTime: null,
                     text: "This is a test message111",
                     bookmarked: false,
+                    created : Date.now(),
+                    lastUpdated : Date.now(),
                     drawn: false,
                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
                 },
@@ -79,6 +82,8 @@ const Meta = {
                     endTime: null,
                     text: "This is a test message222",
                     bookmarked: false,
+                    created : Date.now(),
+                    lastUpdated : Date.now(),
                     drawn: false,
                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
                 }
@@ -87,7 +92,7 @@ const Meta = {
     
         },
         {
-            videoId: 0,
+            videoId: 1,
             category: 'web', //  web = youtube, vimero. etc, local = files
             type: 'video/youtube',
             url: 'https://www.youtube.com/watch?v=voFRslp8d60&t=17s',
@@ -98,8 +103,10 @@ const Meta = {
                     noteId: 0,
                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
-                    text: "This is a test message111",
+                    text: "This is a test message333",
                     bookmarked: false,
+                    created : Date.now(),
+                    lastUpdated : Date.now(),
                     drawn: false,
                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
                 },
@@ -107,8 +114,10 @@ const Meta = {
                     noteId: 1,
                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
-                    text: "This is a test message222",
+                    text: "This is a test message444",
                     bookmarked: false,
+                    created : Date.now(),
+                    lastUpdated : Date.now(),
                     drawn: false,
                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
                 }
@@ -117,28 +126,32 @@ const Meta = {
     
         },
         {
-            videoId: 1,
+            videoId: 2,
             category: 'local', //  web = youtube, vimero. etc, local = files
             type: 'video/mp4',
-            url: null,
+            url: testVideo2,
             videoName: "testVid.mp4",
             notes: 
             [   
                 {
                     noteId: 2,
-                    startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
+                    startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
-                    text: "This is a test message1",
+                    text: "This is a test message444",
                     bookmarked: false,
+                    created : Date.now(),
+                    lastUpdated : Date.now(),
                     drawn: false,
                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
                 },
                 {   
                     noteId: 3,
-                    startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
+                    startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
-                    text: "This is a test message2",
+                    text: "This is a test message555",
                     bookmarked: false,
+                    created : Date.now(),
+                    lastUpdated : Date.now(),
                     drawn: false,
                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
                 }
@@ -193,7 +206,8 @@ export default class PageContainer extends React.Component{
             meta: Meta,
             info: 'asdf',
             uploadedVideos: [],
-            currPlayingVid : {}
+            currPlayingVid : {},
+            currPlayingVidId : 0
             // current
         }
         this.setVideoRef = this.setVideoRef.bind(this);
@@ -221,8 +235,11 @@ export default class PageContainer extends React.Component{
         ref.on('playlistitem', ()=> {
             // ref.playlist();
             console.log("Playing next video!", ref.playlist()[ref.playlist.currentIndex()])
+            var currIndex = ref.playlist.currentIndex()
             this.setState({
-                currPlayingVid : ref.playlist()[ref.playlist.currentIndex()]
+                // currPlayingVid : ref.playlist()[ref.playlist.currentIndex()],
+                currPlayingVid : ref.playlist()[currIndex],
+                currPlayingVidId : currIndex
             },
             ()=> {console.log("hiiii", this.state.currPlayingVid)}
             )
@@ -273,13 +290,16 @@ export default class PageContainer extends React.Component{
         // this.state
         var metaCopy = this.state.meta;
         var currentTime  = this.getCurrVidTime()
-        metaCopy.noteData[0].notes.push(
+        // metaCopy.noteData[0].notes.push(
+        metaCopy.noteData[this.state.currPlayingVidId].notes.push(
             {   
                 noteId: Meta.maxNoteId+1,
                 startTime: currentTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
                 endTime: null,
                 text: this.state.newNote,
                 bookmarked: false,
+                created : Date.now(),
+                lastUpdated : Date.now(),
                 drawn: false,
                 images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
             }
@@ -698,7 +718,9 @@ export default class PageContainer extends React.Component{
                 <div className='notes'>
                     <NoteContainer id="list" 
                     // itemList={items} 
-                    itemList = {this.state.meta.noteData[0]} 
+                    // itemList = {this.state.meta.noteData[0]} 
+                    itemList = {this.state.meta.noteData[this.state.currPlayingVidId]} 
+                    
 
                     setCurrVidTime = {this.setCurrVidTime}
                     />
