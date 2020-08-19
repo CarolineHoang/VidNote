@@ -62,7 +62,8 @@ const Meta = {
             category: 'web', //  web = youtube, vimero. etc, local = files
             type: 'video/youtube',
             url: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
-            videoName: null,
+            // videoName: null,
+            videoName: 'Dummy YouTube VideoName 1',
             notes: 
             [   
                 {
@@ -97,6 +98,7 @@ const Meta = {
             type: 'video/youtube',
             url: 'https://www.youtube.com/watch?v=voFRslp8d60&t=17s',
             videoName: null,
+            // videoName: 'Dummy YouTube VideoName 2',
             notes: 
             [   
                 {
@@ -527,6 +529,7 @@ export default class PageContainer extends React.Component{
         this.setState({[stateVal]: e.target.value},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
 
     }
+    // generateUrlForPrint
       
     render() {
         const videoJsOptions = {
@@ -716,6 +719,11 @@ export default class PageContainer extends React.Component{
                 </div> */}
                     
                 <div className='notes'>
+                    <div>HIII{this.state.currPlayingVid != {} && console.log('current video: ',this.state.currPlayingVid, this.state.currPlayingVid.sources)}</div>
+
+                    {/* Wait until the currPlayingVid has been set to a non-empty name value to show a name and show it as long as it's not null. If it is null, substitute the 'Untitled Video' for null */}
+                    {/* <div className="noteSectionVideoTitle">{this.state.currPlayingVid != {} && (this.state.currPlayingVid.name != null ? this.state.currPlayingVid.name : 'Untitled Video') }</div>
+                    <div className="noteSectionVideoTitle">{this.state.currPlayingVid != {} &&  this.state.currPlayingVid.sources != undefined && (this.state.currPlayingVid.sources[0].type != 'video/mp4' ? this.state.currPlayingVid.sources[0].src : 'Local File') }</div> */}
                     <NoteContainer id="list" 
                     // itemList={items} 
                     // itemList = {this.state.meta.noteData[0]} 
@@ -726,6 +734,9 @@ export default class PageContainer extends React.Component{
                     />
 
                     Hi
+                    <form>
+                        <input type='button' name='print' value="Print Page" onClick={()=>{window.print()}}/>
+                    </form>
 
                 </div>
                 {/* {this.setCurrVidTime(180)} */}

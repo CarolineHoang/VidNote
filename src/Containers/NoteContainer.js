@@ -174,13 +174,20 @@ export default class NoteContainer extends React.Component{
         // let { id, itemss } =  this.props;
         // console.log("ITEMMMMS", itemss)
         // console.log("ITEMMMMS2", this.props)
-        var items = this.props.itemList
-        console.log("ITEMMMMS", items.notes)
+        var notes = this.props.itemList.notes
+        console.log("ITEMMMMS", notes)
+        // var videoLink = this.props.itemList.category == 'web' ? 
+        //                         <a className="noteSectionVideoTitle" src={this.props.itemList.url} >{this.props.itemList.url}</a>      : <div className="noteSectionVideoTitle">Uploaded File</div>
+        // var videoLink = this.props.itemList.category == 'web' ? this.props.itemList.url     : <div className="noteSectionVideoTitle">Uploaded File</div>
         return(
                 <div>
+                    {/* <div className="noteSectionVideoTitle">{this.state.currPlayingVid != {} && (this.state.currPlayingVid.name != null ? this.state.currPlayingVid.name : 'Untitled Video') }</div> */}
+                    <div className="noteSectionVideoTitle">{this.props.itemList.videoName != null ? this.props.itemList.videoName : 'Untitled Video'}</div>
+                    {/* <div className="noteSectionVideoTitle">{this.props.itemList.category == 'web' ? this.props.itemList.url: 'Uploaded File'}</div> */}
+                    {this.props.itemList.category == 'web' ? <div className="noteSectionVideoLink">Watch Now: <a href={this.props.itemList.url}>{this.props.itemList.url}</a></div>  : <div className="noteSectionVideoLink">Uploaded File</div>}
                     {this.state.index}
                     {/* this must be a arrow function in order to bind the this so that we can use state in the map function  */}
-                  <ul>{items.notes.map((item, i) => {
+                  <ul>{notes.map((item, i) => {
                     //   if (i == this.state.index){}
                       if (i == this.state.index){
                         return (
