@@ -229,6 +229,7 @@ export default class PageContainer extends React.Component{
         this.addToPlaylist = this.addToPlaylist.bind(this);
         // this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.acceptSpecialSymbol = this.acceptSpecialSymbol.bind(this);
         // this.resetNoteState = this.resetNoteState.bind(this);
 
     }
@@ -573,6 +574,19 @@ export default class PageContainer extends React.Component{
 
     }
     // generateUrlForPrint
+
+    acceptSpecialSymbol(e, stateVal ){
+
+        if (e.keyCode == 9){
+            e.preventDefault(); //prevent tab from focusing the next dom object
+
+        // this.setState({[stateVal]: e.target.value},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
+            this.setState({[stateVal]: this.state[stateVal]+ String.fromCharCode(9)},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
+
+            
+        }
+
+    }
       
     render() {
         const videoJsOptions = {
@@ -746,7 +760,7 @@ export default class PageContainer extends React.Component{
                     {/* <textarea onChange={this.handleNoteInputChange} className='NoteInputField' ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button> */}
 
                     {/* by including the state variable as a value for the input/textarea field, we make sure it clears out if we set the state variable to be empty because then on the rerender, it repopulates as a empty */}
-                    <textarea onChange={(e, note) => this.handleInputChange(e, 'newNote')} className='NoteInputField' value={this.state.newNote} ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
+                    <textarea onChange={(e, note) => this.handleInputChange(e, 'newNote')} onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, 'newNote')} className='NoteInputField' value={this.state.newNote} ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
                     <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  ></input> <button onClick={(e , type) => this.addToPlaylist(e , 'web')} type='submit' >Add to Playlist</button>
                 
                     {/* using && conditional logic makes sure that the parent has the ref before we try to render the playlist because the playlist doesn't seem to rerender when the videoRef is updated */}

@@ -169,18 +169,8 @@
     /* width: 100%; */
     width: calc(100% -  (1px * 2 ));
     border: 1px solid black;
-    /* word-wrap: normal; */
-    word-wrap: break-word;
-    /*  <pre> tag defines preformatted text. 
-        It is used to display code blocks since it preserves spaces and line breaks.
-        If the line is large, then the <pre> tag won’t wrap it by default. 
-        To wrap it, we need to use CSS.
-        Source: https://www.tutorialspoint.com/How-do-I-wrap-text-in-a-pre-tag-in-HTML    */
-    white-space: pre-wrap;
-    white-space: -moz-pre-wrap;
-    white-space: -pre-wrap;
-    white-space: -o-pre-wrap;
-    text-align: start;
+
+    /* text-align: start; */
     display: flex;
     flex-direction: column;
   }
@@ -259,4 +249,25 @@
     font-size: 1.2rem;
     padding: .5rem 1.5rem;
     overflow-y: visible;
+  }
+
+  .noteMessage{
+    /* word-wrap: normal; */
+    word-wrap: break-word;
+    /*  <pre> tag defines preformatted text. 
+        It is used to display code blocks since it preserves spaces and line breaks.
+        If the line is large, then the <pre> tag won’t wrap it by default. 
+        To wrap it, we need to use CSS.
+        Source: https://www.tutorialspoint.com/How-do-I-wrap-text-in-a-pre-tag-in-HTML    */
+    width: calc(100% - (1.5rem * 2) - (1px * 2 ));
+    margin: 0;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    flex: 1;
+    text-align: start;
+    padding: .5rem 1.5rem;
+
+    
   }

@@ -153,6 +153,7 @@ export default class Note extends React.Component{
         // this.handleShow = this.handleShow.bind(this);
         this.handleToggleState = this.handleToggleState.bind(this);
         this.handleSave = this.handleSave.bind(this);
+        this.acceptSpecialSymbol = this.acceptSpecialSymbol.bind(this);
     }
     componentDidUpdate(nextProps){
         if (nextProps.videoId != this.props.videoId){
@@ -207,6 +208,18 @@ export default class Note extends React.Component{
         this.setState({[stateVal]: e.target.value},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
 
     }
+    acceptSpecialSymbol(e, stateVal ){
+
+        if (e.keyCode == 9){
+            e.preventDefault(); //prevent tab from focusing the next dom object
+
+        // this.setState({[stateVal]: e.target.value},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
+            this.setState({[stateVal]: this.state[stateVal]+ String.fromCharCode(9)},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
+
+            
+        }
+
+    }
       
     render() {
         var noteInfo = this.props.note
@@ -214,7 +227,7 @@ export default class Note extends React.Component{
        
         return(
                 // <div className='ListItem' >
-                    <pre ref={this.props._ref} className={'ListItem '+ this.props.additionalClasses} >
+                    <div ref={this.props._ref} className={'ListItem '+ this.props.additionalClasses} >
                         <div onClick={() => this.props.setCurrVidTime(ts) } className="noteTitleContainer" >
                             <div className= "timestamp" >{ts}</div>
                             &nbsp;|&nbsp;
@@ -224,18 +237,26 @@ export default class Note extends React.Component{
                             <br/>
                         </div>
                         {/* <textarea disabled={this.state.textarea_disabled} onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} value={this.state.textareaValue} className="noteContent"></textarea> */}
-                        <span hidden={!this.state.textarea_disabled} >{noteInfo.text}</span> 
-                        <textarea hidden={this.state.textarea_disabled} onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} value={this.state.textareaValue} className="noteContent"></textarea>
+                        <pre hidden={!this.state.textarea_disabled} className="noteMessage" >{noteInfo.text}</pre> 
+                        <textarea hidden={this.state.textarea_disabled} onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, 'textareaValue')} value={this.state.textareaValue} className="noteContent"></textarea>
                         
 
                         {/* {noteInfo.text}<br/>{ts} */}
                         <button onClick={( e, state ) => this.handleToggleState( e, 'editing')}>Edit</button>
                         <button onClick={( e, state ) => this.handleToggleState( e, 'textarea_disabled')}>Toggle TextArea</button>
                         <button hidden={this.state.textarea_disabled} onClick={this.handleSave}>Save</button>
+                        {/* <button onClick={( e, state ) => this.handleToggleState( e, 'show ')}>Toggle TextArea</button> */}
+
+                        <select>
+                            <option value="grapefruit">Grapefruit</option>
+                            <option value="lime">Lime</option>
+                            <option selected value="coconut">Coconut</option>
+                            <option value="mango">Mango</option>
+                        </select>
 
                         
 
-                    </pre>
+                    </div>
                   
                 // </div> setCurrentTime(seconds)
 
