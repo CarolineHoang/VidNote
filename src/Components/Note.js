@@ -226,7 +226,7 @@ export default class Note extends React.Component{
         var ts = Math.round((noteInfo.startTime + Number.EPSILON) * 100) / 100
        
         return(
-                // <div className='ListItem' >
+               
                     <div ref={this.props._ref} className={'ListItem '+ this.props.additionalClasses} >
                         <div onClick={() => this.props.setCurrVidTime(ts) } className="noteTitleContainer" >
                             <div className= "timestamp" >{ts}</div>
@@ -237,12 +237,17 @@ export default class Note extends React.Component{
                             <br/>
                         </div>
                         {/* <textarea disabled={this.state.textarea_disabled} onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} value={this.state.textareaValue} className="noteContent"></textarea> */}
-                        <pre hidden={!this.state.textarea_disabled} className="noteMessage" >{noteInfo.text}</pre> 
-                        <textarea hidden={this.state.textarea_disabled} onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, 'textareaValue')} value={this.state.textareaValue} className="noteContent"></textarea>
+                        <pre hidden={!this.state.textarea_disabled} className="noteMsgDisplay" >{noteInfo.text}</pre> 
+                        {/* <div hidden={this.state.textarea_disabled} className= {!this.state.textarea_disabled ? "noteMsgEditorContainer" : ''}> test</div> */}
                         
-
+                        {/* the className must be conditional because display flex undos this hidden attribute */}
+                        <div hidden={this.state.textarea_disabled} className= {!this.state.textarea_disabled ? "noteMsgEditorContainer" : ''}>
+                            <textarea onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, 'textareaValue')} value={this.state.textareaValue} className="noteMsgEditor"></textarea>
+                        </div>
+                        
+                
                         {/* {noteInfo.text}<br/>{ts} */}
-                        <button onClick={( e, state ) => this.handleToggleState( e, 'editing')}>Edit</button>
+                        {/* <button onClick={( e, state ) => this.handleToggleState( e, 'editing')}>Edit</button> */}
                         <button onClick={( e, state ) => this.handleToggleState( e, 'textarea_disabled')}>Toggle TextArea</button>
                         <button hidden={this.state.textarea_disabled} onClick={this.handleSave}>Save</button>
                         {/* <button onClick={( e, state ) => this.handleToggleState( e, 'show ')}>Toggle TextArea</button> */}
@@ -258,7 +263,7 @@ export default class Note extends React.Component{
 
                     </div>
                   
-                // </div> setCurrentTime(seconds)
+
 
         
         );
