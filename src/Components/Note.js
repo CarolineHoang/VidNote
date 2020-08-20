@@ -146,9 +146,10 @@ export default class Note extends React.Component{
             editing: false,
             textarea_disabled: true,
             input_disabled: true,
-            textareaValue: this.props.note.text,
-            inputValue: this.props.note.noteTitle != null ? this.props.note.noteTitle : this.props.note.text ,
-            noteSectionVideoId : this.props.videoId
+            text: this.props.note.text,
+            noteTitle: this.props.note.noteTitle != null ? this.props.note.noteTitle : this.props.note.text ,
+            noteSectionVideoId : this.props.videoId,
+            lastEnabled:  { state : null, saved: true } 
             
             // index: 0
         }
@@ -156,6 +157,7 @@ export default class Note extends React.Component{
         this.handleToggleState = this.handleToggleState.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.acceptSpecialSymbol = this.acceptSpecialSymbol.bind(this);
+        this.convertDisableStatusToValue = this.convertDisableStatusToValue.bind(this);
     }
     componentDidUpdate(nextProps){
         if (nextProps.videoId != this.props.videoId){
@@ -163,8 +165,11 @@ export default class Note extends React.Component{
             console.log("updating...")
         }
         else{
-            console.log("not updating...")
+            // debugger;
+            console.log("not updating...", )
         }
+        
+
     }
     // componentDidMount(){
 
@@ -182,23 +187,73 @@ export default class Note extends React.Component{
         this.setState({index: i})
       }
 
-    handleToggleState(e, state){
+    handleToggleState(e, stateVal){
+        // var value = '' 
+       
         this.setState(
             {
-            [state]: !this.state[state]
+            [stateVal]: !this.state[stateVal],
+            // lastEnabled: this.state[stateVal] ? { state : stateVal, saved: true } : { state : stateVal, saved: false } 
+            lastEnabled: { state : stateVal, saved: false } 
             }, 
             ()=>{
-                console.log("Toggling "+state, this.state[state])
+                console.log("Toggling ", stateVal, this.state[stateVal])
             }
         )
     }
-    handleSave(){
+    convertDisableStatusToValue(dType){
+        
+        switch( dType ){
+            case 'textarea_disabled':
+                return 'text'
+                // debugger;
+                // break;
+            case 'input_disabled':
+                return 'noteTitle'
+                // break;
+            default:
+                break;
+        }
+    }
+    handleSave( e, overrideObj ){
+        //note, lastEnabledData is a object with properties 'state' and 'saved' in the same fashion as the 
+
+        var lastEnabled = this.state.lastEnabled
+
+
         // this.props.changeNote("changing note")
-        this.setState({textarea_disabled: true},  ()=>{
-            console.log(`textarea_disabled: `, this.state.textarea_disabled)
-            this.props.changeNote(this.props.note, this.state.textareaValue , this.props.videoId )
+        console.log("saving....", lastEnabled, lastEnabled.state ,this.state[lastEnabled.state] , this.state.text)
+        var noteEditProperty =  this.convertDisableStatusToValue(lastEnabled.state)
+        // switch( stateVal ){
+        //     case 'text':
+        //         noteEditProperty = 'text'
+        //         var test = this.state[stateVal]
+        //         // debugger;
+        //         break;
+        //     case 'noteTitle':
+        //         noteEditProperty = 'noteTitle'
+        //         break;
+        //     default:
+        //         break;
+        // }
+        // debugger
+
+
+        // this.handleToggleState(e, lastEnabled.state)
+        this.setState({
+                            [lastEnabled.state]: !this.state[lastEnabled.state], 
+                            lastEnabled : {
+                                                state: this.state.lastEnabled.state, 
+                                                saved: true
+                                            } 
+                        },  ()=>{
+            console.log(`textarea_disabled: `, this.state[noteEditProperty], noteEditProperty )
+            this.props.changeNote(this.props.note, this.state[noteEditProperty] , this.props.videoId, noteEditProperty  )
 
         } )
+
+
+
         // this.setState({
         //     textarea_disabled: true
         // })
@@ -230,15 +285,16 @@ export default class Note extends React.Component{
         return(
                
                     <div ref={this.props._ref} className={'ListItem '+ this.props.additionalClasses} >
-                        <div onClick={() => this.props.setCurrVidTime(ts) } className="noteTitleContainer" title={this.state.inputValue}>
+                        <div onClick={() => this.props.setCurrVidTime(ts) } className="noteTitleContainer" title={this.state.noteTitle}>
                             <div hidden={!this.state.input_disabled} className= {this.state.input_disabled ? "seekText titleDiv" : ''}  >Go to:</div>
 
                             <div className= "timestamp titleDiv" >{ts}</div>
                             <div className="  titleDiv" >&nbsp;|&nbsp;</div>
-                            <input hidden={this.state.input_disabled} onChange={( e, state ) => this.handleInputChange( e, 'inputValue')} value={this.state.inputValue}  className= {!this.state.input_disabled ? "noteTitleEditor titleDiv"  : ''}   ></input>
-
+                            <input hidden={this.state.input_disabled} onChange={( e, state ) => this.handleInputChange( e, 'noteTitle')} value={this.state.noteTitle}  className= {!this.state.input_disabled ? "noteTitleEditor titleDiv"  : ''}   ></input>
+                            {/* {()=>{debugger}} */}
+                            
                             <div hidden ={!this.state.input_disabled} className= {this.state.input_disabled ? "noteTitleDisplay titleDiv"  : ''}  >
-                                {this.state.inputValue}
+                                {this.state.noteTitle}
                                 {/* {noteInfo.noteTitle != null ? noteInfo.noteTitle : noteInfo.text}  */}
                             </div> 
                             {/* <div className= "noteTitle titleDiv" >
@@ -246,21 +302,27 @@ export default class Note extends React.Component{
                             </div>  */}
                             <br/>
                         </div>
-                        {/* <textarea disabled={this.state.textarea_disabled} onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} value={this.state.textareaValue} className="noteContent"></textarea> */}
+                        {/* <textarea disabled={this.state.textarea_disabled} onChange={( e, state ) => this.handleInputChange( e, 'text')} value={this.state.text} className="noteContent"></textarea> */}
                         <pre hidden={!this.state.textarea_disabled} className="noteMsgDisplay" >{noteInfo.text}</pre> 
                         {/* <div hidden={this.state.textarea_disabled} className= {!this.state.textarea_disabled ? "noteMsgEditorContainer" : ''}> test</div> */}
                         
                         {/* the className must be conditional because display flex undos this hidden attribute */}
-                        <div hidden={this.state.textarea_disabled} className= {!this.state.textarea_disabled ? "noteMsgEditorContainer" : ''}>
-                            <textarea onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, 'textareaValue')} value={this.state.textareaValue} className="noteMsgEditor"></textarea>
+                        <div hidden={this.state.textarea_disabled } className= {!this.state.textarea_disabled ? "noteMsgEditorContainer" : ''}>
+                            <textarea onChange={( e, state ) => this.handleInputChange( e, 'text')} onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, 'text')} value={this.state.text} className="noteMsgEditor"></textarea>
                         </div>
                         
                 
                         {/* {noteInfo.text}<br/>{ts} */}
                         {/* <button onClick={( e, state ) => this.handleToggleState( e, 'editing')}>Edit</button> */}
-                        <button onClick={( e, state ) => this.handleToggleState( e, 'textarea_disabled')}>Toggle TextArea</button>
+
+                        {/* <button onClick={( e, state ) => this.handleToggleState( e, 'textarea_disabled')}>Toggle TextArea</button>
                         <button onClick={( e, state ) => this.handleToggleState( e, 'input_disabled')}>Toggle Title</button>
-                        <button hidden={this.state.textarea_disabled} onClick={this.handleSave}>Save</button>
+                        <button hidden={this.state.lastEnabled.state == null || this.state.lastEnabled.saved} onClick={(e, state)=>this.handleSave(e, this.state.lastEnabled )}>Save</button> */}
+                        <button hidden={!this.state.lastEnabled.saved} onClick={( e, state ) => this.handleToggleState( e, 'textarea_disabled')}>Toggle TextArea</button>
+                        <button hidden={!this.state.lastEnabled.saved} onClick={( e, state ) => this.handleToggleState( e, 'input_disabled')}>Toggle Title</button>
+                        <button hidden={this.state.lastEnabled.state == null || this.state.lastEnabled.saved} onClick={(e, state)=>this.handleSave(e, this.state.lastEnabled )}>Save</button>
+
+                        
                         {/* <button onClick={( e, state ) => this.handleToggleState( e, 'show ')}>Toggle TextArea</button> */}
 
                         <select>
