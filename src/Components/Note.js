@@ -26,117 +26,7 @@ import YoutubeVid from 'videojs-youtube';
 // import "https://vjs.zencdn.net/7.8.4/video.js";
 
 
-// this is how to make a file download 
-const testFile = test;
-//react state values:
-const currentNoteIndex =0;  // this is the index of the note that is currently the note that the video is on to color as the "current one"
-                            // to start out, and be easy, we reset this to 0 and start the video from the start every time we change video in the playlist
-const videoTime =0; //this value should update every half second and is the time that the user saves as the note time but rounded to the next second
-                    //on each update, we check if the time is greater than the timestamp on the above indexed note
-                    //if it's more and the index is not the max length of the note list minus 1, then we check the nextones through the list and stop at the next one before the one that is more than this number. If we get to the end, then the last one is the current note.
-                    //if the note happens to have an end time  (and we cannot set this time to overlap with the next one's start time) then we make sure that the current time is less than that end time
-
-
-
-const Meta = {
-    // fileNames: [],  //this will be an array in the order of the playlist
-    //                 // every Youtube video will have the 
-    maxVideoId: 1,
-    maxNoteId:  3,
-    noteData:[
-        {
-            videoId: 0,
-            type: 'web', //  web = youtube, vimero. etc, local = files
-            source: 'YouTube',
-            url: '',
-            fileName: null,
-            notes: 
-            [   
-                {
-                    noteId: 0,
-                    startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
-                    endTime: null,
-                    text: "This is a test message1",
-                    bookmarked: false,
-                    drawn: false,
-                    images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-                },
-                {   
-                    noteId: 1,
-                    startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
-                    endTime: null,
-                    text: "This is a test message2",
-                    bookmarked: false,
-                    drawn: false,
-                    images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-                }
-            ]
-            
-    
-        },
-        {
-            videoId: 1,
-            type: 'local', //  web = youtube, vimero. etc, local = files
-            source: null,
-            url: null,
-            fileName: "testVid.mp4",
-            notes: 
-            [   
-                {
-                    noteId: 2,
-                    startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
-                    endTime: null,
-                    text: "This is a test message1",
-                    bookmarked: false,
-                    drawn: false,
-                    images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-                },
-                {   
-                    noteId: 3,
-                    startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
-                    endTime: null,
-                    text: "This is a test message2",
-                    bookmarked: false,
-                    drawn: false,
-                    images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-                }
-            ]
-    
-        }
-
-    ]
-    
-}
-
-let zip = new JSZip();
-var Img = zip.folder("Images");
-var Videos = zip.folder("Videos");
-var Originals = Videos.folder("Originals");
-var Drawn = Videos.folder("Drawn");
-var Data= zip.folder("Data");
-var MetaFiles= zip.folder("Meta");
-
-MetaFiles.file("meta.txt", JSON.stringify(Meta)  );
-// var Meta = zip.folder("meta");
-
-
-
-// var img = zip.folder("images");
-// zip.file("idlist.txt", `PMID:29651880\r\nPMID:29303721`);
-// zip.file("idlist2.txt", `PMID:29651880\r\nPMID:29303721`);
-// img.file("idlist2.txt", `PMID:29651880\r\nPMID:29303721`);
-
-const downloadNotes = () =>{
-    zip.generateAsync({type: "blob"}).then(function(content) {
-        const filename = 'VidNotes '+Date.now()+'.zip'
-        FileSaver.saveAs(content, filename);
-    }); 
-}
-
-var items = [];
-for (var i = 0; i < 100; i++) {
-  items.push(i+'d');
-}
+// function round
 
 export default class Note extends React.Component{
 
@@ -159,6 +49,7 @@ export default class Note extends React.Component{
         this.acceptSpecialSymbol = this.acceptSpecialSymbol.bind(this);
         this.convertDisableStatusToValue = this.convertDisableStatusToValue.bind(this);
         this.updateTimeStamp = this.updateTimeStamp.bind(this);
+        this.formatTimeStamp = this.formatTimeStamp.bind(this);
     }
     componentDidUpdate(nextProps){
         //if the section rendered is different from the last (we changed videos or we're loading a different set of notes) then update all disabled states to close them all
@@ -177,7 +68,6 @@ export default class Note extends React.Component{
 
     }
     // componentDidMount(){
-
     // }
     handleShow(i) {
         console.log(this.refs, i)
@@ -299,10 +189,55 @@ export default class Note extends React.Component{
     updateTimeStamp(e, getCurrVidTime){
         this.handleSave( e, {value: "startTime" , data: getCurrVidTime() }) 
     }
+
+    formatTimeStamp(totalSecs){
+        // var tsecs = parseInt(totalSecs)
+        var hr = 0
+        var min = 0 
+        var sec = 0
+        if (totalSecs < 60){ //if it's under a minute
+            // sec = Math.round((totalSecs + Number.EPSILON) * 100) / 100
+            sec = Math.trunc(totalSecs)
+    // return <div>0:{sec < 10 ? '0' : ''}{sec}iiii{totalSecs}{totalSecs<60 ? typeof totalSecs : typeof totalSecs}</div>
+    return <div>0:{sec < 10 ? '0' : ''}{sec}</div>
+        }
+        else if (totalSecs < 60*60){ //if it's under an hour
+            min = Math.trunc(totalSecs/60)
+            sec = Math.trunc(totalSecs - (min*60))
+            return <div>{min}:{sec < 10 ? '0' : ''}{sec}</div>
+        }
+        else if (totalSecs < 60*60*24){//if it's under a day
+            hr =  Math.trunc(totalSecs/60/60)
+            min = Math.trunc((totalSecs - (hr*60*60))/60)
+            sec = Math.trunc(totalSecs - (hr*60*60) - (min*60))
+            return <div>{hr}:{min < 10 ? '0' : ''}{min}:{sec < 10 ? '0' : ''}{sec}</div>
+        }
+        else{//if it's been a day and no video should be that long
+            return <div>Error: MAX_VIDEO_LENGTH EXCEEDED</div>
+        }
+    }
+    formatUpdate(sec){
+        if (sec < 60){ //if it's under a minute
+
+        }
+        else if (sec < 60*60){ //if it's under an hour
+
+        }
+        else if (sec < 60*60*24){//if it's under a day
+
+        }
+        else{//if it's been a day
+
+        }
+        return
+    }
       
     render() {
         var noteInfo = this.props.note
-        var ts = Math.round((noteInfo.startTime + Number.EPSILON) * 100) / 100
+        var formattedTS = this.formatTimeStamp(noteInfo.startTime)
+
+
+        // var ts = Math.round((noteInfo.startTime + Number.EPSILON) * 100) / 100
 
         // const date = new Date('2010-08-05')
         const date = noteInfo.lastUpdated
@@ -315,10 +250,10 @@ export default class Note extends React.Component{
         return(
                
                     <div ref={this.props._ref} className={'ListItem '+ this.props.additionalClasses} >
-                        <div onClick={() => this.props.setCurrVidTime(ts) } className="noteTitleContainer" title={this.state.noteTitle}>
+                        <div onClick={() => this.props.setCurrVidTime(noteInfo.startTime) } className="noteTitleContainer" title={this.state.noteTitle}>
                             <div hidden={!this.state.noteTitle_disabled} className= {this.state.noteTitle_disabled ? "seekText titleDiv" : ''}  >Go to:</div>
 
-                            <div className= "timestamp titleDiv" >{ts}</div>
+                            <div className= "timestamp titleDiv" >{formattedTS}</div>
                             <div className="  titleDiv" >&nbsp;|&nbsp;</div>
                             <input  hidden={this.state.noteTitle_disabled} 
                                     onChange={( e, state ) => this.handleInputChange( e, 'noteTitle')} 
