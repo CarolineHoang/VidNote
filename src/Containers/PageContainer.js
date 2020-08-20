@@ -331,6 +331,14 @@ const downloadNotes = () =>{
     }); 
 }
 
+
+const downloadProject = () =>{
+    zip.generateAsync({type: "blob"}).then(function(content) {
+        const filename = 'VidNotes '+Date.now()+'.zip'
+        FileSaver.saveAs(content, filename);
+    }); 
+}
+
 var items = [];
 for (var i = 0; i < 100; i++) {
   items.push(i+'d');
@@ -350,7 +358,8 @@ export default class PageContainer extends React.Component{
             info: 'asdf',
             uploadedVideos: [],
             currPlayingVid : {},
-            currPlayingVidId : 0
+            currPlayingVidId : 0,
+            fileContents: 'blah blah'
             // current
         }
         this.setVideoRef = this.setVideoRef.bind(this);
@@ -369,16 +378,11 @@ export default class PageContainer extends React.Component{
         this.findNewNoteIdx = this.findNewNoteIdx.bind(this)
         this.recursiveBinarySearch = this.recursiveBinarySearch.bind(this)
         this.YouTubeGetID = this.YouTubeGetID.bind(this);
+        this.loadProject = this.loadProject.bind(this);
 
         // this.resetNoteState = this.resetNoteState.bind(this);
 
     }
-    // shouldComponentUpdate(){
-    //     return false
-    // }
-    // resetNoteState(reset = false){
-    //     return reset
-    // }
     setVideoRef(ref){
         console.log("setting the ref")
         // ref.on('playlistchange', function() {
@@ -441,9 +445,6 @@ export default class PageContainer extends React.Component{
 
     addNote(e){
         console.log(this.state.newNote)
-    //     maxVideoId: 1,
-    // maxNoteId:  3,
-        // this.state
         var metaCopy = this.state.meta;
         var currentTime  = this.getCurrVidTime()
         var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
@@ -473,20 +474,6 @@ export default class PageContainer extends React.Component{
             
             
         );
-        // metaCopy.noteData[this.state.currPlayingVidId].notes.push(
-        //     {   
-        //         noteId: metaCopy.maxNoteId+1,
-        //         startTime: currentTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
-        //         endTime: null,
-        //         noteTitle: null,
-        //         text: this.state.newNote,
-        //         bookmarked: false,
-        //         created : Date.now(),
-        //         lastUpdated : Date.now(),
-        //         drawn: false,
-        //         images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-        //     }
-        // )
         metaCopy.maxNoteId = metaCopy.maxNoteId+1;
 
 
@@ -497,20 +484,7 @@ export default class PageContainer extends React.Component{
             info: this.state.newNote
         }, ()=>{console.log(this.state.meta)} )
 
-        // this.state.meta.noteData[0].notes.push(
-        //     {   
-        //         noteId: Meta.maxNoteId+1,
-        //         startTime: Date(), //this should not be a Date value but instead a count of miliseconds from the start of the video
-        //         endTime: null,
-        //         text: this.state.newNote,
-        //         bookmarked: false,
-        //         drawn: false,
-        //         images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-        //     }
-        // )
-        // Meta.maxNoteId = Meta.maxNoteId+1;
 
-        // console.log(e.target)
     }
     changeNote(noteInfo, newdata , noteIdx, dataToUpdate, videoId ){
         console.log(noteInfo, newdata, videoId )
@@ -547,36 +521,7 @@ export default class PageContainer extends React.Component{
     }
 
 
-// {
-//             videoId: 0,
-//             category: 'web', //  web = youtube, vimero. etc, local = files
-//             type: 'video/youtube',
-//             url: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
-//             fileName: null,
-//             notes: 
-//             [   
-//                 {
-//                     noteId: 0,
-//                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
-//                     endTime: null,
-//                     text: "This is a test message111",
-//                     bookmarked: false,
-//                     drawn: false,
-//                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-//                 },
-//                 {   
-//                     noteId: 1,
-//                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
-//                     endTime: null,
-//                     text: "This is a test message222",
-//                     bookmarked: false,
-//                     drawn: false,
-//                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-//                 }
-//             ]
-            
-    
-//         },
+
 
     addToPlaylist(e, category, fileTarget ){
 
@@ -644,25 +589,6 @@ export default class PageContainer extends React.Component{
                     fileObj : fileObj,
                     notes: []
                 }
-
-                // {
-                //     videoId: parseInt(metaCopy.videoId)+1,
-                //     category: 'web', //  web = youtube, vimero. etc, local = files
-                //     type: 'video/youtube',
-                //     url: this.state.newVideoLink,
-                //     fileName: null,
-                //     notes: []
-                // }
-
-                // {   
-                //     noteId: Meta.maxNoteId+1,
-                //     startTime: currentTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
-                //     endTime: null,
-                //     text: this.state.newNote,
-                //     bookmarked: false,
-                //     drawn: false,
-                //     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-                // }
             )
             console.log("meta before1: ", this.state.meta , metaCopy.maxVideoId)
 
@@ -690,13 +616,7 @@ export default class PageContainer extends React.Component{
         //make sure that trickles down to the individual playlist that we see (make sure it's inhertiing from state)
 
     }
-    // handleNoteInputChange(e){
-    //     this.setState({newNote: e.target.value})
-    // }
 
-    // handlePlaylistInputChange(){
-
-    // }
     
     uploadFile(e){
         console.log("heeeeeelllllooo")
@@ -719,29 +639,6 @@ export default class PageContainer extends React.Component{
           let arrayBuffer = e.target.files[0].arrayBuffer();
 
         this.addToPlaylist(e , 'local' , e.target )
-        //   var currentVideos = this.state.uploadedVideos
-        //   currentVideos.push(e.target.files[0])
-        //   this.setState({ uploadedVideos: currentVideos }, this.addToPlaylist(e , 'local' , e.target ))
-
-          
-        //   console.log(e.target.files)
-
-        //   URL.createObjectURL(uploadedFiles[0])
-          
-        //   let ctx = this.$store.state.mixer.master.ctx;
-        //   let vue = this;
-          
-          // decode array buffer
-        //   arrayBuffer.then(function(buffer) {
-        //     ctx.decodeAudioData(buffer, function(decodedData) {
-        //       // add sound to store
-        //       vue.$store.dispatch('addSound', {
-        //         index: rowNum,
-        //         sound: decodedData,
-        //         fileName: fileName
-        //       });
-        //     });
-        //   });
         }
     }
 
@@ -809,82 +706,99 @@ export default class PageContainer extends React.Component{
 
     }
 
-    // binarySearch( array, comparator){
-  
-           
-    //     // Driver code 
-    //     let arr = [1, 3, 5, 7, 8, 9]; 
-    //     let x = 5; 
-           
-    //     // var 
-    //     if (recursiveFunction(arr, x, 0, arr.length-1)) 
-    //         document.write("Element found!<br>"); 
-    //     else document.write("Element not found!<br>"); 
-           
-    //     // x = 6; 
-           
-    //     // if (recursiveFunction(arr, x, 0, arr.length-1)) 
-    //     //     document.write("Element found!<br>"); 
-    //     // else document.write("Element not found!<br>"); 
- 
-    // }
-                        recursiveBinarySearch(arr, target,  start, end , arrLength) { 
-                        
-                            // Base Condition 
-                            if (start > end){ return end
-                                // if  (Math.abs(arr[start].startTime-target)<Math.abs(arr[end].startTime-target)) {
-                                //     return start
-                                // }
-                                // else{
-                                //     return end
-                                // }
-                            }; 
-                            
-                            // Find the middle index 
-                            let mid=Math.floor((start + end)/2); 
-                        
-                            // Compare mid with given key x 
-                            if( mid < arrLength-1 ){
-                                if ( arr[mid].startTime <= target && arr[mid+1].startTime > target ){
-                                    return mid
-                                }
-                            }
-                            else if ( mid == arrLength-1 ){
-                                if ( arr[mid].startTime >= target  ){
-                                    return mid
-                                }
-                            }
-                            // if (arr[mid]===comparator) return true; 
-                                
-                            // If element at mid is greater than x, 
-                            // search in the left half of mid 
-                            if(arr[mid].startTime > target)  {
-                                return this.recursiveBinarySearch(arr, target, start, mid-1, arrLength); 
-                            } 
-                            else{
-                                // If element at mid is smaller than x, 
-                                // search in the right half of mid 
-                                return this.recursiveBinarySearch(arr, target, mid+1, end, arrLength); 
-                            }
-                        
-                                
-                                
-                        } 
-    // isClosestTimeCheck( arr, mid , target , start, end , arrLength ){
-    //     if( idx < arrLength-1 ){
-    //         console.log("time comparisons: ", arr[idx].startTime,  currentTime)
-    //         if ( notesArr[idx].startTime <= currentTime && notesArr[idx+1].startTime > currentTime ){
-    //             return idx
-    //         }
-    //     }
-    // }
 
+    recursiveBinarySearch(arr, target,  start, end , arrLength) { 
+    
+        // Base Condition 
+        if (start > end){ return end
+            // if  (Math.abs(arr[start].startTime-target)<Math.abs(arr[end].startTime-target)) {
+            //     return start
+            // }
+            // else{
+            //     return end
+            // }
+        }; 
+        
+        // Find the middle index 
+        let mid=Math.floor((start + end)/2); 
+    
+        // Compare mid with given key x 
+        if( mid < arrLength-1 ){
+            if ( arr[mid].startTime <= target && arr[mid+1].startTime > target ){
+                return mid
+            }
+        }
+        else if ( mid == arrLength-1 ){
+            if ( arr[mid].startTime >= target  ){
+                return mid
+            }
+        }
+        // if (arr[mid]===comparator) return true; 
+            
+        // If element at mid is greater than x, 
+        // search in the left half of mid 
+        if(arr[mid].startTime > target)  {
+            return this.recursiveBinarySearch(arr, target, start, mid-1, arrLength); 
+        } 
+        else{
+            // If element at mid is smaller than x, 
+            // search in the right half of mid 
+            return this.recursiveBinarySearch(arr, target, mid+1, end, arrLength); 
+        }
+    
+            
+            
+    } 
+  
 
     YouTubeGetID(url){
         url = url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
         return undefined !== url[2]?url[2].split(/[^0-9a-z_\-]/i)[0]:url[0];
     }
 
+    loadProject(e, val ){
+        var fileObj = e.target.files[0]
+            // src = this.state.newVideoLink
+
+        var src = URL.createObjectURL(e.target.files[0])
+
+        console.log ("PROJECT UPLOAD: ", e.target.files , fileObj, typeof fileObj, src, typeof src )
+        var fr=new FileReader();
+        // fr.onload=function(){ 
+        //     document.getElementById('output') 
+        //             .textContent=fr.result; 
+        
+        
+        // } 
+        fr.onloadend=()=>{ 
+            // document.getElementById('output') 
+            //         .textContent=fr.result; 
+            this.setState({
+                // currPlayingVid : ref.playlist()[ref.playlist.currentIndex()],
+                fileContents: fr.result
+            },
+            ()=> {
+                    console.log("hiiii", this.state.currPlayingVid)
+                    // fr.readAsText(src);
+                }
+            )
+        } 
+
+        // fr.on('loadend', ()=> {
+        //     this.setState({
+        //         // currPlayingVid : ref.playlist()[ref.playlist.currentIndex()],
+        //         fileContents: fr.result
+        //     },
+        //     ()=> {
+        //             console.log("hiiii", this.state.currPlayingVid)
+        //             fr.readAsText(src);
+        //         }
+        //     )
+          
+        // });
+        // fr.readAsText(fileObj);
+        fr.readAsText(e.target.files[1]);
+    }
 
 
 
@@ -948,59 +862,9 @@ export default class PageContainer extends React.Component{
         )
        
 
-        // playlistJSON  = this.state.meta.noteData.reduce((videoJSON, i) => {
-        //     if (videoJSON.category === 'web'){
-        //         console.log("web index: ", i)
-        //         return({
-  
-        //             sources: [{
-        //                 src: videoJSON.url,
-        //                 type: videoJSON.type
-        //             }],
-        //             poster: 'http://media.w3.org/2010/05/sintel/poster.png'
-                
-                
-        //         })
-        //     }
-           
-              
-        // })
 
         console.log("playlistJSON:", playlistJSON)
-        // this.state.meta.noteData.forEach( videoJSON , i){
-        //     if (videoJSON.category === 'web'){
-        //         playlistJSON.push({
-  
-        //             sources: [{
-        //                 src: videoJSON.url,
-        //                 type: videoJSON.type
-        //             }],
-        //             poster: 'http://media.w3.org/2010/05/sintel/poster.png'
-                
-                
-        //         })
-        //     }
-           
-        // };
-        //   const playlistJSON = [{
-        //     // sources: [{
-        //     //   src: 'http://media.w3.org/2010/05/sintel/trailer.mp4',
-        //     //   type: 'video/mp4'
-        //     // }],
-        //     sources: [{
-        //         src: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
-        //         type: 'video/youtube'
-        //     }],
-        //     poster: 'http://media.w3.org/2010/05/sintel/poster.png' //this is the image that shows while it loads I think
-        //   }, 
-        //   {
-            
-        //     sources: [{
-        //         src: 'https://www.youtube.com/watch?v=voFRslp8d60&t=17s',
-        //         type: 'video/youtube'
-        //     }],
-        //     poster: 'http://media.w3.org/2010/05/sintel/poster.png'
-        //   }]
+    
         
         
        
@@ -1070,6 +934,17 @@ export default class PageContainer extends React.Component{
 
                     {/* <input onChange='upload' type='file' accept='.wav, audio/wav'> */}
                     <input  onChange={(e , type) => this.addToPlaylist(e , 'local')}  type='file' accept='.mp4, video/mp4'></input>
+
+                    {/* <div>Field Import:<input directory="" webkitdirectory="" mozdirectory="" type="file" /></div> */}
+                    <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} directory="" webkitdirectory="" mozdirectory="" type="file" /></div>
+                    <pre>{this.state.fileContents}</pre>
+
+                    {/* 
+                        React as of version 16 STILL has not fully accounte4d for directory imports.
+                        One person (bheptinh --- commented on Dec 18, 2018 ) from this github issue has revealed that it works for them if they add empty strings to the properties, however. 
+                        Source: https://github.com/facebook/react/issues/3468#issuecomment-448336672 
+                    */}
+                    {/* <input type="file" webkitdirectory mozdirectory /> */}
 
                 </div>
                 {/* <div>
