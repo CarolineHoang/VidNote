@@ -235,11 +235,12 @@ export default class Note extends React.Component{
 
                             <div className= "timestamp titleDiv" >{ts}</div>
                             <div className="  titleDiv" >&nbsp;|&nbsp;</div>
-                            <input disabled={this.state.input_disabled} onChange={( e, state ) => this.handleInputChange( e, 'inputValue')} value={this.state.inputValue} className="noteTitle titleDiv" title={this.state.inputValue} ></input>
+                            <input hidden={this.state.input_disabled} onChange={( e, state ) => this.handleInputChange( e, 'inputValue')} value={this.state.inputValue}  className= {!this.state.input_disabled ? "noteTitleEditor titleDiv"  : ''}   ></input>
 
-                            {/* <div hidden ={this.state.input_disabled} className= {this.state.input_disabled ? "seekText titleDiv" : ''} className= "noteTitle titleDiv" >
-                                {noteInfo.noteTitle != null ? noteInfo.noteTitle : noteInfo.text} 
-                            </div>  */}
+                            <div hidden ={!this.state.input_disabled} className= {this.state.input_disabled ? "noteTitleDisplay titleDiv"  : ''}  >
+                                {this.state.inputValue}
+                                {/* {noteInfo.noteTitle != null ? noteInfo.noteTitle : noteInfo.text}  */}
+                            </div> 
                             {/* <div className= "noteTitle titleDiv" >
                                 {noteInfo.noteTitle != null ? noteInfo.noteTitle : noteInfo.text} 
                             </div>  */}

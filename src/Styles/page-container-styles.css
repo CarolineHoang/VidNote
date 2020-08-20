@@ -225,11 +225,11 @@
       flex: row;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
+      /* cursor: pointer; */
 
 
   }
-  .noteTitleContainer .noteTitle{
+  .noteTitleContainer .noteTitleEditor{
     /* width: 80%; */
     flex: 1;
     /* width: fit-content; */
@@ -245,34 +245,26 @@
     font-size: inherit;
     color: inherit;
     font-family: inherit;
+    margin-right: 1rem;
 
   }
-  .noteTitleContainer .noteTitle:disabled{
+  .noteTitleContainer  .noteTitleDisplay{
     /* box-sizing: content-box; */
     display: inline-block;
     
 
-    width: min-content;
+    /* width: min-content; */
     max-width: 60%;
     white-space: nowrap;
     text-indent: 0%;
 
 
-    overflow: hidden; /*    Goal:   make it so that the title is like a plain div 
-                                    with ellipsis that is not scrollable in the disabled state
-                            Realization:    Overflow hidden will not do anything unless display is either 
-                                            inline-block or block and pointer-events are set to none          */
+    overflow: hidden; 
     text-overflow: ellipsis; /* elipsis needs overflow hidden to work */
-    pointer-events: none; /* IMPORTANT:  this tells the div not to pay attention if the user tries to scroll horizontally on the inpiut field.
-                                        The input field is different than the average field in that the overflow property will not simply crop the underlying text.
-                                        It will instead just cover it but the length underneath is the same and that text can be moved back and forth if you scroll.
-                                        Thus, you must do this to disable interacting with it at all.   
-                            Reference: https://stackoverflow.com/questions/10900210/overflow-hidden-and-input-text-scrolling-in-google-chrome 
-                            Note:   This reference warns against possible disadvantages. One, I discovered is the inability to highlight the text by character.
-                                    However, in this case, the input field in question only has this applied when it's disabled and only meant for viewing. So, I'm finding this to be mostly okay.                                          */
+  
     /* text-align: center; */
     /* vertical-align: middle; */
-    background-color: transparent;
+    background-color:transparent;
     border: none;
     font-size: inherit;
     color: inherit;
@@ -296,6 +288,9 @@
     /* vertical-align: middle; */
     position: relative;
 
+  }
+  .noteTitleContainer .timestamp{
+      margin-left: 1rem;
   }
   .noteTitleContainer .seekText{
     /* max-width: 70%; */
@@ -324,7 +319,7 @@
   }
   .noteTitleContainer:hover  .seekText{
     /* width: fit-content; */
-    width: 4rem;
+    width: 2.5rem;
 
     /* color: red; */
     opacity: 1;
