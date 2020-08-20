@@ -308,8 +308,14 @@ export default class PageContainer extends React.Component{
         // this.state
         var metaCopy = this.state.meta;
         var currentTime  = this.getCurrVidTime()
-
-        var index = this.findNewNoteIdx(currentTime)
+        var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
+        // if arrLength
+        var arrLength = notesArr.length
+        var index = 0
+        if (arrLength  > 0){
+            var index = this.findNewNoteIdx(currentTime, notesArr, arrLength)
+        }
+        
         console.log("currentNoteIndex: ", index)
         // metaCopy.noteData[0].notes.push(
         metaCopy.noteData[this.state.currPlayingVidId].notes.splice(index+1, 0, 
@@ -640,16 +646,22 @@ export default class PageContainer extends React.Component{
         }
         return notesArr.length-1
     }
-    findNewNoteIdx(ct, videoId){//binary search is probably the best bet here but we will start with linear
+    findNewNoteIdx(ct, arr, arrLength, videoId){//binary search is probably the best bet here but we will start with linear
         var currentTime = ct
-        var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
-        if (notesArr.length == 0){
-            return -1 //error: there are no notes
+        // var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
+        var notesArr = arr
+        if (arrLength== 0){
+            return -2 //error: there are no notes
         }
-        if (notesArr.length == 1){
-            return 0
+        if (arrLength == 1){
+            if (notesArr[0].startTime < currentTime){
+                return 0
+            }
+            else{
+                return -1 //the program adds 1 to the value so this will add the note at index 0
+            }
         }
-        return this.recursiveBinarySearch(notesArr, currentTime, 0, notesArr.length-1, notesArr.length-1)
+        return this.recursiveBinarySearch(notesArr, currentTime, 0, arrLength-1, arrLength)
 
     }
 
