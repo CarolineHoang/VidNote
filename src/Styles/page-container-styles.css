@@ -210,41 +210,132 @@
     /* all whitespace preserved */
   }
 
-
+  .titleDiv{
+      padding: .1rem;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+  }
   .noteTitleContainer{
       color: rgb(87, 178, 206);
       margin: .5rem 0 1rem 0;
+      /* transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 3s; */
+      transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 1s;
+      display: flex;
+      flex: row;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+
   }
   .noteTitleContainer .noteTitle{
-    max-width: 60%;
+    /* width: 80%; */
+    flex: 1;
+    /* width: fit-content; */
     /* max-width: 20vw;  */
     /* I will make this explicit for now so that the div doesn't stretch too large. This must change when the note section gets a determined width */
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
     /* text-align: center; */
     display: inline-block;
-    vertical-align: middle;
+    /* vertical-align: middle; */
+    /* background-color: transparent; */
+    font-size: inherit;
+    color: inherit;
+    font-family: inherit;
 
   }
-  .noteTitleContainer .timestamp{
+  .noteTitleContainer .noteTitle:disabled{
+    /* box-sizing: content-box; */
+    display: inline-block;
+    
+
+    width: min-content;
+    max-width: 60%;
+    white-space: nowrap;
+    text-indent: 0%;
+
+
+    overflow: hidden; /*    Goal:   make it so that the title is like a plain div 
+                                    with ellipsis that is not scrollable in the disabled state
+                            Realization:    Overflow hidden will not do anything unless display is either 
+                                            inline-block or block and pointer-events are set to none          */
+    text-overflow: ellipsis; /* elipsis needs overflow hidden to work */
+    pointer-events: none; /* IMPORTANT:  this tells the div not to pay attention if the user tries to scroll horizontally on the inpiut field.
+                                        The input field is different than the average field in that the overflow property will not simply crop the underlying text.
+                                        It will instead just cover it but the length underneath is the same and that text can be moved back and forth if you scroll.
+                                        Thus, you must do this to disable interacting with it at all.   
+                            Reference: https://stackoverflow.com/questions/10900210/overflow-hidden-and-input-text-scrolling-in-google-chrome 
+                            Note:   This reference warns against possible disadvantages. One, I discovered is the inability to highlight the text by character.
+                                    However, in this case, the input field in question only has this applied when it's disabled and only meant for viewing. So, I'm finding this to be mostly okay.                                          */
+    /* text-align: center; */
+    /* vertical-align: middle; */
+    background-color: transparent;
+    border: none;
+    font-size: inherit;
+    color: inherit;
+    cursor: pointer; /* disabled by pointer-events: none; */
+    
+    /* appearance: none; */
+    /* overflow: hidden !important; */
+    /* line-height: 0px; */
+    /* border: none;
+    appearance: none;
+    text-rendering: inherit; */
+
+  }
+  /* .noteTitle:disabled { pointer-events:none; } */
+
+  .noteTitleContainer .timestamp, .noteTitleContainer .seekText{
     /* max-width: 70%; */
     width: fit-content;
     /* text-align: center; */
     display: inline-block;
-    vertical-align: middle;
+    /* vertical-align: middle; */
+    position: relative;
+
+  }
+  .noteTitleContainer .seekText{
+    /* max-width: 70%; */
+    width: 1px;
+    /* width: fit-content; */
+    /* overflow: hidden; */
+    white-space: nowrap;
+
+    /* text-align: center; */
+    display: inline-block;
+    /* vertical-align: middle; */
+    position: relative;
+    font-size: 1rem;
+    
+    opacity: 0;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) .5s,
+                opacity cubic-bezier(0.075, 0.82, 0.165, 1) .3s;
 
   }
   .noteTitleContainer:hover{
       color: blue;
+      /* transition: all cubic-bezier(0.6, -0.28, 0.735, 0.045) .2s; */
+      transition: all cubic-bezier(0.075, 0.82, 0.165, 1) .1s;
+
+
   }
-  .noteTitleContainer:hover::before{
-    /* color: blue; */
-    content: 'Go to: ';
-    vertical-align: middle;
-    font-size: 1rem;
+  .noteTitleContainer:hover  .seekText{
+    /* width: fit-content; */
+    width: 4rem;
+
+    /* color: red; */
+    opacity: 1;
+    /* transition: all cubic-bezier(0.6, -0.28, 0.735, 0.045) .2s; */
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) .2s;
+    /* transition: cubic-bezier(0.785, 0.135, 0.15, 0.86); */
+    /* transition: width  3s; */
+
 
 }
+ 
 
   .noteMsgEditor{
     resize: none;

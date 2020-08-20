@@ -145,7 +145,9 @@ export default class Note extends React.Component{
         this.state= {
             editing: false,
             textarea_disabled: true,
+            input_disabled: true,
             textareaValue: this.props.note.text,
+            inputValue: this.props.note.noteTitle != null ? this.props.note.noteTitle : this.props.note.text ,
             noteSectionVideoId : this.props.videoId
             
             // index: 0
@@ -228,12 +230,19 @@ export default class Note extends React.Component{
         return(
                
                     <div ref={this.props._ref} className={'ListItem '+ this.props.additionalClasses} >
-                        <div onClick={() => this.props.setCurrVidTime(ts) } className="noteTitleContainer" >
-                            <div className= "timestamp" >{ts}</div>
-                            &nbsp;|&nbsp;
-                            <div className= "noteTitle" >
+                        <div onClick={() => this.props.setCurrVidTime(ts) } className="noteTitleContainer" title={this.state.inputValue}>
+                            <div hidden={!this.state.input_disabled} className= {this.state.input_disabled ? "seekText titleDiv" : ''}  >Go to:</div>
+
+                            <div className= "timestamp titleDiv" >{ts}</div>
+                            <div className="  titleDiv" >&nbsp;|&nbsp;</div>
+                            <input disabled={this.state.input_disabled} onChange={( e, state ) => this.handleInputChange( e, 'inputValue')} value={this.state.inputValue} className="noteTitle titleDiv" title={this.state.inputValue} ></input>
+
+                            {/* <div hidden ={this.state.input_disabled} className= {this.state.input_disabled ? "seekText titleDiv" : ''} className= "noteTitle titleDiv" >
                                 {noteInfo.noteTitle != null ? noteInfo.noteTitle : noteInfo.text} 
-                            </div> 
+                            </div>  */}
+                            {/* <div className= "noteTitle titleDiv" >
+                                {noteInfo.noteTitle != null ? noteInfo.noteTitle : noteInfo.text} 
+                            </div>  */}
                             <br/>
                         </div>
                         {/* <textarea disabled={this.state.textarea_disabled} onChange={( e, state ) => this.handleInputChange( e, 'textareaValue')} value={this.state.textareaValue} className="noteContent"></textarea> */}
@@ -249,6 +258,7 @@ export default class Note extends React.Component{
                         {/* {noteInfo.text}<br/>{ts} */}
                         {/* <button onClick={( e, state ) => this.handleToggleState( e, 'editing')}>Edit</button> */}
                         <button onClick={( e, state ) => this.handleToggleState( e, 'textarea_disabled')}>Toggle TextArea</button>
+                        <button onClick={( e, state ) => this.handleToggleState( e, 'input_disabled')}>Toggle Title</button>
                         <button hidden={this.state.textarea_disabled} onClick={this.handleSave}>Save</button>
                         {/* <button onClick={( e, state ) => this.handleToggleState( e, 'show ')}>Toggle TextArea</button> */}
 
