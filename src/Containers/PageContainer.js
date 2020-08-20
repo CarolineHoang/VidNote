@@ -791,6 +791,7 @@ export default class PageContainer extends React.Component{
                     
 
                     setCurrVidTime = {this.setCurrVidTime}
+                    getCurrVidTime = {this.getCurrVidTime}
                     changeNote = {this.changeNote}
                     />
 

@@ -195,7 +195,7 @@ export default class NoteContainer extends React.Component{
                             // <Note _ref={i} item={item} additionalClasses='centerListItem' ></Note>
                             // <pre ref={i} className='ListItem centerListItem' >{item.text}<br/>{item.startTime}</pre>
                             <div ref={i}>
-                                <Note _ref={i} note={item} additionalClasses='centerListItem' setCurrVidTime = {this.props.setCurrVidTime } changeNote = {this.props.changeNote } videoId = {this.props.itemList.videoId} ></Note>
+                                <Note _ref={i} note={item} additionalClasses='centerListItem' setCurrVidTime = {this.props.setCurrVidTime } changeNote = {this.props.changeNote } videoId = {this.props.itemList.videoId} getCurrVidTime = {this.props.getCurrVidTime}></Note>
                                 {/* <pre className='ListItem centerListItem' >{item.text}<br/>{item.startTime}</pre> */}
                             </div>
                         )
@@ -206,7 +206,7 @@ export default class NoteContainer extends React.Component{
                             // <Note _ref={i} item={item} ></Note>
                             // <pre ref={i} className='ListItem' >{item.text}<br/>{item.startTime}</pre>
                             <div ref={i}>
-                                <Note _ref={i} note={item} additionalClasses='' setCurrVidTime = {this.props.setCurrVidTime }  changeNote = {this.props.changeNote } videoId = {this.props.itemList.videoId} ></Note>
+                                <Note _ref={i} note={item} additionalClasses='' setCurrVidTime = {this.props.setCurrVidTime }  changeNote = {this.props.changeNote } videoId = {this.props.itemList.videoId} getCurrVidTime = {this.props.getCurrVidTime}></Note>
                                 {/* <pre className='ListItem' >{item.text}<br/>{item.startTime}</pre> */}
                             </div>
 
