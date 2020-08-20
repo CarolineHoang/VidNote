@@ -48,8 +48,132 @@ const videoTime =0; //this value should update every half second and is the time
                     //on each update, we check if the time is greater than the timestamp on the above indexed note
                     //if it's more and the index is not the max length of the note list minus 1, then we check the nextones through the list and stop at the next one before the one that is more than this number. If we get to the end, then the last one is the current note.
                     //if the note happens to have an end time  (and we cannot set this time to overlap with the next one's start time) then we make sure that the current time is less than that end time
-
-
+    //
+        // const Meta = {
+        //     // fileNames: [],  //this will be an array in the order of the playlist
+        //     //                 // every Youtube video will have the 
+        //     maxVideoId: 3,
+        //     maxNoteId:  3,
+        //     noteData:[
+        //         {
+        //             videoId: 0,
+        //             category: 'web', //  web = youtube, vimero. etc, local = files
+        //             type: 'video/youtube',
+        //             url: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
+        //             // videoName: null,
+        //             videoName: 'Dummy YouTube VideoName 1',
+        //             notes: 
+        //             [   
+        //                 {
+        //                     noteId: 0,
+        //                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
+        //                     endTime: null,
+        //                     noteTitle: null,
+        //                     text: "This is a test message111",
+        //                     bookmarked: false,
+        //                     created : Date.now(),
+        //                     lastUpdated : Date.now(),
+        //                     drawn: false,
+        //                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+        //                 },
+        //                 {   
+        //                     noteId: 1,
+        //                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
+        //                     endTime: null,
+        //                     noteTitle: null,
+        //                     text: "This is a test message222",
+        //                     bookmarked: false,
+        //                     created : Date.now(),
+        //                     lastUpdated : Date.now(),
+        //                     drawn: false,
+        //                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+        //                 }
+        //             ]
+                    
+            
+        //         },
+        //         {
+        //             videoId: 1,
+        //             category: 'web', //  web = youtube, vimero. etc, local = files
+        //             type: 'video/youtube',
+        //             url: 'https://www.youtube.com/watch?v=voFRslp8d60&t=17s',
+        //             videoName: null,
+        //             // videoName: 'Dummy YouTube VideoName 2',
+        //             notes: 
+        //             [   
+        //                 {
+        //                     noteId: 0,
+        //                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
+        //                     endTime: null,
+        //                     noteTitle: null,
+        //                     text: "This is a test message333",
+        //                     bookmarked: false,
+        //                     created : Date.now(),
+        //                     lastUpdated : Date.now(),
+        //                     drawn: false,
+        //                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+        //                 },
+        //                 {   
+        //                     noteId: 1,
+        //                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
+        //                     endTime: null,
+        //                     noteTitle: null,
+        //                     text: "This is a test message444",
+        //                     bookmarked: false,
+        //                     created : Date.now(),
+        //                     lastUpdated : Date.now(),
+        //                     drawn: false,
+        //                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+        //                 }
+        //             ]
+                    
+            
+        //         },
+        //         {
+        //             videoId: 2,
+        //             category: 'local', //  web = youtube, vimero. etc, local = files
+        //             type: 'video/mp4',
+        //             url: testVideo2,
+        //             videoName: "testVid.mp4",
+        //             notes: 
+        //             [   
+        //                 {
+        //                     noteId: 2,
+        //                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
+        //                     endTime: null,
+        //                     noteTitle: null,
+        //                     text: "This is a test message444",
+        //                     bookmarked: false,
+        //                     created : Date.now(),
+        //                     lastUpdated : Date.now(),
+        //                     drawn: false,
+        //                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+        //                 },
+        //                 {   
+        //                     noteId: 3,
+        //                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
+        //                     endTime: null,
+        //                     noteTitle: null,
+        //                     text: "This is a test message555",
+        //                     bookmarked: false,
+        //                     created : Date.now(),
+        //                     lastUpdated : Date.now(),
+        //                     drawn: false,
+        //                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+        //                 }
+        //             ]
+            
+        //         }
+        
+        //     ],
+        //     settings : {
+        //         warnings: false,
+        //         reverse_shift_enter_submit: false,
+        //         show_undo: false
+        //     }
+            
+        // }
+    //
                     
 const Meta = {
     // fileNames: [],  //this will be an array in the order of the playlist
@@ -64,6 +188,8 @@ const Meta = {
             url: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
             // videoName: null,
             videoName: 'Dummy YouTube VideoName 1',
+            ytVidId : '3WQHDUYk310',
+            fileObj : null,
             notes: 
             [   
                 {
@@ -80,7 +206,7 @@ const Meta = {
                 },
                 {   
                     noteId: 1,
-                    startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
+                    startTime: 1, //this should not be a Date value but instead a count of miliseconds from the start of the video
                     endTime: null,
                     noteTitle: null,
                     text: "This is a test message222",
@@ -100,6 +226,8 @@ const Meta = {
             type: 'video/youtube',
             url: 'https://www.youtube.com/watch?v=voFRslp8d60&t=17s',
             videoName: null,
+            ytVidId : 'voFRslp8d60',
+            fileObj : null,
             // videoName: 'Dummy YouTube VideoName 2',
             notes: 
             [   
@@ -137,6 +265,8 @@ const Meta = {
             type: 'video/mp4',
             url: testVideo2,
             videoName: "testVid.mp4",
+            ytVidId : null,
+            fileObj : null,
             notes: 
             [   
                 {
@@ -238,6 +368,7 @@ export default class PageContainer extends React.Component{
         this.findMostRecentNoteIdx =this.findMostRecentNoteIdx.bind(this)
         this.findNewNoteIdx = this.findNewNoteIdx.bind(this)
         this.recursiveBinarySearch = this.recursiveBinarySearch.bind(this)
+        this.YouTubeGetID = this.YouTubeGetID.bind(this);
 
         // this.resetNoteState = this.resetNoteState.bind(this);
 
@@ -253,6 +384,8 @@ export default class PageContainer extends React.Component{
         // ref.on('playlistchange', function() {
         //     // ref.playlist();
         //     console.log("The playlist has changed!")
+        // debugger
+
           
         // });
         ref.on('playlistitem', ()=> {
@@ -460,9 +593,12 @@ export default class PageContainer extends React.Component{
         var type = ''
         var src = ''
         var vidName = ''
+        var ytVidId = null
+        var fileObj = null
         if (category == 'web'){
             type = 'video/youtube'
             src = this.state.newVideoLink
+            ytVidId  =  this.YouTubeGetID(src)
             vidName = src
 
         }
@@ -470,6 +606,7 @@ export default class PageContainer extends React.Component{
             let fileName = e.target.value.split('\\').pop();
             var ext = e.target.value.substr(e.target.value.lastIndexOf('.') + 1);
             type = 'video/'+ext
+            fileObj = e.target.files[0]
             // src = this.state.newVideoLink
 
             src = URL.createObjectURL(e.target.files[0])
@@ -503,6 +640,8 @@ export default class PageContainer extends React.Component{
                     type: type,
                     url: src,
                     videoName: vidName,
+                    ytVidId : ytVidId,
+                    fileObj : fileObj,
                     notes: []
                 }
 
@@ -741,7 +880,10 @@ export default class PageContainer extends React.Component{
     // }
 
 
-
+    YouTubeGetID(url){
+        url = url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+        return undefined !== url[2]?url[2].split(/[^0-9a-z_\-]/i)[0]:url[0];
+    }
 
 
 
@@ -860,7 +1002,7 @@ export default class PageContainer extends React.Component{
         //     poster: 'http://media.w3.org/2010/05/sintel/poster.png'
         //   }]
         
-          
+        
        
         return(
             <div className="tripleColumnContainer" >
@@ -919,7 +1061,8 @@ export default class PageContainer extends React.Component{
 
                     {/* by including the state variable as a value for the input/textarea field, we make sure it clears out if we set the state variable to be empty because then on the rerender, it repopulates as a empty */}
                     <textarea onChange={(e, note) => this.handleInputChange(e, 'newNote')} onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, 'newNote')} className='NoteInputField' value={this.state.newNote} ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
-                    <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  ></input> <button onClick={(e , type) => this.addToPlaylist(e , 'web')} type='submit' >Add to Playlist</button>
+                    <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  ></input> 
+                    <button onClick={(e , type) => this.addToPlaylist(e , 'web')} type='submit' >Add to Playlist</button>
                 
                     {/* using && conditional logic makes sure that the parent has the ref before we try to render the playlist because the playlist doesn't seem to rerender when the videoRef is updated */}
                     {/* alternatively, all the starting playlist info can be set up in the video player component but I want to make the playlist div diffinitively in charge of everything relating playlists */}

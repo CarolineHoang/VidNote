@@ -39,7 +39,8 @@ export default class Note extends React.Component{
             text: this.props.note.text,
             noteTitle: this.props.note.noteTitle != null ? this.props.note.noteTitle : this.props.note.text ,
             noteSectionVideoId : this.props.videoId,
-            lastEnabled:  { state : null, saved: true } 
+            lastEnabled:  { state : null, saved: true } ,
+            videoCategory : this.props.videoCategory
             
             // index: 0
         }
@@ -52,6 +53,8 @@ export default class Note extends React.Component{
         this.formatTimeStamp = this.formatTimeStamp.bind(this);
     }
     componentDidUpdate(nextProps){
+        // debugger;
+
         //if the section rendered is different from the last (we changed videos or we're loading a different set of notes) then update all disabled states to close them all
         if (nextProps.videoId != this.props.videoId){
             this.setState({
@@ -68,6 +71,7 @@ export default class Note extends React.Component{
 
     }
     // componentDidMount(){
+
     // }
     handleShow(i) {
         console.log(this.refs, i)
@@ -190,7 +194,7 @@ export default class Note extends React.Component{
         this.handleSave( e, {value: "startTime" , data: getCurrVidTime() }) 
     }
 
-    formatTimeStamp(totalSecs){
+    formatTimeStamp(totalSecs, noteInfo){
         // var tsecs = parseInt(totalSecs)
         var hr = 0
         var min = 0 
@@ -198,8 +202,12 @@ export default class Note extends React.Component{
         if (totalSecs < 60){ //if it's under a minute
             // sec = Math.round((totalSecs + Number.EPSILON) * 100) / 100
             sec = Math.trunc(totalSecs)
+            
+            // debugger;
+
     // return <div>0:{sec < 10 ? '0' : ''}{sec}iiii{totalSecs}{totalSecs<60 ? typeof totalSecs : typeof totalSecs}</div>
-    return <div>0:{sec < 10 ? '0' : ''}{sec}</div>
+    // return <div>0:{sec < 10 ? '0' : ''}{sec}{ (this.props.videoCategory == "web"  ?    <a href={`${this.props.url}?t=${sec}`}>0:{sec < 10 ? '0' : ''}{sec}</a> : "" )}</div>
+    return <div><div className={this.props.videoCategory == "web"  ?  "timestamp": ""}>0:{sec < 10 ? '0' : ''}{sec}</div>{ (this.props.videoCategory == "web"  ?    <a href={`https://youtu.be/${this.props.ytVidId}?t=${sec}`} className="printOnlyTimeStamp"  >0:{sec < 10 ? '0' : ''}{sec}</a> : "" )}</div>
         }
         else if (totalSecs < 60*60){ //if it's under an hour
             min = Math.trunc(totalSecs/60)
@@ -233,9 +241,17 @@ export default class Note extends React.Component{
     }
       
     render() {
-        var noteInfo = this.props.note
-        var formattedTS = this.formatTimeStamp(noteInfo.startTime)
 
+        if (this.props.videoCategory != this.state.videoCategory){
+            this.setState({
+                videoCategory : this.props.videoCategory
+            })
+        }
+
+
+        var noteInfo = this.props.note
+        var formattedTS = this.formatTimeStamp(noteInfo.startTime, noteInfo)
+        
 
         // var ts = Math.round((noteInfo.startTime + Number.EPSILON) * 100) / 100
 
@@ -253,7 +269,7 @@ export default class Note extends React.Component{
                         <div onClick={() => this.props.setCurrVidTime(noteInfo.startTime) } className="noteTitleContainer" title={this.state.noteTitle}>
                             <div hidden={!this.state.noteTitle_disabled} className= {this.state.noteTitle_disabled ? "seekText titleDiv" : ''}  >Go to:</div>
 
-                            <div className= "timestamp titleDiv" >{formattedTS}</div>
+                            <div className= "titleDiv" >{formattedTS}</div>
                             <div className="  titleDiv" >&nbsp;|&nbsp;</div>
                             <input  hidden={this.state.noteTitle_disabled} 
                                     onChange={( e, state ) => this.handleInputChange( e, 'noteTitle')} 
@@ -317,6 +333,7 @@ export default class Note extends React.Component{
                                         Save
                         </button>
                         <div>Last Edited: {`${month} ${day}, ${year } at ${hour}:${minute}:${second }`}</div>
+                        <div>{this.state.videoCategory != null && this.state.videoCategory != undefined && this.state.videoCategory & "hello"}</div>
                         
                         {/* <button onClick={( e, state ) => this.handleToggleState( e, 'show ')}>Toggle TextArea</button> */}
 
