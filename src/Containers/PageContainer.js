@@ -230,6 +230,10 @@ export default class PageContainer extends React.Component{
         // this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.acceptSpecialSymbol = this.acceptSpecialSymbol.bind(this);
+        this.findMostRecentNoteIdx =this.findMostRecentNoteIdx.bind(this)
+        this.findNewNoteIdx = this.findNewNoteIdx.bind(this)
+        this.recursiveBinarySearch = this.recursiveBinarySearch.bind(this)
+
         // this.resetNoteState = this.resetNoteState.bind(this);
 
     }
@@ -304,10 +308,14 @@ export default class PageContainer extends React.Component{
         // this.state
         var metaCopy = this.state.meta;
         var currentTime  = this.getCurrVidTime()
+
+        var index = this.findNewNoteIdx(currentTime)
+        console.log("currentNoteIndex: ", index)
         // metaCopy.noteData[0].notes.push(
-        metaCopy.noteData[this.state.currPlayingVidId].notes.push(
+        metaCopy.noteData[this.state.currPlayingVidId].notes.splice(index+1, 0, 
             {   
                 noteId: metaCopy.maxNoteId+1,
+
                 startTime: currentTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
                 endTime: null,
                 noteTitle: null,
@@ -318,7 +326,23 @@ export default class PageContainer extends React.Component{
                 drawn: false,
                 images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
             }
-        )
+            
+            
+        );
+        // metaCopy.noteData[this.state.currPlayingVidId].notes.push(
+        //     {   
+        //         noteId: metaCopy.maxNoteId+1,
+        //         startTime: currentTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
+        //         endTime: null,
+        //         noteTitle: null,
+        //         text: this.state.newNote,
+        //         bookmarked: false,
+        //         created : Date.now(),
+        //         lastUpdated : Date.now(),
+        //         drawn: false,
+        //         images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+        //     }
+        // )
         metaCopy.maxNoteId = metaCopy.maxNoteId+1;
 
 
@@ -344,13 +368,15 @@ export default class PageContainer extends React.Component{
 
         // console.log(e.target)
     }
-    changeNote(noteInfo, newdata , videoId , dataToUpdate){
+    changeNote(noteInfo, newdata , noteIdx, dataToUpdate, videoId ){
         console.log(noteInfo, newdata, videoId )
 
 
                 var metaCopy = this.state.meta;
-                metaCopy.noteData[videoId].notes[noteInfo.noteId][dataToUpdate] = newdata
-                metaCopy.noteData[videoId].notes[noteInfo.noteId].lastUpdated = Date.now()
+
+                console.log('videoId: ', videoId , 'noteIdx: ', noteIdx, metaCopy.noteData[videoId].notes[noteIdx], metaCopy.noteData[videoId].notes[noteIdx][dataToUpdate] , newdata)
+                metaCopy.noteData[videoId].notes[noteIdx][dataToUpdate] = newdata
+                metaCopy.noteData[videoId].notes[noteIdx].lastUpdated = Date.now()
                 // metaCopy.noteData[0].notes.push(
                 // metaCopy.noteData[videoId].notes[noteInfo.noteId] = {   
                 //     noteId:         noteInfo.noteId,
@@ -590,7 +616,119 @@ export default class PageContainer extends React.Component{
         }
 
     }
-      
+
+    findMostRecentNoteIdx(){
+        var currentTime = this.props.getCurrVidTime()
+        var idx=0;
+        var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
+        if (notesArr.length == 0){
+            return -1 //error: there are no notes
+        }
+        if (notesArr.length == 1){
+            return 0
+        }
+        while (idx < notesArr.length){
+            console.log("time comparisons: ", notesArr[idx].startTime,  currentTime)
+
+            if(notesArr.length > 1 && idx < notesArr.length-1 ){
+                console.log("time comparisons: ", notesArr[idx].startTime,  currentTime)
+                if ( notesArr[idx].startTime <= currentTime && notesArr[idx+1].startTime > currentTime ){
+                    return idx
+                }
+            }
+            idx+=1
+        }
+        return notesArr.length-1
+    }
+    findNewNoteIdx(ct, videoId){//binary search is probably the best bet here but we will start with linear
+        var currentTime = ct
+        var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
+        if (notesArr.length == 0){
+            return -1 //error: there are no notes
+        }
+        if (notesArr.length == 1){
+            return 0
+        }
+        return this.recursiveBinarySearch(notesArr, currentTime, 0, notesArr.length-1, notesArr.length-1)
+
+    }
+
+    // binarySearch( array, comparator){
+  
+           
+    //     // Driver code 
+    //     let arr = [1, 3, 5, 7, 8, 9]; 
+    //     let x = 5; 
+           
+    //     // var 
+    //     if (recursiveFunction(arr, x, 0, arr.length-1)) 
+    //         document.write("Element found!<br>"); 
+    //     else document.write("Element not found!<br>"); 
+           
+    //     // x = 6; 
+           
+    //     // if (recursiveFunction(arr, x, 0, arr.length-1)) 
+    //     //     document.write("Element found!<br>"); 
+    //     // else document.write("Element not found!<br>"); 
+ 
+    // }
+                        recursiveBinarySearch(arr, target,  start, end , arrLength) { 
+                        
+                            // Base Condition 
+                            if (start > end){ return end
+                                // if  (Math.abs(arr[start].startTime-target)<Math.abs(arr[end].startTime-target)) {
+                                //     return start
+                                // }
+                                // else{
+                                //     return end
+                                // }
+                            }; 
+                            
+                            // Find the middle index 
+                            let mid=Math.floor((start + end)/2); 
+                        
+                            // Compare mid with given key x 
+                            if( mid < arrLength-1 ){
+                                if ( arr[mid].startTime <= target && arr[mid+1].startTime > target ){
+                                    return mid
+                                }
+                            }
+                            else if ( mid == arrLength-1 ){
+                                if ( arr[mid].startTime >= target  ){
+                                    return mid
+                                }
+                            }
+                            // if (arr[mid]===comparator) return true; 
+                                
+                            // If element at mid is greater than x, 
+                            // search in the left half of mid 
+                            if(arr[mid].startTime > target)  {
+                                return this.recursiveBinarySearch(arr, target, start, mid-1, arrLength); 
+                            } 
+                            else{
+                                // If element at mid is smaller than x, 
+                                // search in the right half of mid 
+                                return this.recursiveBinarySearch(arr, target, mid+1, end, arrLength); 
+                            }
+                        
+                                
+                                
+                        } 
+    // isClosestTimeCheck( arr, mid , target , start, end , arrLength ){
+    //     if( idx < arrLength-1 ){
+    //         console.log("time comparisons: ", arr[idx].startTime,  currentTime)
+    //         if ( notesArr[idx].startTime <= currentTime && notesArr[idx+1].startTime > currentTime ){
+    //             return idx
+    //         }
+    //     }
+    // }
+
+
+
+
+
+
+
     render() {
         const videoJsOptions = {
             autoplay: true,

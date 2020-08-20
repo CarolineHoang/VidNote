@@ -252,11 +252,16 @@ export default class Note extends React.Component{
 
         // this.handleToggleState(e, lastEnabled.state)
         this.setState( setStateOpts ,  ()=>{
-            console.log(`text_disabled: `, this.state[noteEditProperty], noteEditProperty )
-            this.props.changeNote(this.props.note, overrideObj !== null ? overrideObj.data : this.state[noteEditProperty] , this.props.videoId, overrideObj !== null ? overrideObj.value : noteEditProperty  )
+            console.log(`text_disabled: `, this.state[noteEditProperty], noteEditProperty , overrideObj )
+            this.props.changeNote(  this.props.note, 
+                                    overrideObj !== null && overrideObj !== undefined ? overrideObj.data : this.state[noteEditProperty] , 
+                                    this.props._ref , 
+                                    overrideObj !== null && overrideObj !== undefined ? overrideObj.value : noteEditProperty  , 
+                                    this.props.videoId)
 
 
         } )
+        // this.props.changeNote(this.props.note, this.state[noteEditProperty] , this.props.videoId, noteEditProperty  )
 
 
 
@@ -362,7 +367,7 @@ export default class Note extends React.Component{
                                         Toggle Title
                         </button>
                         <button     hidden={this.state.lastEnabled.state == null || this.state.lastEnabled.saved} 
-                                    onClick={(e, state)=>this.handleSave(e, this.state.lastEnabled )}>
+                                    onClick={this.handleSave}>
                                         Save
                         </button>
 
