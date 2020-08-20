@@ -168,7 +168,7 @@ const Meta = {
         }
 
     ],
-    settings = {
+    settings : {
         warnings: false,
         reverse_shift_enter_submit: false,
         show_undo: false
