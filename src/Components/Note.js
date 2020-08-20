@@ -285,10 +285,13 @@ export default class Note extends React.Component{
             this.setState({[stateVal]: this.state[stateVal]+ String.fromCharCode(9)},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
         }
         if (e.keyCode == 13 && e.shiftKey && commands["SE_submit"] ){ // reference for 'e.shiftKey: http://jsfiddle.net/McH8q/28/#save
-            this.handleSave(e, this.state.lastEnabled );
+            // this.handleSave(e, this.state.lastEnabled );
+            this.handleSave(e);
         }
         if (e.keyCode == 13 && commands["E_submit"] ){
-            this.handleSave(e, this.state.lastEnabled );
+            // this.handleSave(e, this.state.lastEnabled );
+            this.handleSave(e);
+
         }
 
     }
