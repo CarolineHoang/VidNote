@@ -303,6 +303,14 @@ export default class Note extends React.Component{
     render() {
         var noteInfo = this.props.note
         var ts = Math.round((noteInfo.startTime + Number.EPSILON) * 100) / 100
+
+        // const date = new Date('2010-08-05')
+        const date = noteInfo.lastUpdated
+        const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' , hour: 'numeric', minute: 'numeric', second: 'numeric',  } ) 
+        const [{ value: month },,{ value: day },,{ value: year },,{value : hour},, { value : minute},, {value : second}] = dateTimeFormat .formatToParts(date ) 
+
+        console.log(`${day}-${month}-${year }`)
+        console.log(`${day}👠${month}👢${year}`) // just for fun
        
         return(
                
@@ -373,7 +381,7 @@ export default class Note extends React.Component{
                                     onClick={this.handleSave}>
                                         Save
                         </button>
-
+                        <div>Last Edited: {`${month} ${day}, ${year } at ${hour}:${minute}:${second }`}</div>
                         
                         {/* <button onClick={( e, state ) => this.handleToggleState( e, 'show ')}>Toggle TextArea</button> */}
 
