@@ -265,15 +265,19 @@ export default class Note extends React.Component{
         this.setState({[stateVal]: e.target.value},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
 
     }
-    acceptSpecialSymbol(e, stateVal ){
+    acceptSpecialSymbol(e, commands, stateVal){
 
-        if (e.keyCode == 9){
+        if (e.keyCode == 9 && commands["include_tabs"] ){
             e.preventDefault(); //prevent tab from focusing the next dom object
 
         // this.setState({[stateVal]: e.target.value},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
             this.setState({[stateVal]: this.state[stateVal]+ String.fromCharCode(9)},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
-
-            
+        }
+        if (e.keyCode == 13 && e.shiftKey && commands["SE_submit"] ){
+            this.handleSave(e, this.state.lastEnabled );
+        }
+        if (e.keyCode == 13 && commands["E_submit"] ){
+            this.handleSave(e, this.state.lastEnabled );
         }
 
     }
@@ -292,6 +296,7 @@ export default class Note extends React.Component{
                             <div className="  titleDiv" >&nbsp;|&nbsp;</div>
                             <input  hidden={this.state.input_disabled} 
                                     onChange={( e, state ) => this.handleInputChange( e, 'noteTitle')} 
+                                    onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, { "E_submit" : true } , null)} 
                                     value={this.state.noteTitle}  
                                     className= {!this.state.input_disabled ? "noteTitleEditor titleDiv"  : ''}   >
                             </input>
@@ -320,7 +325,7 @@ export default class Note extends React.Component{
                         <div    hidden={this.state.textarea_disabled } 
                                 className= {!this.state.textarea_disabled ? "noteMsgEditorContainer" : ''} >
                                     <textarea   onChange={( e, state ) => this.handleInputChange( e, 'text')} 
-                                                onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, 'text')} 
+                                                onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, {'include_tabs' : true , "SE_submit" : true }, 'text')} 
                                                 value={this.state.text} 
                                                 className="noteMsgEditor">
                                     </textarea>
