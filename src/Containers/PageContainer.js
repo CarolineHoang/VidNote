@@ -757,47 +757,52 @@ export default class PageContainer extends React.Component{
     }
 
     loadProject(e, val ){
-        var fileObj = e.target.files[0]
-            // src = this.state.newVideoLink
+        //more reference material: ['https://www.geeksforgeeks.org/how-to-read-a-local-text-file-using-javascript/','https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsText','https://developer.mozilla.org/en-US/docs/Web/API/Blob/text']
+        /*Step 1:   trigger a file read with an onChange event on the input div you use to upload the files
+                    the files from all the folders will be decentralized and kind of floating in an array.
+                    choose the index of the file you want to read fron withibn the files property of your event.target 
+                    that object is actually of type blob (at least when I console.logged it's typeof, it was)
+                    It's also called a File when inspecting                                                                   */
+        var fileObj = e.target.files[1] //note that there are going to be files in there like .DS_Store that you don't want 
+                                        //this file happens to be the meta data
 
-        var src = URL.createObjectURL(e.target.files[0])
+        /*  to confirm the identity of a file, you can log it's 'name' property 
+            Other info you can glean (here is a real example of ```e.target.files[0]``` logged): 
+                    {name: ".DS_Store", lastModified: 1597600999440, lastModifiedDate: Sun Aug 16 2020 14:03:19 GMT-0400 (Eastern Daylight Time), webkitRelativePath: "VidNotes 1597600971230/.DS_Store", size: 6148, …}  */
 
-        console.log ("PROJECT UPLOAD: ", e.target.files , fileObj, typeof fileObj, src, typeof src )
+
+        var src = URL.createObjectURL(e.target.files[0]) //if you do this, the output is a string that may be used as a link
+        console.log ("PROJECT UPLOAD: ", e.target.files , fileObj, typeof fileObj, src, typeof src, e.target.files[1].name )
+        
+
+        //Step 2:   generate the FileReader object (here named fr)
         var fr=new FileReader();
-        // fr.onload=function(){ 
-        //     document.getElementById('output') 
-        //             .textContent=fr.result; 
-        
-        
-        // } 
-        fr.onloadend=()=>{ 
-            // document.getElementById('output') 
-            //         .textContent=fr.result; 
+       
+        /*Step 3:   attach onload or onloadend eventlisteners to the new reader
+                    These should fire when they detect that the file contents are done load ing and ready for viewing/accessing
+                    Note: .on() events like this wont work:                                                                         */
+                            // fr.on('loadend', ()=> {
+                            //     this.setState({
+                            //         // currPlayingVid : ref.playlist()[ref.playlist.currentIndex()],
+                            //         fileContents: fr.result
+                            //     },
+                            //     ()=> {
+                            //             console.log("hiiii", this.state.currPlayingVid)
+                            //             fr.readAsText(fileObj);
+                            //         }
+                            //     )
+        fr.onloadend=()=>{  
             this.setState({
-                // currPlayingVid : ref.playlist()[ref.playlist.currentIndex()],
-                fileContents: fr.result
+                fileContents: fr.result     //Step 4:   set up actions to take with fr.result
+                                            //          When the event listener fires, fr.result is poopulated with the text from the file it was read from
+                                            //          my React.js appreach to rendering this would be to set it to state and have the state variable referenced in the JSX
             },
             ()=> {
-                    console.log("hiiii", this.state.currPlayingVid)
-                    // fr.readAsText(src);
+                    console.log("hiiii", this.state.fileContents)
                 }
             )
         } 
-
-        // fr.on('loadend', ()=> {
-        //     this.setState({
-        //         // currPlayingVid : ref.playlist()[ref.playlist.currentIndex()],
-        //         fileContents: fr.result
-        //     },
-        //     ()=> {
-        //             console.log("hiiii", this.state.currPlayingVid)
-        //             fr.readAsText(src);
-        //         }
-        //     )
-          
-        // });
-        // fr.readAsText(fileObj);
-        fr.readAsText(e.target.files[1]);
+        fr.readAsText(fileObj);  //Step 5   after establishing the listener, tell it to read the file we picked earlier
     }
 
 
@@ -937,7 +942,7 @@ export default class PageContainer extends React.Component{
 
                     {/* <div>Field Import:<input directory="" webkitdirectory="" mozdirectory="" type="file" /></div> */}
                     <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} directory="" webkitdirectory="" mozdirectory="" type="file" /></div>
-                    <pre>{this.state.fileContents}</pre>
+                    <pre className="testerPre" >{this.state.fileContents}</pre>
 
                     {/* 
                         React as of version 16 STILL has not fully accounte4d for directory imports.
