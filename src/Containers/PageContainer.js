@@ -306,6 +306,16 @@ const Meta = {
     
 }
 
+const ACCEPTED_FILE_EXTENSIONS = {
+        "txt" : { type: 'text', valid : true },
+
+        "jpg" : { type: 'image', valid : true },
+
+        "mp4" :  { type: 'video', valid : true }
+
+}
+
+
 let zip = new JSZip();
 var Img = zip.folder("Images");
 var Videos = zip.folder("Videos");
@@ -332,18 +342,19 @@ const downloadNotes = () =>{
 }
 
 
-const downloadProject = () =>{
-    zip.generateAsync({type: "blob"}).then(function(content) {
-        const filename = 'VidNotes '+Date.now()+'.zip'
-        FileSaver.saveAs(content, filename);
-    }); 
-}
+
 
 var items = [];
 for (var i = 0; i < 100; i++) {
   items.push(i+'d');
 }
 
+const getFileExtenstion = (fileName) => {
+    return fileName.substr(fileName.lastIndexOf('.') + 1); 
+    // var ext = e.target.value.substr(e.target.value.lastIndexOf('.') + 1);
+
+
+}
 
 export default class PageContainer extends React.Component{
 
@@ -355,6 +366,7 @@ export default class PageContainer extends React.Component{
             newNote: '',
             newVideoLink: '',
             meta: Meta,
+            backupMeta : null,
             info: 'asdf',
             uploadedVideos: [],
             currPlayingVid : {},
@@ -379,6 +391,7 @@ export default class PageContainer extends React.Component{
         this.recursiveBinarySearch = this.recursiveBinarySearch.bind(this)
         this.YouTubeGetID = this.YouTubeGetID.bind(this);
         this.loadProject = this.loadProject.bind(this);
+        this.downloadProject = this.downloadProject.bind(this);
 
         // this.resetNoteState = this.resetNoteState.bind(this);
 
@@ -549,7 +562,8 @@ export default class PageContainer extends React.Component{
         }
         else if (category == 'local'){
             let fileName = e.target.value.split('\\').pop();
-            var ext = e.target.value.substr(e.target.value.lastIndexOf('.') + 1);
+            // var ext = e.target.value.substr(e.target.value.lastIndexOf('.') + 1);
+            var ext = getFileExtenstion(e.target.value)
             type = 'video/'+ext
             fileObj = e.target.files[0]
             // src = this.state.newVideoLink
@@ -626,7 +640,8 @@ export default class PageContainer extends React.Component{
           let fileName = e.target.value.split('\\').pop();
 
           console.log('fileName :', fileName, e.target.value)
-          var ext = fileName.substr(fileName.lastIndexOf('.') + 1);
+          //   var ext = fileName.substr(fileName.lastIndexOf('.') + 1);
+          var ext = getFileExtenstion(fileName)
         
           console.log('fileName :', fileName, e.target.value, ext)
 
@@ -757,13 +772,40 @@ export default class PageContainer extends React.Component{
     }
 
     loadProject(e, val ){
+
+        var fileArr = e.target.files;
+        var i =0 ;
+        var metaIdx = 0;
+        while(i<fileArr.length){
+            console.log("uploaded file: " , e.target.files[i].name )
+            var fileName = e.target.files[i].name
+            var ext = getFileExtenstion(fileName)
+            var fileStatus = ACCEPTED_FILE_EXTENSIONS[ext]
+            if (fileStatus != undefined && fileStatus.valid ){
+                // console.log("accepted file type: " , fileName )
+                switch (fileStatus.type){
+                    case 'video':
+                        break;
+                    case 'image':
+                        break;
+                    case 'text':
+                        if (fileName == 'meta.txt'){
+                            metaIdx= i
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            i+=1
+        }
         //more reference material: ['https://www.geeksforgeeks.org/how-to-read-a-local-text-file-using-javascript/','https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsText','https://developer.mozilla.org/en-US/docs/Web/API/Blob/text']
         /*Step 1:   trigger a file read with an onChange event on the input div you use to upload the files
                     the files from all the folders will be decentralized and kind of floating in an array.
                     choose the index of the file you want to read fron withibn the files property of your event.target 
                     that object is actually of type blob (at least when I console.logged it's typeof, it was)
                     It's also called a File when inspecting                                                                   */
-        var fileObj = e.target.files[1] //note that there are going to be files in there like .DS_Store that you don't want 
+        var fileObj = e.target.files[metaIdx] //note that there are going to be files in there like .DS_Store that you don't want 
                                         //this file happens to be the meta data
 
         /*  to confirm the identity of a file, you can log it's 'name' property 
@@ -772,7 +814,7 @@ export default class PageContainer extends React.Component{
 
 
         var src = URL.createObjectURL(e.target.files[0]) //if you do this, the output is a string that may be used as a link
-        console.log ("PROJECT UPLOAD: ", e.target.files , fileObj, typeof fileObj, src, typeof src, e.target.files[1].name )
+        // console.log ("PROJECT UPLOAD: ", e.target.files , fileObj, typeof fileObj, src, typeof src, e.target.files[1].name )
         
 
         //Step 2:   generate the FileReader object (here named fr)
@@ -792,8 +834,12 @@ export default class PageContainer extends React.Component{
                             //         }
                             //     )
         fr.onloadend=()=>{  
+            var result = fr.result
+            var resultJSON = JSON.parse(fr.result)
             this.setState({
-                fileContents: fr.result     //Step 4:   set up actions to take with fr.result
+                backupMeta: this.state.meta, 
+                meta : resultJSON,
+                fileContents: result,    //Step 4:   set up actions to take with fr.result
                                             //          When the event listener fires, fr.result is poopulated with the text from the file it was read from
                                             //          my React.js appreach to rendering this would be to set it to state and have the state variable referenced in the JSX
             },
@@ -804,7 +850,23 @@ export default class PageContainer extends React.Component{
         } 
         fr.readAsText(fileObj);  //Step 5   after establishing the listener, tell it to read the file we picked earlier
     }
+    downloadProject(){
 
+
+        let zip = new JSZip();
+        var Img = zip.folder("Images");
+        var Videos = zip.folder("Videos");
+        var Originals = Videos.folder("Originals");
+        var Drawn = Videos.folder("Drawn");
+        var Data= zip.folder("Data");
+        var MetaFiles= zip.folder("Meta");
+
+        MetaFiles.file("meta.txt", JSON.stringify(this.state.meta)  );
+                zip.generateAsync({type: "blob"}).then(function(content) {
+                    const filename = 'VidNotes '+Date.now()+'.zip'
+                    FileSaver.saveAs(content, filename);
+                }); 
+    }
 
 
     render() {
@@ -924,7 +986,8 @@ export default class PageContainer extends React.Component{
                 <div className='playList' >
                     {/* this is how to create an HTML a tag that will download a local app file*/}
                     <a href={testFile} download="testFile.txt">{testFile}Hiii</a>
-                    <button onClick={downloadNotes}> Click to Download Info </button>
+                    <button onClick={downloadNotes}> Click to Download Default Info </button>
+                    <button onClick={this.downloadProject}> Click to Download Info </button>
                     {/* <a href={testFile2} download="testFolder.zip">----Hiii2</a> */}Hi
                     {/* <textarea onChange={this.handleNoteInputChange} className='NoteInputField' ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button> */}
 
