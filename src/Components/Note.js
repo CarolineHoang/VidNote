@@ -94,19 +94,7 @@ export default class Note extends React.Component{
         // this.props.changeNote("changing note")
         console.log("saving....", lastEnabled, lastEnabled.state ,this.state[lastEnabled.state] , this.state.text)
         var noteEditProperty =  this.convertDisableStatusToValue(lastEnabled.state)
-        // switch( stateVal ){
-        //     case 'text':
-        //         noteEditProperty = 'text'
-        //         var test = this.state[stateVal]
-        //         // debugger;
-        //         break;
-        //     case 'noteTitle':
-        //         noteEditProperty = 'noteTitle'
-        //         break;
-        //     default:
-        //         break;
-        // }
-        // debugger
+    
         var setStateOpts = {
                                 [lastEnabled.state]: !this.state[lastEnabled.state], 
                                 lastEnabled : {
@@ -118,11 +106,11 @@ export default class Note extends React.Component{
         // this.handleToggleState(e, lastEnabled.state)
         this.setState( setStateOpts ,  ()=>{
             console.log(`text_disabled: `, this.state[noteEditProperty], noteEditProperty , overrideObj )
-            this.props.changeNote(  this.props.note, 
-                                    overrideObj !== null && overrideObj !== undefined ? overrideObj.data : this.state[noteEditProperty] , 
-                                    this.props._ref , 
-                                    overrideObj !== null && overrideObj !== undefined ? overrideObj.value : noteEditProperty  , 
-                                    this.props.videoId)
+            this.props.changeNote(  /* noteInfo     */  this.props.note, 
+                                    /* newdata      */  overrideObj !== null && overrideObj !== undefined ? overrideObj.data : this.state[noteEditProperty] , 
+                                    /* noteIdx      */  this.props._ref , 
+                                    /* dataToUpdate */  overrideObj !== null && overrideObj !== undefined ? overrideObj.value : noteEditProperty  , 
+                                    /* videoId      */  this.props.videoId)
 
 
         } )
@@ -133,6 +121,18 @@ export default class Note extends React.Component{
         // this.setState({
         //     text_disabled: true
         // })
+    }
+    handleDelete( e, overrideObj = null  ){
+        var setStateOpts = {
+                                editing: false,
+                                text_disabled: true,
+                                noteTitle_disabled: true,
+                                lastEnabled:  { state : null, saved: true } 
+                            }
+        this.setState( setStateOpts ,  ()=>{
+            this.props.deleteNote(  /* noteIdx      */  this.props._ref , 
+                                    /* videoId      */  this.props.videoId)
+        } )
     }
     handleInputChange(e, stateVal){
         // var eVal = e.target.value
@@ -262,7 +262,9 @@ export default class Note extends React.Component{
 
 
                         <button onClick={(e, updateTimeFunc )=>this.updateTimeStamp(e , this.props.getCurrVidTime)} >Update Timestamp</button>
-
+                        <button     onClick={( e, state ) => this.handleDelete( e, '')}>
+                                        Delete Note
+                        </button>
                         <button     hidden={!this.state.lastEnabled.saved} 
                                     onClick={( e, state ) => this.handleToggleState( e, 'text_disabled')}>
                                         Toggle TextArea

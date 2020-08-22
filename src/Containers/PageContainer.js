@@ -262,6 +262,7 @@ export default class PageContainer extends React.Component{
 
         this.addNote = this.addNote.bind(this);
         this.changeNote = this.changeNote.bind(this);
+        this.deleteNote = this.deleteNote.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         this.addToPlaylist = this.addToPlaylist.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -401,6 +402,26 @@ export default class PageContainer extends React.Component{
                 //     images:         noteInfo.images //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
                 // }
                 // // debugger;
+
+
+
+                this.setState({
+                    meta: metaCopy,
+                }, ()=>{console.log(this.state.meta)} )
+
+
+        
+    } 
+    deleteNote( noteIdx,  videoId ){
+        console.log(`deleting note: ${noteIdx} ....`, noteIdx, "    video:" ,  videoId )
+
+
+
+                var metaCopy = this.state.meta;
+
+                // console.log('videoId: ', videoId , 'noteIdx: ', noteIdx, metaCopy.noteData[videoId].notes[noteIdx], metaCopy.noteData[videoId].notes[noteIdx][dataToUpdate] , newdata)
+                metaCopy.noteData[videoId].notes.splice(noteIdx, 1);
+       
 
 
 
@@ -960,6 +981,7 @@ export default class PageContainer extends React.Component{
                     setCurrVidTime = {this.setCurrVidTime}
                     getCurrVidTime = {this.getCurrVidTime}
                     changeNote = {this.changeNote}
+                    deleteNote= {this.deleteNote}
                     />
 
                     <form>

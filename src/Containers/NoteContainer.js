@@ -102,6 +102,7 @@ export default class NoteContainer extends React.Component{
                                         additionalClasses={ i === this.state.index ? 'centerListItem' : ''}
                                         setCurrVidTime = {this.props.setCurrVidTime } 
                                         changeNote = {this.props.changeNote } 
+                                        deleteNote = {this.props.deleteNote } 
                                         videoId = {this.props.itemList.videoId} 
                                         videoCategory = {this.props.itemList.category} 
                                         url = {this.props.itemList.url} 
