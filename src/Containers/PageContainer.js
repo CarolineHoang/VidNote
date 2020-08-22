@@ -872,7 +872,7 @@ export default class PageContainer extends React.Component{
             meta : this.state.backupMeta,
         })
     }
-    downloadProject(){
+    downloadProject(gdrive = false){
 
 
         let zip = new JSZip();
@@ -884,12 +884,99 @@ export default class PageContainer extends React.Component{
         var MetaFiles= zip.folder("Meta");
 
         MetaFiles.file("meta.txt", JSON.stringify(this.state.meta)  );
-                zip.generateAsync({type: "blob"}).then(function(content) {
-                    const filename = 'VidNotes '+Date.now()+'.zip'
-                    FileSaver.saveAs(content, filename);
-                }); 
+     
+        zip.generateAsync({type: "blob"}).then(function(content) {
+            const filename = 'VidNotes '+Date.now()+'.zip'
+            if (gdrive){
+                // return URL.createObjectURL(content)
+                // var folderId = '0BwwA4oUTeiV1TGRPeTVjaWRDY1E';
+                // var fileMetadata = {
+                // 'name': 'photo.jpg',
+                // parents: [folderId]
+                // };
+                // var media = {
+                // mimeType: 'application/zip',
+                // body: fs.createReadStream('files/photo.zip')
+                // };
+                // drive.files.create({
+                // resource: fileMetadata,
+                // media: media,
+                // fields: 'id'
+                // }, function (err, file) {
+                // if (err) {
+                //     // Handle error
+                //     console.error(err);
+                // } else {
+                //     console.log('File Id: ', file.id);
+                // }
+                // });
+            }
+            else{
+                FileSaver.saveAs(content, filename);
+            }
+        }); 
     }
+    // gdriveSave(gdrive = false){
+    //     //need Drive API to do this: https://developers.google.com/drive/api/v3/quickstart/nodejs
 
+
+    //     // let zip = new JSZip();
+    //     // var Img = zip.folder("Images");
+    //     // var Videos = zip.folder("Videos");
+    //     // var Originals = Videos.folder("Originals");
+    //     // var Drawn = Videos.folder("Drawn");
+    //     // var Data= zip.folder("Data");
+    //     // var MetaFiles= zip.folder("Meta");
+
+    //     // MetaFiles.file("meta.txt", JSON.stringify(this.state.meta)  );
+     
+    //     // zip.generateAsync({type: "blob"}).then(function(content) {
+    //     //     const filename = 'VidNotes '+Date.now()+'.zip'
+    //         // if (gdrive){
+    //             // return URL.createObjectURL(content)
+    //             var fileMetadata = {
+    //                 'name': 'Invoices',
+    //                 'mimeType': 'application/vnd.google-apps.folder'
+    //             };
+    //             drive.files.create({
+    //             resource: fileMetadata,
+    //             fields: 'id'
+    //             }, function (err, file) {
+    //             if (err) {
+    //                 // Handle error
+    //                 console.error(err);
+    //             } else {
+    //                 console.log('Folder Id: ', file.id);
+    //             }
+    //             });
+
+    //             var folderId = '0BwwA4oUTeiV1TGRPeTVjaWRDY1E';
+    //             var fileMetadata = {
+    //             'name': 'photo.jpg',
+    //             parents: [folderId]
+    //             };
+    //             var media = {
+    //             mimeType: 'application/zip',
+    //             body: fs.createReadStream('files/photo.zip')
+    //             };
+    //             drive.files.create({
+    //             resource: fileMetadata,
+    //             media: media,
+    //             fields: 'id'
+    //             }, function (err, file) {
+    //             if (err) {
+    //                 // Handle error
+    //                 console.error(err);
+    //             } else {
+    //                 console.log('File Id: ', file.id);
+    //             }
+    //             });
+    //         // }
+    //     //     else{
+    //     //         FileSaver.saveAs(content, filename);
+    //     //     }
+    //     // }); 
+    // }
 
     render() {
         const videoJsOptions = {
@@ -952,7 +1039,7 @@ export default class PageContainer extends React.Component{
        
 
 
-        console.log("playlistJSON:", playlistJSON)
+        console.log("playlistJSON:", playlistJSON, process.env.REACT_APP_TEST_ENV_VAR)
     
         
         
@@ -1033,6 +1120,18 @@ export default class PageContainer extends React.Component{
                     {/* allowdir is something I found here: 'https://stackoverflow.com/questions/42633306/how-to-allow-the-user-to-pick-any-file-or-directory-in-an-input-type-file-ta'    But, I don't think it's needed, actually. */}
                     {/* <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} type="file"  accept=".zip" directory=""/></div> */}
                     {/* <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} type="file"  accept=".zip" directory="" mozdirectory="" allowdirs="" /></div> */}
+                    <div    class="g-savetodrive"
+                            data-src={testVideo2}
+                            data-filename="My Statement.mp4"
+                            data-sitename="My Company Name">
+                    </div>
+                    <div>Test Env String: {process.env.REACT_APP_TEST_ENV_VAR}</div>
+                    {/* <div>Test Env String: %REACT_APP_TEST_ENV_VAR%</div> */}
+                    {/* <div    class="g-savetodrive"
+                            data-src={this.downloadProject(true)}
+                            data-filename="myProject"
+                            data-sitename="My Company Name">
+                    </div> */}
                     <pre className="testerPre" >{this.state.fileContents}</pre>
 
                     {/* 
