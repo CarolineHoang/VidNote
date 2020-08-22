@@ -104,7 +104,7 @@ export default class Playlist extends React.Component {
     
     return (
       <div>	
-        <div class="vjs-playlist"></div>
+        <div className="vjs-playlist"></div>
       </div>
     )
   }

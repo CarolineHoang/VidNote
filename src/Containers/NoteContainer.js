@@ -12,7 +12,8 @@ export default class NoteContainer extends React.Component{
         super(props);
         this.state= {
             index: 0,
-            currentNoteId: 0
+            currentNoteId: 0,
+            noteRefArr : []
         }
         this.handleShow = this.handleShow.bind(this);
         this.findMostRecentNoteIdx =this.findMostRecentNoteIdx.bind(this)
@@ -41,11 +42,13 @@ export default class NoteContainer extends React.Component{
         }
         return notesArr.length-1
     }
-    handleShow(command, i) {
+    handleShow(command, i, refArr ) {
+        console.log("ref arrs: " ,  refArr, this.state.noteRefArr)
         if (command == "current"){
            var mRIdx = this.findMostRecentNoteIdx()
            if (mRIdx>0){
-                this.refs[mRIdx].scrollIntoView({block: 'center', behavior: 'smooth'});
+                // this.refs[mRIdx].scrollIntoView({block: 'center', behavior: 'smooth'});
+                refArr[mRIdx].current.scrollIntoView({block: 'center', behavior: 'smooth'});
                 console.log('mRIdx: ', mRIdx)
                 this.setState({index: mRIdx})
            }
@@ -59,63 +62,63 @@ export default class NoteContainer extends React.Component{
             // console.log(this.refs[i].)
             // this.refs[i].attributes.push("centerListItem")
             console.log('the refs: ', this.refs, this.refs[1] )
-            this.refs[i].scrollIntoView({block: 'center', behavior: 'smooth'});
+            refArr[i].current.scrollIntoView({block: 'center', behavior: 'smooth'});
 
             this.setState({index: i})
         }
       }
 
       
-    render() {
+      
+      
+      render() {
         var notes = this.props.itemList.notes
         console.log("ITEMMMMS", notes)
+
+        var idx = 0;
+        var newRef  = null;
+        var refArr  = [];
+        while (idx <notes.length){
+            newRef = React.createRef()
+            refArr.push(newRef)
+            idx+=1
+        }
+        // if ( notes.length !=this.state.noteRefArr.length){
+        //     this.setState({
+        //         noteRefArr : refArr
+        //     })
+        // }
         return(
                 <div>
                     <div className="noteSectionVideoTitle">{this.props.itemList.videoName != null ? this.props.itemList.videoName : 'Untitled Video'}</div>
                     {this.props.itemList.category == 'web' ? <div className="noteSectionVideoLink">Watch Now: <a href={this.props.itemList.url}>{this.props.itemList.url}</a></div>  : <div className="noteSectionVideoLink">Uploaded File</div>}
                     {this.state.index}
                     {/* this must be a arrow function in order to bind the this so that we can use state in the map function  */}
-                    <ul>{notes.map((item, i) => {
-                        if (i == this.state.index){
-                            return (
-                                <div ref={i}>
-                                    <Note   _ref={i} note={item} 
-                                            additionalClasses='centerListItem' 
-                                            setCurrVidTime = {this.props.setCurrVidTime } 
-                                            changeNote = {this.props.changeNote } 
-                                            videoId = {this.props.itemList.videoId} 
-                                            videoCategory = {this.props.itemList.category} 
-                                            url = {this.props.itemList.url} 
-                                            ytVidId = {this.props.itemList.ytVidId}  
-                                            getCurrVidTime = {this.props.getCurrVidTime}>
-                                    </Note>
-                                </div>
-                            )
-                        }
-                        else{
-                            return (
-                                <div ref={i}>
-                                    <Note   _ref={i} 
-                                            note={item} 
-                                            additionalClasses='' 
-                                            setCurrVidTime = {this.props.setCurrVidTime }  
-                                            changeNote = {this.props.changeNote } 
-                                            videoId = {this.props.itemList.videoId}  
-                                            videoCategory = {this.props.itemList.category}  
-                                            url = {this.props.itemList.url}  
-                                            ytVidId = {this.props.itemList.ytVidId} 
-                                            getCurrVidTime = {this.props.getCurrVidTime}>
-                                    </Note>
-                                </div>
-                            )
-                        }
+                    <ul>
+                        {notes.map((item, i) => {
+                        return (
+                            <div ref={refArr[i]} key={"note"+i} >
+                                <Note   _ref={i} note={item} 
+                                        additionalClasses={ i == this.state.index ? 'centerListItem' : ''}
+                                        setCurrVidTime = {this.props.setCurrVidTime } 
+                                        changeNote = {this.props.changeNote } 
+                                        videoId = {this.props.itemList.videoId} 
+                                        videoCategory = {this.props.itemList.category} 
+                                        url = {this.props.itemList.url} 
+                                        ytVidId = {this.props.itemList.ytVidId}  
+                                        getCurrVidTime = {this.props.getCurrVidTime}>
+                                </Note>
+                            </div>
+                        ) 
                     })}
+{/* 
+                    { renderNoteList(notes)} */}
                   </ul>
-                  <button onClick={this.handleShow.bind(this, "", 0)}>0</button>
-                  <button onClick={this.handleShow.bind(this, "", 2)}>2</button>
-                  <button onClick={this.handleShow.bind(this, "", 50)}>50</button>
-                  <button onClick={this.handleShow.bind(this, "", 99)}>99</button>
-                  <button onClick={this.handleShow.bind(this, "current", 0  )}>Current Note</button>
+                  <button onClick={this.handleShow.bind(this, "", 0, refArr)}>0</button>
+                  <button onClick={this.handleShow.bind(this, "", 2, refArr)}>2</button>
+                  <button onClick={this.handleShow.bind(this, "", 50, refArr)}>50</button>
+                  <button onClick={this.handleShow.bind(this, "", 99, refArr)}>99</button>
+                  <button onClick={this.handleShow.bind(this, "current", 0  , refArr)}>Current Note</button>
                   {this.state.index}
                 </div>
         );

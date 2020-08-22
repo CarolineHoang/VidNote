@@ -24,22 +24,36 @@ import YoutubeVid from 'videojs-youtube';
 import NoteContainer from "./NoteContainer";
 import Playlist from "../Components/Playlist";
 // import 'videojs-youtube';
+const https = require('https');
+// const request = require('request');
+
+const testGet=()=>{
+    // https.get('/repos/:owner/:repo/actions/secrets', (resp) => {
+    https.get('/VidNote/:CarolineHoang/:VidNote/actions/secrets', (resp) => {
+        let data = '';
+      
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+          data += chunk;
+        });
+      
+        // The whole response has been received. Print out the result.
+        resp.on('end', () => {
+        //   console.log(JSON.parse(data).explanation);
+          console.log(data);
+        });
+      
+      }).on("error", (err) => {
+        console.log("Error: " + err.message);
+      });
+}
+
 
 // import "https://vjs.zencdn.net/7.8.4/video.js";
 
 
-// this is how to make a file download 
 const testFile = test;
-// const testFile2 = testF;
-// let zip = new JSZip();
-// var img = zip.folder("images");
-// zip.file("idlist.txt", `PMID:29651880\r\nPMID:29303721`);
-// zip.file("idlist2.txt", `PMID:29651880\r\nPMID:29303721`);
-// img.file("idlist2.txt", `PMID:29651880\r\nPMID:29303721`);
-// zip.generateAsync({type: "blob"}).then(function(content) {
-//   FileSaver.saveAs(content, "download.zip");
-// }); 
-// this command will download a file right away
+
 
 //react state values:
 const currentNoteIndex =0;  // this is the index of the note that is currently the note that the video is on to color as the "current one"
@@ -48,132 +62,7 @@ const videoTime =0; //this value should update every half second and is the time
                     //on each update, we check if the time is greater than the timestamp on the above indexed note
                     //if it's more and the index is not the max length of the note list minus 1, then we check the nextones through the list and stop at the next one before the one that is more than this number. If we get to the end, then the last one is the current note.
                     //if the note happens to have an end time  (and we cannot set this time to overlap with the next one's start time) then we make sure that the current time is less than that end time
-    //
-        // const Meta = {
-        //     // fileNames: [],  //this will be an array in the order of the playlist
-        //     //                 // every Youtube video will have the 
-        //     maxVideoId: 3,
-        //     maxNoteId:  3,
-        //     noteData:[
-        //         {
-        //             videoId: 0,
-        //             category: 'web', //  web = youtube, vimero. etc, local = files
-        //             type: 'video/youtube',
-        //             url: 'https://www.youtube.com/watch?v=3WQHDUYk310&feature=emb_rel_pause',
-        //             // videoName: null,
-        //             videoName: 'Dummy YouTube VideoName 1',
-        //             notes: 
-        //             [   
-        //                 {
-        //                     noteId: 0,
-        //                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
-        //                     endTime: null,
-        //                     noteTitle: null,
-        //                     text: "This is a test message111",
-        //                     bookmarked: false,
-        //                     created : Date.now(),
-        //                     lastUpdated : Date.now(),
-        //                     drawn: false,
-        //                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-        //                 },
-        //                 {   
-        //                     noteId: 1,
-        //                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
-        //                     endTime: null,
-        //                     noteTitle: null,
-        //                     text: "This is a test message222",
-        //                     bookmarked: false,
-        //                     created : Date.now(),
-        //                     lastUpdated : Date.now(),
-        //                     drawn: false,
-        //                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-        //                 }
-        //             ]
-                    
-            
-        //         },
-        //         {
-        //             videoId: 1,
-        //             category: 'web', //  web = youtube, vimero. etc, local = files
-        //             type: 'video/youtube',
-        //             url: 'https://www.youtube.com/watch?v=voFRslp8d60&t=17s',
-        //             videoName: null,
-        //             // videoName: 'Dummy YouTube VideoName 2',
-        //             notes: 
-        //             [   
-        //                 {
-        //                     noteId: 0,
-        //                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
-        //                     endTime: null,
-        //                     noteTitle: null,
-        //                     text: "This is a test message333",
-        //                     bookmarked: false,
-        //                     created : Date.now(),
-        //                     lastUpdated : Date.now(),
-        //                     drawn: false,
-        //                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-        //                 },
-        //                 {   
-        //                     noteId: 1,
-        //                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
-        //                     endTime: null,
-        //                     noteTitle: null,
-        //                     text: "This is a test message444",
-        //                     bookmarked: false,
-        //                     created : Date.now(),
-        //                     lastUpdated : Date.now(),
-        //                     drawn: false,
-        //                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-        //                 }
-        //             ]
-                    
-            
-        //         },
-        //         {
-        //             videoId: 2,
-        //             category: 'local', //  web = youtube, vimero. etc, local = files
-        //             type: 'video/mp4',
-        //             url: testVideo2,
-        //             videoName: "testVid.mp4",
-        //             notes: 
-        //             [   
-        //                 {
-        //                     noteId: 2,
-        //                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
-        //                     endTime: null,
-        //                     noteTitle: null,
-        //                     text: "This is a test message444",
-        //                     bookmarked: false,
-        //                     created : Date.now(),
-        //                     lastUpdated : Date.now(),
-        //                     drawn: false,
-        //                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-        //                 },
-        //                 {   
-        //                     noteId: 3,
-        //                     startTime: 0, //this should not be a Date value but instead a count of miliseconds from the start of the video
-        //                     endTime: null,
-        //                     noteTitle: null,
-        //                     text: "This is a test message555",
-        //                     bookmarked: false,
-        //                     created : Date.now(),
-        //                     lastUpdated : Date.now(),
-        //                     drawn: false,
-        //                     images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-        //                 }
-        //             ]
-            
-        //         }
-        
-        //     ],
-        //     settings : {
-        //         warnings: false,
-        //         reverse_shift_enter_submit: false,
-        //         show_undo: false
-        //     }
-            
-        // }
-    //
+ 
                     
 const Meta = {
     // fileNames: [],  //this will be an array in the order of the playlist
@@ -326,9 +215,6 @@ var MetaFiles= zip.folder("Meta");
 
 MetaFiles.file("meta.txt", JSON.stringify(Meta)  );
 // var Meta = zip.folder("meta");
-
-
-
 // var img = zip.folder("images");
 // zip.file("idlist.txt", `PMID:29651880\r\nPMID:29303721`);
 // zip.file("idlist2.txt", `PMID:29651880\r\nPMID:29303721`);
@@ -344,16 +230,11 @@ const downloadNotes = () =>{
 
 
 
-var items = [];
-for (var i = 0; i < 100; i++) {
-  items.push(i+'d');
-}
+
 
 const getFileExtenstion = (fileName) => {
     return fileName.substr(fileName.lastIndexOf('.') + 1); 
     // var ext = e.target.value.substr(e.target.value.lastIndexOf('.') + 1);
-
-
 }
 
 export default class PageContainer extends React.Component{
@@ -383,7 +264,6 @@ export default class PageContainer extends React.Component{
         this.changeNote = this.changeNote.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         this.addToPlaylist = this.addToPlaylist.bind(this);
-        // this.handleNoteInputChange = this.handleNoteInputChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.acceptSpecialSymbol = this.acceptSpecialSymbol.bind(this);
         this.findMostRecentNoteIdx =this.findMostRecentNoteIdx.bind(this)
@@ -393,8 +273,6 @@ export default class PageContainer extends React.Component{
         this.loadProject = this.loadProject.bind(this);
         this.downloadProject = this.downloadProject.bind(this);
         this.loadBackupProject = this.loadBackupProject.bind(this);
-
-        // this.resetNoteState = this.resetNoteState.bind(this);
 
     }
     setVideoRef(ref){
@@ -538,8 +416,6 @@ export default class PageContainer extends React.Component{
 
 
     addToPlaylist(e, category, fileTarget ){
-
-
         // let fileName = e.target.value.split('\\').pop();
 
         //   console.log('fileName :', fileName, e.target.value)
@@ -568,29 +444,11 @@ export default class PageContainer extends React.Component{
             type = 'video/'+ext
             fileObj = e.target.files[0]
             // src = this.state.newVideoLink
-
             src = URL.createObjectURL(e.target.files[0])
             console.log("LOCAL vars: ", type,src)
             vidName = fileName
-
-            // src = e.target.files[0]
         }
-    
-        // else if (category == 'local'){
-        //     // let fileName = fileTarget.value.split('\\').pop();
-        //     var ext = fileTarget.value.substr(fileTarget.value.lastIndexOf('.') + 1);
-        //     type = 'video/'+ext
-        //     src = this.state.newVideoLink
-
-        //     // src = URL.createObjectURL(fileTarget.files[0])
-        //     console.log("LOCAL vars: ", type,src)
-
-        //     // src = e.target.files[0]
-        // }
         console.log(this.state.newNote)
-        //     maxVideoId: 1,
-        // maxNoteId:  3,
-            // this.state
             var metaCopy = this.state.meta;
             var currentTime  = this.getCurrVidTime()
             metaCopy.noteData.push(
@@ -606,24 +464,15 @@ export default class PageContainer extends React.Component{
                 }
             )
             console.log("meta before1: ", this.state.meta , metaCopy.maxVideoId)
-
             metaCopy.maxVideoId = parseInt(metaCopy.maxVideoId)+1;
             console.log("meta before2: ", this.state.meta , metaCopy.maxVideoId)
 
-    
-    
             this.setState({
                 meta: metaCopy,
                 newVideoLink : ''
             }, ()=>{console.log( "meta after: ",  this.state.meta)} )
 
-            
-
         console.log("video added: ", this.state.newVideoLink )
-        // this.setState({
-        //     newVideoLink : ''
-        // } )
-        
 
         //figure out if it's a youtube video or proper url
         //if it is a proper url, add it to the Meta playlist
@@ -634,7 +483,6 @@ export default class PageContainer extends React.Component{
 
     
     uploadFile(e){
-        console.log("heeeeeelllllooo")
         console.log("UPLOADING:", e.target.value, typeof e.target.value)
         if (e.target.value !== ""){ //if a file is uploaded and user did not cancel
           // Extract file name from path
@@ -647,11 +495,6 @@ export default class PageContainer extends React.Component{
           console.log('fileName :', fileName, e.target.value, ext)
 
           let rowNum = e.target.id.split('-').pop();
-          
-          // Get row num from end of id to select this row's label to for filename
-        //   let labelTxt = document.querySelector(`[for="uploader-${rowNum}"] > .filePreview`);
-        //   labelTxt.innerHTML = fileName;
-          // Get track data for processing
           let arrayBuffer = e.target.files[0].arrayBuffer();
 
         this.addToPlaylist(e , 'local' , e.target )
@@ -999,7 +842,6 @@ export default class PageContainer extends React.Component{
         var playlistJSON = [];
         this.state.meta.noteData.forEach((videoJSON) => {
                 // if (videoJSON.category === 'web'){
-                    console.log("web index: ", i)
                     playlistJSON.push({
                         name: videoJSON.videoName,
                         sources: [{
@@ -1028,18 +870,13 @@ export default class PageContainer extends React.Component{
                         //       src: 'test/example/oceans-low.jpg'
                         //     }
                         //   ]
-                          
-                          
-                    
                     })
-                // }
-                // else if (videoJSON.category === 'local')
             }
         )
        
 
 
-        console.log("playlistJSON:", playlistJSON, process.env.REACT_APP_TEST_ENV_VAR)
+        // console.log("playlistJSON:", playlistJSON, process.env.REACT_APP_TEST_ENV_VAR)
     
         
         
@@ -1047,50 +884,10 @@ export default class PageContainer extends React.Component{
         return(
             <div className="tripleColumnContainer" >
                 <div className='videoPlayer' >
-                    {/* <video
-                        id="my-video"
-                        className="video-js"
-                        controls
-                        preload="auto"
-                        width="640"
-                        height="264"
-                        poster="MY_VIDEO_POSTER.jpg"
-                    >
-                        <source src={testVideo} type="video/mp4" />
-
-                    </video> */}
-                     {/* <div data-vjs-player>
-                        <video id="example_video_1" 
-                            className="video-js " 
-                            controls
-                            preload="auto" 
-                            width="640"
-                            height="264"
-                            poster="http://ec2-54-227-116-247.compute-1.amazonaws.com/models/site-templates/images/cover_img/ted_cover.jpg" 
-                            data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }'
-                        >
-                        </video>
-                    </div> */}
-                    {/* <VideoPlayer { ...videoJsOptions } setVidRef = {this.setVideoRef}  test = "hi" /> */}
                     <VideoPlayer { ...videoJsOptions } setVidRef = {this.setVideoRef}  test = "hi" />
                     <button onClick={this.getVideoRef}>getVideoRef</button>
                     <button onClick={this.getCurrVidTime}>Get current Video Time [PC] </button>
                     <button onClick={ () => this.setCurrVidTime(180)}>Set current Video Time to 3 min[PC] </button>
-                   
-                        jhvj
-                    {/* </div> */}
-                    {/* <video src={testVideo} autoPlay="true" /> */}
-
-
-                    {/* <video id="example_video_1" 
-  class="video-js vjs-default-skin" 
-  controls
-  preload="auto" 
-  width="640"
-  height="264"
-  poster="http://ec2-54-227-116-247.compute-1.amazonaws.com/models/site-templates/images/cover_img/ted_cover.jpg" 
-  data-setup='{"techOrder":["youtube"], "src":"http://www.youtube.com/watch?v=xYemnKEKx0c"}'></video> */}
-                    
                 </div>
                 <div className='playList' >
                     {/* this is how to create an HTML a tag that will download a local app file*/}
@@ -1098,9 +895,6 @@ export default class PageContainer extends React.Component{
                     <button onClick={downloadNotes}>Download Default Info </button>
                     <button onClick={this.downloadProject}>Download Info </button>
                     <button onClick={this.loadBackupProject}>Revert to Last Project</button>
-                    {/* <a href={testFile2} download="testFolder.zip">----Hiii2</a> */}Hi
-                    {/* <textarea onChange={this.handleNoteInputChange} className='NoteInputField' ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button> */}
-
                     {/* by including the state variable as a value for the input/textarea field, we make sure it clears out if we set the state variable to be empty because then on the rerender, it repopulates as a empty */}
                     <textarea onChange={(e, note) => this.handleInputChange(e, 'newNote')} onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, 'newNote')} className='NoteInputField' value={this.state.newNote} ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
                     <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  ></input> 
@@ -1120,18 +914,22 @@ export default class PageContainer extends React.Component{
                     {/* allowdir is something I found here: 'https://stackoverflow.com/questions/42633306/how-to-allow-the-user-to-pick-any-file-or-directory-in-an-input-type-file-ta'    But, I don't think it's needed, actually. */}
                     {/* <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} type="file"  accept=".zip" directory=""/></div> */}
                     {/* <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} type="file"  accept=".zip" directory="" mozdirectory="" allowdirs="" /></div> */}
-                    <div    class="g-savetodrive"
+                    <div    className="g-savetodrive"
                             data-src={testVideo2}
                             data-filename="My Statement.mp4"
                             data-sitename="My Company Name">
                     </div>
-                    <div>Test Env String: {process.env.REACT_APP_TEST_ENV_VAR}</div>
+                                    {/* <div>Test Env String: {process.env.REACT_APP_TEST_ENV_VAR}|||{process.env.REACT_APP_TEST}</div> */}
+
                     {/* <div>Test Env String: %REACT_APP_TEST_ENV_VAR%</div> */}
                     {/* <div    class="g-savetodrive"
                             data-src={this.downloadProject(true)}
                             data-filename="myProject"
                             data-sitename="My Company Name">
                     </div> */}
+
+                                    {/* <button onClick={testGet}>Test Get</button> */}
+
                     <pre className="testerPre" >{this.state.fileContents}</pre>
 
                     {/* 
@@ -1163,7 +961,6 @@ export default class PageContainer extends React.Component{
                     changeNote = {this.changeNote}
                     />
 
-                    Hi
                     <form>
                         <input type='button' name='print' value="Print Page" onClick={()=>{window.print()}}/>
                     </form>

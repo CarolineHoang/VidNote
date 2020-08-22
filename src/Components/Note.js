@@ -1,32 +1,12 @@
+import React from "react";
+import '../Styles/page-container-styles.css'
+// import VideoPlayer from "../Components/VideoPlayer.js";
+// import YoutubeVid from 'videojs-youtube';
+
 // Scrolling view functionality is inspired and based off of CodePen:
 // Name: 'React: scrollIntoView'
 // Pen Owner: 'Hirokazu Takatama'
 
-
-
-
-import React from "react";
-
-import '../Styles/page-container-styles.css'
-
-import test from '../DownloadFolder/testFile.txt'
-// import testVideo  from '../Assets/testVid.mp4'
-// import testVideo2  from './testVid.mp4'
-// import testF from '../DownloadFolder/testFolder.zip'
-
-import JSZip from 'jszip';
-import FileSaver from 'file-saver';
-
-// import videojs from 'video.js'
-import VideoPlayer from "../Components/VideoPlayer.js";
-
-import YoutubeVid from 'videojs-youtube';
-// import 'videojs-youtube';
-
-// import "https://vjs.zencdn.net/7.8.4/video.js";
-
-
-// function round
 
 export default class Note extends React.Component{
 
@@ -41,10 +21,7 @@ export default class Note extends React.Component{
             noteSectionVideoId : this.props.videoId,
             lastEnabled:  { state : null, saved: true } ,
             videoCategory : this.props.videoCategory
-            
-            // index: 0
         }
-        // this.handleShow = this.handleShow.bind(this);
         this.handleToggleState = this.handleToggleState.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.acceptSpecialSymbol = this.acceptSpecialSymbol.bind(this);
@@ -53,8 +30,6 @@ export default class Note extends React.Component{
         this.formatTimeStamp = this.formatTimeStamp.bind(this);
     }
     componentDidUpdate(nextProps){
-        // debugger;
-
         //if the section rendered is different from the last (we changed videos or we're loading a different set of notes) then update all disabled states to close them all
         if (nextProps.videoId != this.props.videoId){
             this.setState({
@@ -64,14 +39,10 @@ export default class Note extends React.Component{
             console.log("updating...")
         }
         else{
-            // debugger;
             console.log("not updating...", )
         }
-        
-
     }
     // componentDidMount(){
-
     // }
     handleShow(i) {
         console.log(this.refs, i)
@@ -166,7 +137,7 @@ export default class Note extends React.Component{
     handleInputChange(e, stateVal){
         // var eVal = e.target.value
         // in order to see the most current change in printing, you must include the print statment in the setState function and there must be in an anonymnous arrow function    >>> https://forum.freecodecamp.org/t/solved-this-setstate-is-updating-state-after-console-log/206985/2
-        //if we use []around the property name, we can use ES6 computed property names >>> https://stackoverflow.com/questions/29280445/reactjs-setstate-with-a-dynamic-key-name
+        // if we use [] around the property name, we can use ES6 computed property names >>> https://stackoverflow.com/questions/29280445/reactjs-setstate-with-a-dynamic-key-name
         this.setState({[stateVal]: e.target.value},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
 
     }
@@ -195,19 +166,12 @@ export default class Note extends React.Component{
     }
 
     formatTimeStamp(totalSecs, noteInfo){
-        // var tsecs = parseInt(totalSecs)
         var hr = 0
         var min = 0 
         var sec = 0
         if (totalSecs < 60){ //if it's under a minute
-            // sec = Math.round((totalSecs + Number.EPSILON) * 100) / 100
             sec = Math.trunc(totalSecs)
-            
-            // debugger;
-
-    // return <div>0:{sec < 10 ? '0' : ''}{sec}iiii{totalSecs}{totalSecs<60 ? typeof totalSecs : typeof totalSecs}</div>
-    // return <div>0:{sec < 10 ? '0' : ''}{sec}{ (this.props.videoCategory == "web"  ?    <a href={`${this.props.url}?t=${sec}`}>0:{sec < 10 ? '0' : ''}{sec}</a> : "" )}</div>
-    return <div><div className={this.props.videoCategory == "web"  ?  "timestamp": ""}>0:{sec < 10 ? '0' : ''}{sec}</div>{ (this.props.videoCategory == "web"  ?    <a href={`https://youtu.be/${this.props.ytVidId}?t=${sec}`} className="printOnlyTimeStamp"  >0:{sec < 10 ? '0' : ''}{sec}</a> : "" )}</div>
+            return <div><div className={this.props.videoCategory == "web"  ?  "timestamp": ""}>0:{sec < 10 ? '0' : ''}{sec}</div>{ (this.props.videoCategory == "web"  ?    <a href={`https://youtu.be/${this.props.ytVidId}?t=${sec}`} className="printOnlyTimeStamp"  >0:{sec < 10 ? '0' : ''}{sec}</a> : "" )}</div>
         }
         else if (totalSecs < 60*60){ //if it's under an hour
             min = Math.trunc(totalSecs/60)
@@ -224,6 +188,7 @@ export default class Note extends React.Component{
             return <div>Error: MAX_VIDEO_LENGTH EXCEEDED</div>
         }
     }
+    //TODO: different update time formats depending on how long it's been
     formatUpdate(sec){
         if (sec < 60){ //if it's under a minute
 
@@ -239,7 +204,7 @@ export default class Note extends React.Component{
         }
         return
     }
-      
+    
     render() {
 
         if (this.props.videoCategory != this.state.videoCategory){
@@ -248,11 +213,8 @@ export default class Note extends React.Component{
             })
         }
 
-
         var noteInfo = this.props.note
         var formattedTS = this.formatTimeStamp(noteInfo.startTime, noteInfo)
-        
-
         // var ts = Math.round((noteInfo.startTime + Number.EPSILON) * 100) / 100
 
         // const date = new Date('2010-08-05')
@@ -264,8 +226,7 @@ export default class Note extends React.Component{
         console.log(`${day}👠${month}👢${year}`) // just for fun
        
         return(
-               
-                    <div ref={this.props._ref} className={'ListItem '+ this.props.additionalClasses} >
+                    <div className={'ListItem '+ this.props.additionalClasses} >
                         <div onClick={() => this.props.setCurrVidTime(noteInfo.startTime) } className="noteTitleContainer" title={this.state.noteTitle}>
                             <div hidden={!this.state.noteTitle_disabled} className= {this.state.noteTitle_disabled ? "seekText titleDiv" : ''}  >Go to:</div>
 
@@ -277,27 +238,18 @@ export default class Note extends React.Component{
                                     value={this.state.noteTitle}  
                                     className= {!this.state.noteTitle_disabled ? "noteTitleEditor titleDiv"  : ''}   >
                             </input>
-                            {/* {()=>{debugger}} */}
-                            
                             <div    hidden ={!this.state.noteTitle_disabled} 
                                     onDoubleClick={this.state.lastEnabled.saved  ? ( e, state ) => this.handleToggleState( e, 'noteTitle_disabled') : null } 
                                     className= {this.state.noteTitle_disabled ? "noteTitleDisplay titleDiv"  : ''} >
                                         {this.state.noteTitle}
-                                {/* {noteInfo.noteTitle != null ? noteInfo.noteTitle : noteInfo.text}  */}
                             </div> 
-                            {/* <div className= "noteTitle titleDiv" >
-                                {noteInfo.noteTitle != null ? noteInfo.noteTitle : noteInfo.text} 
-                            </div>  */}
                             <br/>
                         </div>
-                        {/* <textarea disabled={this.state.text_disabled} onChange={( e, state ) => this.handleInputChange( e, 'text')} value={this.state.text} className="noteContent"></textarea> */}
                         <pre    hidden={!this.state.text_disabled} 
                                 onDoubleClick={this.state.lastEnabled.saved  ? ( e, state ) => this.handleToggleState( e, 'text_disabled') : null} 
                                 className="noteMsgDisplay" >
                                     {noteInfo.text}
                         </pre> 
-                        {/* <div hidden={this.state.text_disabled} className= {!this.state.text_disabled ? "noteMsgEditorContainer" : ''}> test</div> */}
-                        
                         {/* the className must be conditional because display flex undos this hidden attribute */}
                         <div    hidden={this.state.text_disabled } 
                                 className= {!this.state.text_disabled ? "noteMsgEditorContainer" : ''} >
@@ -307,15 +259,6 @@ export default class Note extends React.Component{
                                                 className="noteMsgEditor">
                                     </textarea>
                         </div>
-                        
-                
-                        {/* {noteInfo.text}<br/>{ts} */}
-                        {/* <button onClick={( e, state ) => this.handleToggleState( e, 'editing')}>Edit</button> */}
-
-                        {/* <button onClick={( e, state ) => this.handleToggleState( e, 'text_disabled')}>Toggle TextArea</button>
-                        <button onClick={( e, state ) => this.handleToggleState( e, 'noteTitle_disabled')}>Toggle Title</button>
-                        <button hidden={this.state.lastEnabled.state == null || this.state.lastEnabled.saved} onClick={(e, state)=>this.handleSave(e, this.state.lastEnabled )}>Save</button> */}
-                        
 
 
                         <button onClick={(e, updateTimeFunc )=>this.updateTimeStamp(e , this.props.getCurrVidTime)} >Update Timestamp</button>
@@ -335,22 +278,13 @@ export default class Note extends React.Component{
                         <div>Last Edited: {`${month} ${day}, ${year } at ${hour}:${minute}:${second }`}</div>
                         <div>{this.state.videoCategory != null && this.state.videoCategory != undefined && this.state.videoCategory & "hello"}</div>
                         
-                        {/* <button onClick={( e, state ) => this.handleToggleState( e, 'show ')}>Toggle TextArea</button> */}
-
-                        <select>
+                        {/* <select>
                             <option value="grapefruit">Grapefruit</option>
                             <option value="lime">Lime</option>
                             <option selected value="coconut">Coconut</option>
                             <option value="mango">Mango</option>
-                        </select>
-
-                        
-
+                        </select> */}
                     </div>
-                  
-
-
-        
         );
     }
 }
