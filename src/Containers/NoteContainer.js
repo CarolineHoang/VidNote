@@ -257,7 +257,6 @@ export default class NoteContainer extends React.Component{
                   <button onClick={this.handleShow.bind(this, "", 50)}>50</button>
                   <button onClick={this.handleShow.bind(this, "", 99)}>99</button>
                   <button onClick={this.handleShow.bind(this, "current", 0  )}>Current Note</button>
-                  {/* <div>current video : </div> */}
 
                   {this.state.index}
                 </div>
