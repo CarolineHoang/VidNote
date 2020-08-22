@@ -392,6 +392,7 @@ export default class PageContainer extends React.Component{
         this.YouTubeGetID = this.YouTubeGetID.bind(this);
         this.loadProject = this.loadProject.bind(this);
         this.downloadProject = this.downloadProject.bind(this);
+        this.loadBackupProject = this.loadBackupProject.bind(this);
 
         // this.resetNoteState = this.resetNoteState.bind(this);
 
@@ -772,8 +773,23 @@ export default class PageContainer extends React.Component{
     }
 
     loadProject(e, val ){
+        // return zip.files[filename].async('blob').then(function (fileData) {
+        //     return new File([fileData], filename);
+        // })
+        // Object.keys(contents.files).forEach(function(filename) {
+        //     zip.file(filename).async('nodebuffer').then(function(content) {
+        //         var dest = path + filename;
+        //         fs.writeFileSync(dest, content);
+        //     });
 
         var fileArr = e.target.files;
+
+        // Object.keys(e.target.files).forEach(function(filename) {
+        //     zip.file(filename).async('nodebuffer').then(function(content) {
+        //         var dest = path + filename;
+        //         fs.writeFileSync(dest, content);
+        //     });
+        // })
         var i =0 ;
         var metaIdx = 0;
         while(i<fileArr.length){
@@ -849,6 +865,12 @@ export default class PageContainer extends React.Component{
             )
         } 
         fr.readAsText(fileObj);  //Step 5   after establishing the listener, tell it to read the file we picked earlier
+    }
+    loadBackupProject(e, val ){
+        this.setState({
+            backupMeta: this.state.meta, 
+            meta : this.state.backupMeta,
+        })
     }
     downloadProject(){
 
@@ -986,8 +1008,9 @@ export default class PageContainer extends React.Component{
                 <div className='playList' >
                     {/* this is how to create an HTML a tag that will download a local app file*/}
                     <a href={testFile} download="testFile.txt">{testFile}Hiii</a>
-                    <button onClick={downloadNotes}> Click to Download Default Info </button>
-                    <button onClick={this.downloadProject}> Click to Download Info </button>
+                    <button onClick={downloadNotes}>Download Default Info </button>
+                    <button onClick={this.downloadProject}>Download Info </button>
+                    <button onClick={this.loadBackupProject}>Revert to Last Project</button>
                     {/* <a href={testFile2} download="testFolder.zip">----Hiii2</a> */}Hi
                     {/* <textarea onChange={this.handleNoteInputChange} className='NoteInputField' ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button> */}
 
@@ -1001,10 +1024,15 @@ export default class PageContainer extends React.Component{
                     {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
 
                     {/* <input onChange='upload' type='file' accept='.wav, audio/wav'> */}
+                    {/* <input  onChange={(e , type) => this.addToPlaylist(e , 'local')}  type='file' accept='.mp4, video/mp4'></input> */}
                     <input  onChange={(e , type) => this.addToPlaylist(e , 'local')}  type='file' accept='.mp4, video/mp4'></input>
 
                     {/* <div>Field Import:<input directory="" webkitdirectory="" mozdirectory="" type="file" /></div> */}
                     <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} directory="" webkitdirectory="" mozdirectory="" type="file" /></div>
+                    {/* for some reason, it does accept any file type other than directories if I choose webkitdirectory="" but it works if I only put directory  and moz directory*/}
+                    {/* allowdir is something I found here: 'https://stackoverflow.com/questions/42633306/how-to-allow-the-user-to-pick-any-file-or-directory-in-an-input-type-file-ta'    But, I don't think it's needed, actually. */}
+                    {/* <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} type="file"  accept=".zip" directory=""/></div> */}
+                    {/* <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} type="file"  accept=".zip" directory="" mozdirectory="" allowdirs="" /></div> */}
                     <pre className="testerPre" >{this.state.fileContents}</pre>
 
                     {/* 
