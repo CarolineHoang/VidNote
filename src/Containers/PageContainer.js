@@ -9,8 +9,8 @@ import React from "react";
 import '../Styles/page-container-styles.css'
 
 import test from '../DownloadFolder/testFile.txt'
-import testVideo  from '../Assets/testVid.mp4'
-import testVideo1  from './testVid.mp4'
+            // import testVideo  from '../Assets/testVid.mp4'
+            // import testVideo1  from './testVid.mp4'
 import testVideo2  from './testVid.mp4'
 // import testF from '../DownloadFolder/testFolder.zip'
 
@@ -20,33 +20,33 @@ import FileSaver from 'file-saver';
 // import videojs from 'video.js'
 import VideoPlayer from "../Components/VideoPlayer.js";
 
-import YoutubeVid from 'videojs-youtube';
+            // import YoutubeVid from 'videojs-youtube';
 import NoteContainer from "./NoteContainer";
 import Playlist from "../Components/Playlist";
 // import 'videojs-youtube';
 const https = require('https');
 // const request = require('request');
 
-const testGet=()=>{
-    // https.get('/repos/:owner/:repo/actions/secrets', (resp) => {
-    https.get('/VidNote/:CarolineHoang/:VidNote/actions/secrets', (resp) => {
-        let data = '';
-      
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-          data += chunk;
-        });
-      
-        // The whole response has been received. Print out the result.
-        resp.on('end', () => {
-        //   console.log(JSON.parse(data).explanation);
-          console.log(data);
-        });
-      
-      }).on("error", (err) => {
-        console.log("Error: " + err.message);
-      });
-}
+                // const testGet=()=>{
+                //     // https.get('/repos/:owner/:repo/actions/secrets', (resp) => {
+                //     https.get('/VidNote/:CarolineHoang/:VidNote/actions/secrets', (resp) => {
+                //         let data = '';
+                    
+                //         // A chunk of data has been recieved.
+                //         resp.on('data', (chunk) => {
+                //           data += chunk;
+                //         });
+                    
+                //         // The whole response has been received. Print out the result.
+                //         resp.on('end', () => {
+                //         //   console.log(JSON.parse(data).explanation);
+                //           console.log(data);
+                //         });
+                    
+                //       }).on("error", (err) => {
+                //         console.log("Error: " + err.message);
+                //       });
+                // }
 
 
 // import "https://vjs.zencdn.net/7.8.4/video.js";
@@ -55,14 +55,14 @@ const testGet=()=>{
 const testFile = test;
 
 
-//react state values:
-const currentNoteIndex =0;  // this is the index of the note that is currently the note that the video is on to color as the "current one"
-                            // to start out, and be easy, we reset this to 0 and start the video from the start every time we change video in the playlist
-const videoTime =0; //this value should update every half second and is the time that the user saves as the note time but rounded to the next second
-                    //on each update, we check if the time is greater than the timestamp on the above indexed note
-                    //if it's more and the index is not the max length of the note list minus 1, then we check the nextones through the list and stop at the next one before the one that is more than this number. If we get to the end, then the last one is the current note.
-                    //if the note happens to have an end time  (and we cannot set this time to overlap with the next one's start time) then we make sure that the current time is less than that end time
- 
+                // //react state values:
+                // const currentNoteIndex =0;  // this is the index of the note that is currently the note that the video is on to color as the "current one"
+                //                             // to start out, and be easy, we reset this to 0 and start the video from the start every time we change video in the playlist
+                // const videoTime =0; //this value should update every half second and is the time that the user saves as the note time but rounded to the next second
+                //                     //on each update, we check if the time is greater than the timestamp on the above indexed note
+                //                     //if it's more and the index is not the max length of the note list minus 1, then we check the nextones through the list and stop at the next one before the one that is more than this number. If we get to the end, then the last one is the current note.
+                //                     //if the note happens to have an end time  (and we cannot set this time to overlap with the next one's start time) then we make sure that the current time is less than that end time
+                
                     
 const Meta = {
     // fileNames: [],  //this will be an array in the order of the playlist
@@ -344,7 +344,7 @@ export default class PageContainer extends React.Component{
         var arrLength = notesArr.length
         var index = 0
         if (arrLength  > 0){
-            var index = this.findNewNoteIdx(currentTime, notesArr, arrLength)
+            index = this.findNewNoteIdx(currentTime, notesArr, arrLength)
         }
         
         console.log("currentNoteIndex: ", index)
@@ -430,14 +430,14 @@ export default class PageContainer extends React.Component{
         var vidName = ''
         var ytVidId = null
         var fileObj = null
-        if (category == 'web'){
+        if (category === 'web'){
             type = 'video/youtube'
             src = this.state.newVideoLink
             ytVidId  =  this.YouTubeGetID(src)
             vidName = src
 
         }
-        else if (category == 'local'){
+        else if (category === 'local'){
             let fileName = e.target.value.split('\\').pop();
             // var ext = e.target.value.substr(e.target.value.lastIndexOf('.') + 1);
             var ext = getFileExtenstion(e.target.value)
@@ -450,7 +450,7 @@ export default class PageContainer extends React.Component{
         }
         console.log(this.state.newNote)
             var metaCopy = this.state.meta;
-            var currentTime  = this.getCurrVidTime()
+            // var currentTime  = this.getCurrVidTime()
             metaCopy.noteData.push(
                 {
                     videoId: parseInt(metaCopy.maxVideoId)+1,
@@ -494,8 +494,8 @@ export default class PageContainer extends React.Component{
         
           console.log('fileName :', fileName, e.target.value, ext)
 
-          let rowNum = e.target.id.split('-').pop();
-          let arrayBuffer = e.target.files[0].arrayBuffer();
+        //   let rowNum = e.target.id.split('-').pop();
+        //   let arrayBuffer = e.target.files[0].arrayBuffer();
 
         this.addToPlaylist(e , 'local' , e.target )
         }
@@ -512,7 +512,7 @@ export default class PageContainer extends React.Component{
 
     acceptSpecialSymbol(e, stateVal ){
 
-        if (e.keyCode == 9){
+        if (e.keyCode === 9){
             e.preventDefault(); //prevent tab from focusing the next dom object
 
         // this.setState({[stateVal]: e.target.value},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
@@ -527,10 +527,10 @@ export default class PageContainer extends React.Component{
         var currentTime = this.props.getCurrVidTime()
         var idx=0;
         var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
-        if (notesArr.length == 0){
+        if (notesArr.length === 0){
             return -1 //error: there are no notes
         }
-        if (notesArr.length == 1){
+        if (notesArr.length === 1){
             return 0
         }
         while (idx < notesArr.length){
@@ -550,10 +550,10 @@ export default class PageContainer extends React.Component{
         var currentTime = ct
         // var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
         var notesArr = arr
-        if (arrLength== 0){
+        if (arrLength=== 0){
             return -2 //error: there are no notes
         }
-        if (arrLength == 1){
+        if (arrLength === 1){
             if (notesArr[0].startTime < currentTime){
                 return 0
             }
@@ -587,7 +587,7 @@ export default class PageContainer extends React.Component{
                 return mid
             }
         }
-        else if ( mid == arrLength-1 ){
+        else if ( mid === arrLength-1 ){
             if ( arr[mid].startTime >= target  ){
                 return mid
             }
@@ -612,7 +612,8 @@ export default class PageContainer extends React.Component{
 
     YouTubeGetID(url){
         url = url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-        return undefined !== url[2]?url[2].split(/[^0-9a-z_\-]/i)[0]:url[0];
+        // return undefined !== url[2]?url[2].split(/[^0-9a-z_\-]/i)[0]:url[0];
+        return undefined !== url[2]?url[2].split(/[^0-9a-z_-]/i)[0]:url[0]; //remove the escape because React suggested that it's unnecessary
     }
 
     loadProject(e, val ){
@@ -640,7 +641,7 @@ export default class PageContainer extends React.Component{
             var fileName = e.target.files[i].name
             var ext = getFileExtenstion(fileName)
             var fileStatus = ACCEPTED_FILE_EXTENSIONS[ext]
-            if (fileStatus != undefined && fileStatus.valid ){
+            if (fileStatus !== undefined && fileStatus.valid ){
                 // console.log("accepted file type: " , fileName )
                 switch (fileStatus.type){
                     case 'video':
@@ -648,7 +649,7 @@ export default class PageContainer extends React.Component{
                     case 'image':
                         break;
                     case 'text':
-                        if (fileName == 'meta.txt'){
+                        if (fileName === 'meta.txt'){
                             metaIdx= i
                         }
                         break;
@@ -945,7 +946,7 @@ export default class PageContainer extends React.Component{
                 </div> */}
                     
                 <div className='notes'>
-                    <div>HIII{this.state.currPlayingVid != {} && console.log('current video: ',this.state.currPlayingVid, this.state.currPlayingVid.sources)}</div>
+                    <div>HIII{this.state.currPlayingVid !== {} && console.log('current video: ',this.state.currPlayingVid, this.state.currPlayingVid.sources)}</div>
 
                     {/* Wait until the currPlayingVid has been set to a non-empty name value to show a name and show it as long as it's not null. If it is null, substitute the 'Untitled Video' for null */}
                     {/* <div className="noteSectionVideoTitle">{this.state.currPlayingVid != {} && (this.state.currPlayingVid.name != null ? this.state.currPlayingVid.name : 'Untitled Video') }</div>

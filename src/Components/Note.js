@@ -17,7 +17,7 @@ export default class Note extends React.Component{
             text_disabled: true,
             noteTitle_disabled: true,
             text: this.props.note.text,
-            noteTitle: this.props.note.noteTitle != null ? this.props.note.noteTitle : this.props.note.text ,
+            noteTitle: this.props.note.noteTitle !== null ? this.props.note.noteTitle : this.props.note.text ,
             noteSectionVideoId : this.props.videoId,
             lastEnabled:  { state : null, saved: true } ,
             videoCategory : this.props.videoCategory
@@ -31,7 +31,7 @@ export default class Note extends React.Component{
     }
     componentDidUpdate(nextProps){
         //if the section rendered is different from the last (we changed videos or we're loading a different set of notes) then update all disabled states to close them all
-        if (nextProps.videoId != this.props.videoId){
+        if (nextProps.videoId !== this.props.videoId){
             this.setState({
                               text_disabled: true,
                               noteTitle_disabled : true
@@ -143,17 +143,17 @@ export default class Note extends React.Component{
     }
     acceptSpecialSymbol(e, commands, stateVal){
 
-        if (e.keyCode == 9 && commands["include_tabs"] ){
+        if (e.keyCode === 9 && commands["include_tabs"] ){
             e.preventDefault(); //prevent tab from focusing the next dom object
 
         // this.setState({[stateVal]: e.target.value},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
             this.setState({[stateVal]: this.state[stateVal]+ String.fromCharCode(9)},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
         }
-        if (e.keyCode == 13 && e.shiftKey && commands["SE_submit"] ){ // reference for 'e.shiftKey: http://jsfiddle.net/McH8q/28/#save
+        if (e.keyCode === 13 && e.shiftKey && commands["SE_submit"] ){ // reference for 'e.shiftKey: http://jsfiddle.net/McH8q/28/#save
             // this.handleSave(e, this.state.lastEnabled );
             this.handleSave(e);
         }
-        if (e.keyCode == 13 && commands["E_submit"] ){
+        if (e.keyCode === 13 && commands["E_submit"] ){
             // this.handleSave(e, this.state.lastEnabled );
             this.handleSave(e);
 
@@ -171,7 +171,7 @@ export default class Note extends React.Component{
         var sec = 0
         if (totalSecs < 60){ //if it's under a minute
             sec = Math.trunc(totalSecs)
-            return <div><div className={this.props.videoCategory == "web"  ?  "timestamp": ""}>0:{sec < 10 ? '0' : ''}{sec}</div>{ (this.props.videoCategory == "web"  ?    <a href={`https://youtu.be/${this.props.ytVidId}?t=${sec}`} className="printOnlyTimeStamp"  >0:{sec < 10 ? '0' : ''}{sec}</a> : "" )}</div>
+            return <div><div className={this.props.videoCategory === "web"  ?  "timestamp": ""}>0:{sec < 10 ? '0' : ''}{sec}</div>{ (this.props.videoCategory === "web"  ?    <a href={`https://youtu.be/${this.props.ytVidId}?t=${sec}`} className="printOnlyTimeStamp"  >0:{sec < 10 ? '0' : ''}{sec}</a> : "" )}</div>
         }
         else if (totalSecs < 60*60){ //if it's under an hour
             min = Math.trunc(totalSecs/60)
@@ -207,7 +207,7 @@ export default class Note extends React.Component{
     
     render() {
 
-        if (this.props.videoCategory != this.state.videoCategory){
+        if (this.props.videoCategory !== this.state.videoCategory){
             this.setState({
                 videoCategory : this.props.videoCategory
             })
@@ -220,7 +220,7 @@ export default class Note extends React.Component{
         // const date = new Date('2010-08-05')
         const date = noteInfo.lastUpdated
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' , hour: 'numeric', minute: 'numeric', second: 'numeric',  } ) 
-        const [{ value: month },,{ value: day },,{ value: year },,{value : hour},, { value : minute},, {value : second}] = dateTimeFormat .formatToParts(date ) 
+        const [{ value: month },,{ value: day },,{ value: year },,{value : hour},, { value : minute},, {value : second}] = dateTimeFormat.formatToParts(date ) 
 
         console.log(`${day}-${month}-${year }`)
         console.log(`${day}👠${month}👢${year}`) // just for fun
@@ -271,12 +271,12 @@ export default class Note extends React.Component{
                                     onClick={( e, state ) => this.handleToggleState( e, 'noteTitle_disabled')}>
                                         Toggle Title
                         </button>
-                        <button     hidden={this.state.lastEnabled.state == null || this.state.lastEnabled.saved} 
+                        <button     hidden={this.state.lastEnabled.state === null || this.state.lastEnabled.saved} 
                                     onClick={this.handleSave}>
                                         Save
                         </button>
                         <div>Last Edited: {`${month} ${day}, ${year } at ${hour}:${minute}:${second }`}</div>
-                        <div>{this.state.videoCategory != null && this.state.videoCategory != undefined && this.state.videoCategory & "hello"}</div>
+                        <div>{this.state.videoCategory !== null && this.state.videoCategory !== undefined && this.state.videoCategory & "hello"}</div>
                         
                         {/* <select>
                             <option value="grapefruit">Grapefruit</option>

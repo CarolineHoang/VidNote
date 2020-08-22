@@ -23,10 +23,10 @@ export default class NoteContainer extends React.Component{
         var currentTime = this.props.getCurrVidTime()
         var idx=0;
         var notesArr = this.props.itemList.notes
-        if (notesArr.length == 0){
+        if (notesArr.length === 0){
             return -1 //error: there are no notes
         }
-        if (notesArr.length == 1){
+        if (notesArr.length === 1){
             return 0
         }
         while (idx < notesArr.length){
@@ -44,7 +44,7 @@ export default class NoteContainer extends React.Component{
     }
     handleShow(command, i, refArr ) {
         console.log("ref arrs: " ,  refArr, this.state.noteRefArr)
-        if (command == "current"){
+        if (command === "current"){
            var mRIdx = this.findMostRecentNoteIdx()
            if (mRIdx>0){
                 // this.refs[mRIdx].scrollIntoView({block: 'center', behavior: 'smooth'});
@@ -91,7 +91,7 @@ export default class NoteContainer extends React.Component{
         return(
                 <div>
                     <div className="noteSectionVideoTitle">{this.props.itemList.videoName != null ? this.props.itemList.videoName : 'Untitled Video'}</div>
-                    {this.props.itemList.category == 'web' ? <div className="noteSectionVideoLink">Watch Now: <a href={this.props.itemList.url}>{this.props.itemList.url}</a></div>  : <div className="noteSectionVideoLink">Uploaded File</div>}
+                    {this.props.itemList.category === 'web' ? <div className="noteSectionVideoLink">Watch Now: <a href={this.props.itemList.url}>{this.props.itemList.url}</a></div>  : <div className="noteSectionVideoLink">Uploaded File</div>}
                     {this.state.index}
                     {/* this must be a arrow function in order to bind the this so that we can use state in the map function  */}
                     <ul>
@@ -99,7 +99,7 @@ export default class NoteContainer extends React.Component{
                         return (
                             <div ref={refArr[i]} key={"note"+i} >
                                 <Note   _ref={i} note={item} 
-                                        additionalClasses={ i == this.state.index ? 'centerListItem' : ''}
+                                        additionalClasses={ i === this.state.index ? 'centerListItem' : ''}
                                         setCurrVidTime = {this.props.setCurrVidTime } 
                                         changeNote = {this.props.changeNote } 
                                         videoId = {this.props.itemList.videoId} 

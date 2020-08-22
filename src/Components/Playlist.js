@@ -27,9 +27,9 @@ export default class Playlist extends React.Component {
         //originally wrote this to prevent rerender because I thought this was what kept resetting the playlist to the start
         // that is false, it was the lack of a second parameter in the componentDidUpdate this.props.player.playlist() function
         // I am still leaving this however as to make runtime more optimized, but if there is an issue, I should come back here and delete this:
-        console.log("compare it2:", nextProps.playlist , this.props.playlist , nextProps.playlist.length  != this.props.playlist.length)
-        return (nextProps.playlist.length  != this.props.playlist.length)
-        // if (this.state.currentPlaylist != this.nextState.currentPlaylist ){
+        console.log("compare it2:", nextProps.playlist , this.props.playlist , nextProps.playlist.length  !== this.props.playlist.length)
+        return (nextProps.playlist.length  !== this.props.playlist.length)
+        // if (this.state.currentPlaylist !== this.nextState.currentPlaylist ){
         //     console.log("Component Updating", this.state.currentPlaylist, nextState.currentPlaylist)
         //     return true
         // }
@@ -61,7 +61,7 @@ export default class Playlist extends React.Component {
         console.log("The Current Playlist:", this.props.playlist)
 
         console.log("player: ", this.props.player, this.props.test)
-        if (this.props.player != undefined && this.props.player != null){
+        if (this.props.player !== undefined && this.props.player != null){
 
             // this.props.player.playlist([]);
             this.props.player.playlist(this.props.playlist);
