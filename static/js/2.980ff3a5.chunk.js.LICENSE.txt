@@ -23,6 +23,10 @@ object-assign
 
 /*! @name videojs-playlist-ui @version 3.8.0 @license Apache-2.0 */
 
+/*! https://mths.be/punycode v1.4.1 by @mathias */
+
+/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
 /**
  * @videojs/http-streaming
  * @version 1.13.2
