@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/VidNote/static/css/main.ce41fc25.chunk.css",
-    "main.js": "/VidNote/static/js/main.e074b411.chunk.js",
-    "main.js.map": "/VidNote/static/js/main.e074b411.chunk.js.map",
+    "main.js": "/VidNote/static/js/main.4177cff3.chunk.js",
+    "main.js.map": "/VidNote/static/js/main.4177cff3.chunk.js.map",
     "runtime-main.js": "/VidNote/static/js/runtime-main.ac2d05ea.js",
     "runtime-main.js.map": "/VidNote/static/js/runtime-main.ac2d05ea.js.map",
     "static/js/2.2dfb38ea.chunk.js": "/VidNote/static/js/2.2dfb38ea.chunk.js",
     "static/js/2.2dfb38ea.chunk.js.map": "/VidNote/static/js/2.2dfb38ea.chunk.js.map",
     "index.html": "/VidNote/index.html",
-    "precache-manifest.91851def3c29806e616a895c34256138.js": "/VidNote/precache-manifest.91851def3c29806e616a895c34256138.js",
+    "precache-manifest.b773f47d3b2c21156ef7aff24b706fce.js": "/VidNote/precache-manifest.b773f47d3b2c21156ef7aff24b706fce.js",
     "service-worker.js": "/VidNote/service-worker.js",
     "static/css/main.ce41fc25.chunk.css.map": "/VidNote/static/css/main.ce41fc25.chunk.css.map",
     "static/js/2.2dfb38ea.chunk.js.LICENSE.txt": "/VidNote/static/js/2.2dfb38ea.chunk.js.LICENSE.txt",
@@ -20,6 +20,6 @@
     "static/js/runtime-main.ac2d05ea.js",
     "static/js/2.2dfb38ea.chunk.js",
     "static/css/main.ce41fc25.chunk.css",
-    "static/js/main.e074b411.chunk.js"
+    "static/js/main.4177cff3.chunk.js"
   ]
 }
