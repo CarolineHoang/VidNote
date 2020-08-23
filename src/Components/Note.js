@@ -98,13 +98,17 @@ export default class Note extends React.Component{
         console.log("saving....", lastEnabled, lastEnabled.state ,this.state[lastEnabled.state] , this.state.text)
         var noteEditProperty =  this.convertDisableStatusToValue(lastEnabled.state)
     
-        var setStateOpts = {
-                                [lastEnabled.state]: !this.state[lastEnabled.state], 
-                                lastEnabled : {
-                                                    state: this.state.lastEnabled.state, 
-                                                    saved: true
-                                                } 
-                            }
+        var setStateOpts = {}
+        if (toggleEditingFeild){
+            setStateOpts = {
+                [lastEnabled.state]: !this.state[lastEnabled.state], 
+                lastEnabled : {
+                                    state: this.state.lastEnabled.state, 
+                                    saved: true
+                                } 
+            }
+        }
+        
 
         // this.handleToggleState(e, lastEnabled.state)
         this.setState( setStateOpts ,  ()=>{
