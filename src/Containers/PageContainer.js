@@ -24,7 +24,8 @@ import VideoPlayer from "../Components/VideoPlayer.js";
 import NoteContainer from "./NoteContainer";
 import Playlist from "../Components/Playlist";
 // import 'videojs-youtube';
-const https = require('https');
+
+// const https = require('https');
 // const request = require('request');
 
                 // const testGet=()=>{
@@ -79,6 +80,7 @@ const Meta = {
             videoName: 'Dummy YouTube VideoName 1',
             ytVidId : '3WQHDUYk310',
             fileObj : null,
+            bookmarkTotal: 0,
             notes: 
             [   
                 {
@@ -117,6 +119,7 @@ const Meta = {
             videoName: null,
             ytVidId : 'voFRslp8d60',
             fileObj : null,
+            bookmarkTotal: 0,
             // videoName: 'Dummy YouTube VideoName 2',
             notes: 
             [   
@@ -156,6 +159,7 @@ const Meta = {
             videoName: "testVid.mp4",
             ytVidId : null,
             fileObj : null,
+            bookmarkTotal: 0,
             notes: 
             [   
                 {
@@ -481,6 +485,7 @@ export default class PageContainer extends React.Component{
                     videoName: vidName,
                     ytVidId : ytVidId,
                     fileObj : fileObj,
+                    bookmarkTotal: 0,
                     notes: []
                 }
             )

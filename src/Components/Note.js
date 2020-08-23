@@ -20,10 +20,13 @@ export default class Note extends React.Component{
             noteTitle: this.props.note.noteTitle !== null ? this.props.note.noteTitle : this.props.note.text ,
             noteSectionVideoId : this.props.videoId,
             lastEnabled:  { state : null, saved: true } ,
-            videoCategory : this.props.videoCategory
+            videoCategory : this.props.videoCategory,
+            // bookmarked : this.props.note.bookmarked
         }
         this.handleToggleState = this.handleToggleState.bind(this);
         this.handleSave = this.handleSave.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        // this.handleBookmark = this.handleBookmark.bind(this);
         this.acceptSpecialSymbol = this.acceptSpecialSymbol.bind(this);
         this.convertDisableStatusToValue = this.convertDisableStatusToValue.bind(this);
         this.updateTimeStamp = this.updateTimeStamp.bind(this);
@@ -85,7 +88,7 @@ export default class Note extends React.Component{
                 break;
         }
     }
-    handleSave( e, overrideObj = null  ){
+    handleSave( e, overrideObj = null  ,  toggleEditingFeild = true ){
         //note, lastEnabledData is a object with properties 'state' and 'saved' in the same fashion as the 
 
         var lastEnabled = this.state.lastEnabled
@@ -141,6 +144,19 @@ export default class Note extends React.Component{
         this.setState({[stateVal]: e.target.value},  ()=>{console.log(`new ${stateVal} value: `, this.state[stateVal])} )
 
     }
+    handleBookmark( e , overrideObj = null){
+        console.log("bookmark: " , this.props.note.bookmarked)
+
+        this.handleSave( e, {value: "bookmarked" , data: !this.props.note.bookmarked }, false ) 
+        
+            // this.props.changeNote(  /* noteInfo     */  this.props.note, 
+            //                         /* newdata      */  overrideObj !== null && overrideObj !== undefined ? overrideObj.data : this.state[noteEditProperty] , 
+            //                         /* noteIdx      */  this.props._ref , 
+            //                         /* dataToUpdate */  overrideObj !== null && overrideObj !== undefined ? overrideObj.value : noteEditProperty  , 
+            //                         /* videoId      */  this.props.videoId)
+
+
+    }
     acceptSpecialSymbol(e, commands, stateVal){
 
         if (e.keyCode === 9 && commands["include_tabs"] ){
@@ -162,7 +178,7 @@ export default class Note extends React.Component{
     }
 
     updateTimeStamp(e, getCurrVidTime){
-        this.handleSave( e, {value: "startTime" , data: getCurrVidTime() }) 
+        this.handleSave( e, {value: "startTime" , data: getCurrVidTime() }, false ) 
     }
 
     formatTimeStamp(totalSecs, noteInfo){
@@ -262,6 +278,9 @@ export default class Note extends React.Component{
 
 
                         <button onClick={(e, updateTimeFunc )=>this.updateTimeStamp(e , this.props.getCurrVidTime)} >Update Timestamp</button>
+                        <button     onClick={( e, state ) => this.handleBookmark( e, '')}>
+                                        Bookmark Note <div hidden={!noteInfo.bookmarked}><i class="fas fa-bookmark"></i> </div> <div hidden={noteInfo.bookmarked}><i class="far fa-bookmark"></i></div>
+                        </button>
                         <button     onClick={( e, state ) => this.handleDelete( e, '')}>
                                         Delete Note
                         </button>

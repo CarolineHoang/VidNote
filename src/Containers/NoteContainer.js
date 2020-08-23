@@ -107,7 +107,10 @@ export default class NoteContainer extends React.Component{
                                         videoCategory = {this.props.itemList.category} 
                                         url = {this.props.itemList.url} 
                                         ytVidId = {this.props.itemList.ytVidId}  
-                                        getCurrVidTime = {this.props.getCurrVidTime}>
+                                        getCurrVidTime = {this.props.getCurrVidTime}
+                                        // bookmarked = {this.props.bookmarked} 
+                                        >
+                                        
                                 </Note>
                             </div>
                         ) 
