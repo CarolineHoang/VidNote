@@ -5,6 +5,14 @@ import playlistJS from 'videojs-playlist';
 import playlistUI from 'videojs-playlist-ui';
 import '../Styles/videoStyles.css';
 
+
+
+
+
+
+
+
+
 // import '../../node_modules/videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css';
 import Playlist from './Playlist';
 
@@ -15,8 +23,13 @@ import Playlist from './Playlist';
 export default class VideoPlayer extends React.Component {
     constructor(props){
         super(props);
-        this.state= { currentTime: 0}
+        this.state= { 
+            currentTime: 0,
+            videoRef : null
+        }
         this.getTime = this.getTime.bind(this);
+        this.generateControlButton = this.generateControlButton.bind(this)
+
         // this.testFunc = this.testFunc.bind(this);
     }
  
@@ -50,6 +63,53 @@ shouldComponentUpdate(){
 
   
     });
+
+    //create a player variable that can be referenced in the button generators
+    var playerObj = this.player
+
+
+    var Button = videojs.getComponent('Button');
+    var PrevButton = videojs.extend(Button, {
+        //constructor: function(player, options) {
+        constructor: function() {
+        Button.apply(this, arguments);
+        //this.addClass('vjs-chapters-button');
+        this.addClass('icon-angle-left');
+        this.controlText("Previous");
+        },
+    
+        handleClick: function() {
+        // console.log('click', playerObj,  this.player.playlist());
+        console.log('click', playerObj);
+        // this.player.playlist.previous();
+        playerObj.playlist.previous();
+        }
+    });
+    videojs.registerComponent('PrevButton', PrevButton);
+    this.player.getChild('controlBar').addChild('PrevButton', {}, 0);
+
+
+    var NextButton = videojs.extend(Button, {
+    //constructor: function(player, options) {
+    constructor: function() {
+        Button.apply(this, arguments);
+        //this.addClass('vjs-chapters-button');
+        this.addClass('icon-angle-right');
+        this.controlText("Next");
+    },
+    
+        handleClick: function() {
+        // console.log('click', playerObj,  this.player.playlist());
+        console.log('click', playerObj);
+        // this.player.playlist.previous();
+        playerObj.playlist.next();
+        }
+    });
+    videojs.registerComponent('NextButton', NextButton);
+    this.player.getChild('controlBar').addChild('NextButton', {}, 2);
+
+
+
                                 // // this.testFunc()
                                 // this.player.playlist([{
                                 //     // sources: [{
@@ -97,7 +157,7 @@ shouldComponentUpdate(){
                                 // // Play through the playlist automatically.
                                 // this.player.playlist.autoadvance(0);
                                 // this.player.playlistUi();
-
+    // this.setState({videoRef: this.player }, ())
     this.props.setVidRef(this.player)
     console.log("player2: ", this.player)
   }
@@ -108,6 +168,10 @@ shouldComponentUpdate(){
       this.player.dispose()
     // this.player.destroy()
     }
+  }
+
+  generateControlButton(playerObj, buttonName, buttonClass, controlText ){
+
   }
 
   // wrap the player in a div with a `data-vjs-player` attribute
