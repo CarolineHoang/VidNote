@@ -930,7 +930,7 @@ export default class PageContainer extends React.Component{
                 
                     {/* {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
                     {this.state.videoRef !== null && this.state.videoRef !== undefined  && <DraggablePlayList key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />} */}
-                    {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
+                    {/* {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />} */}
                     {this.state.videoRef !== null && this.state.videoRef !== undefined  && <DraggablePlayList player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
                     <div onClick={this.printPlayer}>print Player</div>
 

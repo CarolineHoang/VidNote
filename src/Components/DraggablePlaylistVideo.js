@@ -2,6 +2,7 @@ import React from 'react';
 import videojs from 'video.js';
 import YoutubeVid from 'videojs-youtube';
 import playlistJS from 'videojs-playlist';
+import "../Styles/draggable-playlist-video-style.css"
 
 var exampleData = {
     videoId: 'videoJSON.videoId',
@@ -49,14 +50,18 @@ export default class DraggablePlayListVideo extends React.Component {
       var video = this.props.videoInfo
       var player = this.props.player
     return (
-        <div onClick={(e, player , video )=>this.changeCurrentVideo(e, this.props.player, this.props.videoInfo)} >
-            <div>
-                :
+        <div className="videoInfoContainerInner" onClick={(e, player , video )=>this.changeCurrentVideo(e, this.props.player, this.props.videoInfo)} >
+            <img  className="thumbnail" src= {video.thumbnail[0].srcset}></img>
+            <div className="titleContainer">
+                <div className="now-playing">
+                    Now Playing
+                </div>
+                <div className="videoTitle">
+                    {video.name !== null ? video.name : "Untitled Video"}
+                </div>
             </div>
-            <div>
-                {video.name !== null ? video.name : "Untitled Video"}
-            </div>
-            <img src= {video.thumbnail[0].srcset}></img>
+            
+            
         </div>	
     )
   }

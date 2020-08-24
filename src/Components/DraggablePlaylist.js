@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import DraggablePlayListVideo from "./DraggablePlaylistVideo";
+import "../Styles/draggable-playlist-style.css"
 
 
 // // fake data generator
@@ -26,31 +27,52 @@ const grid = 8;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
-  userSelect: "none",
-  // padding: grid * 2,
-  // margin: `0 0 ${grid}px 0`,
-  padding: (grid * 2) ,
-  margin: `1rem 0`,
-  whiteSpace: "wrap",
-  flexWrap: "wrap",
-  wordWrap: "break-word",
-
-  // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
 
   // styles we need to apply on draggables
   ...draggableStyle
 });
+const getItemClass= (isDragging, draggableStyle) => {
+  // some basic styles to make the items look a bit nicer
+  return (isDragging ? "video-dragging-state" : "video-not-dragging-state")
+};
 
-const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-  // width: 250
-  // width: '100%',
-  maxHeight: '10vw',
-  overflowX: 'hidden',
-  overflowY: 'scroll'
-});
+
+
+// const getItemStyle = (isDragging, draggableStyle) => ({
+//   // some basic styles to make the items look a bit nicer
+//   userSelect: "none",
+//   // padding: grid * 2,
+//   // margin: `0 0 ${grid}px 0`,
+//   padding: (grid * 2) ,
+//   margin: `1rem 0`,
+//   whiteSpace: "wrap",
+//   flexWrap: "wrap",
+//   wordWrap: "break-word",
+
+//   // change background colour if dragging
+//   background: isDragging ? "lightgreen" : "grey",
+
+//   // styles we need to apply on draggables
+//   ...draggableStyle
+// });
+
+// const getListStyle = (isDraggingOver) => ({
+//   background: isDraggingOver ? "lightblue" : "lightgrey",
+//   padding: grid,
+//   // width: 250
+//   // width: '100%',
+//   // maxHeight: '10vw',
+//   maxHeight: '20vw',
+//   overflowX: 'hidden',
+//   overflowY: 'scroll'
+// });
+
+
+const getListStyle = (isDraggingOver) => {
+  console.log ("isDraggingOver: " , isDraggingOver, isDraggingOver ? "dragging" : "not-dragging" )
+  return (isDraggingOver ? "dragging-state" : "not-dragging-state")
+};
+
 
 
 
@@ -128,6 +150,7 @@ export default class DraggablePlayList extends React.Component {
       }
     })
   }
+  //
     // getItems = (playlist) =>{
     //     var formattedPlaylist = playlist.map(( video , k)=>{
     //     console.log(video)
@@ -139,23 +162,23 @@ export default class DraggablePlayList extends React.Component {
     //   })
     // }
 
-  //   getItems = (count = 3) =>
-  //   Array.from({ length: count }, (v, k) => k).map((k) => ({
-  //   id: `item-${k}`,
-  //   // content: `item- ${k}`
-  //   content: { text: `item- ${k}`, text2: "....hello" }
-  // }));
+    //   getItems = (count = 3) =>
+    //   Array.from({ length: count }, (v, k) => k).map((k) => ({
+    //   id: `item-${k}`,
+    //   // content: `item- ${k}`
+    //   content: { text: `item- ${k}`, text2: "....hello" }
+    // }));
 
 
 
-//   getItems = (count = 3, playlist) =>
-// {
-//   console.log("get playlist rms:", playlist)
-//   return Array.from({ length: count }, (v, k) => k).map((k) => ({
-//   id: `item-${k}`,
-//   // content: `item- ${k}`
-//   content: { text: `item- ${k}`, text2: "....hello" }
-// }))
+    //   getItems = (count = 3, playlist) =>
+    // {
+    //   console.log("get playlist rms:", playlist)
+    //   return Array.from({ length: count }, (v, k) => k).map((k) => ({
+    //   id: `item-${k}`,
+    //   // content: `item- ${k}`
+    //   content: { text: `item- ${k}`, text2: "....hello" }
+    // }))
 // }
 
     
@@ -256,7 +279,10 @@ testConsoleLog(message){
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
+              // style={getListStyle(snapshot.isDraggingOver)}
+              className={`playlistContainer ${getListStyle(snapshot.isDraggingOver)}`}
+              // className={`playlistContainer ${getListStyle(snapshot.isDraggingOver)}`}
+              // className="playlistContainer dragging-state"
             >
               {this.state.items.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index} 
@@ -270,21 +296,23 @@ testConsoleLog(message){
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       // {...provided.dragHandleProps}
-                      // style={getItemStyle(
-                      //   snapshot.isDragging,
-                      //   provided.draggableProps.style
-                      // )}
+                      style={getItemStyle(
+                        snapshot.isDragging,
+                        provided.draggableProps.style
+                      )}
+                      className={`videoContainer ${getItemClass(snapshot.isDragging)}`}
                       onClick={console.log("clicked!")}
                       // onCl={e => e.stopPropagation()}
                       // onMouseDown={e => e.stopPropagation()}
                       // onMouseDown={console.log("clicked!")}
                     >
-                      <div {...provided.dragHandleProps} > Hello </div>
+                      <div className="handle" {...provided.dragHandleProps} > = </div>
                       {/* <button onClick={this.testConsoleLog}> Hello </button> 
                       <button  onMouseDown={e => e.stopPropagation()} onClick={this.testConsoleLog} onFocus={console.log("clicked!") }>Hello2</button> */}
                       {/* <input onClick={console.log("clicked input!") } onChange={console.log("clicked!") } ></input> */}
-                      <DraggablePlayListVideo  videoInfo = {item.content.videoInfo} onMouseDown={e => e.stopPropagation()} onClick={this.testConsoleLog}  player= {this.props.player}></DraggablePlayListVideo>
+                      <DraggablePlayListVideo  className="videoInfoContainerOuter" videoInfo = {item.content.videoInfo} onMouseDown={e => e.stopPropagation()} onClick={this.testConsoleLog}  player= {this.props.player}></DraggablePlayListVideo>
                       {/* <DraggablePlayListVideo contenteditable videoInfo = {item.content.videoInfo} onMouseDown={e => e.stopPropagation()} onClick={this.testConsoleLog}  ></DraggablePlayListVideo> */}
+                      <div className="delete"> X </div>
                     </div>
                   )}
                   {/* <div > Hello </div> */}

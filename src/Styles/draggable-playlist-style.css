@@ -1,0 +1,74 @@
+
+
+.playlistContainer{
+    /* padding: grid; */
+    max-height: 40vw;
+    height:40vw;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+
+.dragging-state{
+    background-color: lightblue;
+}
+.not-dragging-state{
+    background-color: lightgrey;
+}
+
+
+
+
+
+
+.videoContainer{
+    user-select: none;
+    padding: (grid * 2) ;
+    margin: 1rem 0;
+    white-space: wrap;
+    flex-wrap: wrap;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 10vw;
+}
+.video-dragging-state{
+    background-color: lightgreen;
+}
+.video-not-dragging-state{
+    background-color: grey;
+}
+
+
+.handle{
+    font-size: 2rem;
+    position: absolute;
+    left: 0;
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+
+}
+
+.delete{
+    font-size: 1.2rem;
+    position: absolute;
+    right: 0;
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+
+}
+.videoInfoContainerOuter{
+    width: 100%;
+    height: 100%;
+}
