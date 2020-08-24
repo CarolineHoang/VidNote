@@ -450,3 +450,21 @@
     white-space: -o-pre-wrap;
     width: 40vw;
   }
+
+
+
+  .playlistContainer{
+      width: 100%;
+      height: 10vw;
+      overflow-y: scroll;
+      position: relative;
+  }
+
+  .playlistTopBar{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 255, 255, 0.082);
+  }

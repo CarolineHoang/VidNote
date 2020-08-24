@@ -103,8 +103,15 @@ export default class Playlist extends React.Component {
     // }
     
     return (
-      <div>	
+      <div className="playlistContainer">	
         <div className="vjs-playlist"></div>
+        {/* {this.props.playlist.map((video, i)=>{
+            // return video.name
+            playlist
+        })
+
+        } */}
+        {/* <div className="playlistTopBar">asdc</div> */}
       </div>
     )
   }
