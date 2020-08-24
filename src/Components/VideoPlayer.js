@@ -6,7 +6,10 @@ import playlistUI from 'videojs-playlist-ui';
 import '../Styles/videoStyles.css';
 
 
-
+// Code for the addition of custom buttons to the video control bar are adaped from Gino's CodePen: 'Videojs - Playlist 5.16.0'
+// It can be found here: https://codepen.io/onigetoc/pen/wJRyvZ   
+// I changed it to be more modular and executable from a method.      
+// I found it under this issue on GitHub: https://github.com/videojs/video.js/issues/3473#issuecomment-291667994
 
 
 
@@ -67,8 +70,12 @@ shouldComponentUpdate(){
     //create a player variable that can be referenced in the button generators
     var playerObj = this.player
 
-    this.generateControlButton(playerObj, 'PrevButton', 'icon-angle-left', "Previous", 0 )
-    this.generateControlButton(playerObj, 'NextButton', 'icon-angle-right', "Next" , 2)
+    // ADDING CUSTOM BUTTONS TO THE CONTROL BAR (credits at top):
+    // parameters: playerObj, buttonName, buttonClass, controlText , barPositionIndex
+    /* ADD PREVIOUS */
+    this.generateControlButton(playerObj, 'previous', 'PrevButton', 'icon-angle-left', "Previous", 0 )
+    /* ADD NEXT */
+    this.generateControlButton(playerObj, 'next', 'NextButton', 'icon-angle-right', "Next" , 2)
     //
         // var Button = videojs.getComponent('Button');
         // var PrevButton = videojs.extend(Button, {
@@ -171,26 +178,25 @@ shouldComponentUpdate(){
     // this.player.destroy()
     }
   }
-
-  generateControlButton(playerObj, buttonName, buttonClass, controlText , position){
-
+  generateControlButton(playerObj, actionFunction, buttonName, buttonClass, controlText , position){
+    
     var Button = videojs.getComponent('Button');
+    // Extend default control button
     var newButton = videojs.extend(Button, {
-        //constructor: function(player, options) {
         constructor: function() {
         Button.apply(this, arguments);
-        //this.addClass('vjs-chapters-button');
         this.addClass(buttonClass);
         this.controlText(controlText);
         },
     
         handleClick: function() {
-        // console.log('click', playerObj,  this.player.playlist());
-        console.log('click', playerObj);
-        // this.player.playlist.previous();
-        playerObj.playlist.previous();
+            // console.log('click', playerObj,  this.player.playlist());
+            console.log('click', playerObj);
+            // change the video
+            playerObj.playlist[actionFunction]();
         }
     });
+    // Register the new component
     videojs.registerComponent(buttonName, newButton);
     this.player.getChild('controlBar').addChild(buttonName, {}, position);
   }
