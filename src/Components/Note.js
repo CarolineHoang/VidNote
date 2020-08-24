@@ -283,7 +283,7 @@ export default class Note extends React.Component{
 
                         <button onClick={(e, updateTimeFunc )=>this.updateTimeStamp(e , this.props.getCurrVidTime)} >Update Timestamp</button>
                         <button     onClick={( e, state ) => this.handleBookmark( e, '')}>
-                                        Bookmark Note <div hidden={!noteInfo.bookmarked}><i class="fas fa-bookmark"></i> </div> <div hidden={noteInfo.bookmarked}><i class="far fa-bookmark"></i></div>
+                                        Bookmark Note <div hidden={!noteInfo.bookmarked}><i className="fas fa-bookmark"></i> </div> <div hidden={noteInfo.bookmarked}><i className="far fa-bookmark"></i></div>
                         </button>
                         <button     onClick={( e, state ) => this.handleDelete( e, '')}>
                                         Delete Note

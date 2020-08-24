@@ -22,6 +22,7 @@ import VideoPlayer from "../Components/VideoPlayer.js";
 
             // import YoutubeVid from 'videojs-youtube';
 import NoteContainer from "./NoteContainer";
+import DraggablePlaylistContainer from "./DraggablePlaylistContainer";
 import Playlist from "../Components/Playlist";
 import DraggableList from "../Components/DraggableList";
 import DraggablePlayList from "../Components/DraggablePlaylist";
@@ -271,6 +272,8 @@ export default class PageContainer extends React.Component{
         this.deleteNote = this.deleteNote.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         this.addToPlaylist = this.addToPlaylist.bind(this);
+        this.deleteVideo = this.deleteVideo.bind(this);
+
         this.handleInputChange = this.handleInputChange.bind(this);
         this.acceptSpecialSymbol = this.acceptSpecialSymbol.bind(this);
         this.findMostRecentNoteIdx =this.findMostRecentNoteIdx.bind(this)
@@ -441,6 +444,32 @@ export default class PageContainer extends React.Component{
 
 
         
+    }
+    deleteVideo(  e, videoId ){
+        console.log('deleting video: ' ,  videoId )
+
+
+
+                var metaCopy = this.state.meta;
+
+                // console.log('videoId: ', videoId , 'noteIdx: ', noteIdx, metaCopy.noteData[videoId].notes[noteIdx], metaCopy.noteData[videoId].notes[noteIdx][dataToUpdate] , newdata)
+                var found  = false
+                var idx =0
+                while (!found && idx < metaCopy.noteData.length){
+                    if (metaCopy.noteData[idx].videoId == videoId){
+                        metaCopy.noteData.splice(idx, 1);
+                        found = true;
+                    }
+                    idx+=1
+                }
+                
+                console.log('new deleted meta: ' , metaCopy  )
+
+
+
+                this.setState({
+                    meta: metaCopy,
+                }, ()=>{console.log(this.state.meta)} )
     }
 
 
@@ -931,7 +960,9 @@ export default class PageContainer extends React.Component{
                     {/* {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
                     {this.state.videoRef !== null && this.state.videoRef !== undefined  && <DraggablePlayList key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />} */}
                     {/* {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />} */}
-                    {this.state.videoRef !== null && this.state.videoRef !== undefined  && <DraggablePlayList player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' currentlyPlayingId = {this.state.currPlayingVidId} />}
+                    
+                    {/* {this.state.videoRef !== null && this.state.videoRef !== undefined && {playlistJSON}!== undefined && <DraggablePlayList player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' currentlyPlayingId = {this.state.currPlayingVidId} deleteVideo={this.deleteVideo}/>} */}
+                    {this.state.videoRef !== null && this.state.videoRef !== undefined && {playlistJSON}!== undefined && <DraggablePlaylistContainer player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' currentlyPlayingId = {this.state.currPlayingVidId} deleteVideo={this.deleteVideo}/> }
                     <div onClick={this.printPlayer}>print Player</div>
 
                     {/* <button onClick={this.testConsoleLog}> Hellot </button>  */}

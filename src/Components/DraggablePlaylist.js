@@ -80,11 +80,13 @@ export default class DraggablePlayList extends React.Component {
     constructor(props){
         super(props);
         this.state= { 
+            loaderStyle: 'block',
+            contentStyle: 'none',
             playerRef : null,
             currentPlaylist : this.props.playlist,
             // items: this.props.playlist != undefined ? this.getItems(this.props.playlist) : []
             // items: this.getItems() 
-            items: this.getItems(5, this.props.playlist ) 
+            items: null
             // items: this.getItems(5, this.state.currentPlaylist !=  null ? this.state.currentPlaylist : this.props.playlist ) 
 
         }
@@ -101,7 +103,40 @@ export default class DraggablePlayList extends React.Component {
       // if(prevProps.playlist  !== this.props.playlist ) {
       //   this.setState({currentPlaylist : this.props.playlist }, ()=> {
             this.props.player.playlist(this.props.playlist, this.props.player.playlist.currentItem()); //this second parameter must be set or the playlist will jump to start once updated (default for the second parameter [index of first video to play] is 0 )
-            console.log("draggable is updating!")
+            console.log("draggable is updating!4" , this.state.items, this.props.playlist, this.getItems(3, this.props.playlist))
+            if ( this.state.items == undefined){
+              // this.changeListEntries(this.state.items,  this.props.playlist)
+              console.log("draggable is updating!5")
+              this.setState(
+                {items: this.getItems(3, this.props.playlist)}, 
+                ()=>{console.log("draggable is updating!5", this.state.items)}
+                )
+
+            }
+              // this.setState({
+        
+              //   currentPlaylist : this.props.playlist,
+              //   items: this.getItems(5, this.props.playlist ) 
+              // })
+            
+            if ( this.state.currentPlaylist.length != this.props.playlist.length){
+              this.changeListEntries(this.state.items,  this.props.playlist)
+              this.setState({loaderStyle: 'none', contentStyle: 'block'})
+              // this.setState({
+        
+              //   currentPlaylist : this.props.playlist,
+              //   items: this.getItems(5, this.props.playlist ) 
+              // })
+            }
+            
+            // if ( this.state.currentPlaylist != this.getItems(5, this.props.playlist) ){
+            //   this.changeListEntries(this.state.items,  this.props.playlist)
+            //   // this.setState({
+        
+            //   //   currentPlaylist : this.props.playlist,
+            //   //   items: this.getItems(5, this.props.playlist ) 
+            //   // })
+            // }
       //   });
       // }
     }
@@ -119,6 +154,21 @@ export default class DraggablePlayList extends React.Component {
             // Play through the playlist automatically.
             this.props.player.playlist.autoadvance(0);
             this.props.player.playlistUi();
+            
+            if (this.state.items == undefined){
+
+              console.log("state is undefined:", this.state.items,  this.props.playlist)
+              this.setState({loaderStyle: 'none', contentStyle: 'block'})
+            }
+            // if (this.state.items == undefined){
+
+            //   console.log("state is undefined:", this.state.items,  this.props.playlist)
+            //   this.setState({
+        
+            //     currentPlaylist : this.props.playlist,
+            //     items: this.getItems(5, this.props.playlist ) 
+            //   })
+            // }
       }
       
   }
@@ -141,14 +191,24 @@ export default class DraggablePlayList extends React.Component {
 
 
     getItems = (count= 0, playlist) =>{
-      return playlist.map(( video , k)=>{
-      console.log(video)
-      return {
-        id: `item-${k}`,
-        content: { videoInfo:video, text: `item- ${k}`, text2: "....hello"
-        }
+      if (playlist != undefined){
+        return playlist.map(( video , k)=>{
+          console.log(video)
+          return {
+            id: `item-${k}`,
+            content: { videoInfo:video, text: `item- ${k}`, text2: "....hello"
+            }
+          }
+        })
       }
-    })
+      // else{
+      //   return [{
+      //     id: `item-0`,
+      //     content: { videoInfo:video, text: `item- 0`, text2: "....hello"
+      //     }
+      //   }]
+      // }
+      
   }
   //
     // getItems = (playlist) =>{
@@ -197,9 +257,13 @@ export default class DraggablePlayList extends React.Component {
     // ));
  
     changeListEntries = (sPlaylist, pPlaylist) =>{
+        
 
         var newPlaylist  = []
-        if (pPlaylist.length > sPlaylist.length){
+        if (sPlaylist == undefined){
+            newPlaylist = newPlaylist
+        }
+        else if (pPlaylist.length > sPlaylist.length){
             newPlaylist = this.addListEntry(sPlaylist, pPlaylist)
             console.log("newPlaylist: " , newPlaylist, [...sPlaylist], [...sPlaylist][0], [...sPlaylist].push({ text: `item- ${sPlaylist.length}`, text2: "....hello"}))
         }
@@ -229,6 +293,7 @@ removeListEntry = (sPlaylist, pPlaylist) =>{
   pPlaylist.forEach(video => {
     videoIndexObj[video.videoId] = true
   });
+  console.log("videoIndexObj: ", videoIndexObj)
   // sPlaylist.forEach(video => {
   //   videoIndexObj[video.videoId] = true
   // });
@@ -239,7 +304,8 @@ removeListEntry = (sPlaylist, pPlaylist) =>{
       found = true
       var newPlaylist =  sPlaylist.map((video , idx)=>{return video.content.videoInfo})
       // return [...sPlaylist].split(idx, 0)
-      return newPlaylist.split(idx, 0)
+      console.log("newPlaylistRemove ", newPlaylist, newPlaylist[0] )
+      return newPlaylist.split(idx, 1)
     }
     idx+=1
   }
@@ -253,6 +319,7 @@ removeListEntry = (sPlaylist, pPlaylist) =>{
   // console.log(pVideoIds )
   // return pPlaylist
 }
+
   
 testConsoleLog(message){
   console.log("clicked button!") 
@@ -262,14 +329,25 @@ testConsoleLog(message){
       // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
   render() {
-    if (this.state.currentPlaylist.length != this.props.playlist.length){
-      this.changeListEntries(this.state.items,  this.props.playlist)
-      // this.setState({
+    // if (this.state.items != undefined && this.state.currentPlaylist != this.getItems(5, this.props.playlist) ){
+    //   this.changeListEntries(this.state.items,  this.props.playlist)
+    //   // this.setState({
 
-      //   currentPlaylist : this.props.playlist,
-      //   items: this.getItems(5, this.props.playlist ) 
-      // })
-    }
+    //   //   currentPlaylist : this.props.playlist,
+    //   //   items: this.getItems(5, this.props.playlist ) 
+    //   // })
+    // }
+    // else if (this.state.items != undefined){
+
+    //   console.log("state is undefined:", this.state.items,  this.props.playlist)
+    //   this.setState({
+
+    //     currentPlaylist : this.props.playlist,
+    //     items: this.getItems(5, this.props.playlist ) 
+    //   })
+    // }
+    console.log("state is not undefined:", this.state.items,  this.props.playlist, this.getItems(5, this.props.playlist))
+
     
     return (
       <div>
@@ -284,7 +362,7 @@ testConsoleLog(message){
               // className={`playlistContainer ${getListStyle(snapshot.isDraggingOver)}`}
               // className="playlistContainer dragging-state"
             >
-              {this.state.items.map((item, index) => (
+              {this.state.items !=null && this.state.items.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index} 
                 // onClick={(e)=>{ e.preventDefault; console.log("clicked!"); }}
                 // isDragDisabled = {true}
@@ -310,9 +388,10 @@ testConsoleLog(message){
                       {/* <button onClick={this.testConsoleLog}> Hello </button> 
                       <button  onMouseDown={e => e.stopPropagation()} onClick={this.testConsoleLog} onFocus={console.log("clicked!") }>Hello2</button> */}
                       {/* <input onClick={console.log("clicked input!") } onChange={console.log("clicked!") } ></input> */}
-                      <DraggablePlayListVideo  className="videoInfoContainerOuter" videoInfo = {item.content.videoInfo} onMouseDown={e => e.stopPropagation()} onClick={this.testConsoleLog}  player= {this.props.player}  currentlyPlayingId = {this.props.currentlyPlayingId} ></DraggablePlayListVideo>
+                      <DraggablePlayListVideo  className="videoInfoContainerOuter" videoInfo = {item.content.videoInfo} onMouseDown={e => e.stopPropagation()} onClick={this.testConsoleLog}  player= {this.props.player}  currentlyPlayingId = {this.props.currentlyPlayingId} videoIdxPos ={index}></DraggablePlayListVideo>
                       {/* <DraggablePlayListVideo contenteditable videoInfo = {item.content.videoInfo} onMouseDown={e => e.stopPropagation()} onClick={this.testConsoleLog}  ></DraggablePlayListVideo> */}
-                      <div className="delete"> X </div>
+                      {/* <div className="delete" onClick={(e, delFunc, videoId)=>this.handleDelete(e, this.props.deleteVideo, item.content.videoInfo.videoId )}> X </div> */}
+                      <div className="delete" onClick={(e, videoId)=>this.props.deleteVideo(e, item.content.videoInfo.videoId )}> X </div>
                     </div>
                   )}
                   {/* <div > Hello </div> */}
