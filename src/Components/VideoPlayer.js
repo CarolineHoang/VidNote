@@ -67,49 +67,51 @@ shouldComponentUpdate(){
     //create a player variable that can be referenced in the button generators
     var playerObj = this.player
 
+    this.generateControlButton(playerObj, 'PrevButton', 'icon-angle-left', "Previous", 0 )
+    this.generateControlButton(playerObj, 'NextButton', 'icon-angle-right', "Next" , 2)
+    //
+        // var Button = videojs.getComponent('Button');
+        // var PrevButton = videojs.extend(Button, {
+        //     //constructor: function(player, options) {
+        //     constructor: function() {
+        //     Button.apply(this, arguments);
+        //     //this.addClass('vjs-chapters-button');
+        //     this.addClass('icon-angle-left');
+        //     this.controlText("Previous");
+        //     },
+        
+        //     handleClick: function() {
+        //     // console.log('click', playerObj,  this.player.playlist());
+        //     console.log('click', playerObj);
+        //     // this.player.playlist.previous();
+        //     playerObj.playlist.previous();
+        //     }
+        // });
+        // videojs.registerComponent('PrevButton', PrevButton);
+        // this.player.getChild('controlBar').addChild('PrevButton', {}, 0);
 
-    var Button = videojs.getComponent('Button');
-    var PrevButton = videojs.extend(Button, {
-        //constructor: function(player, options) {
-        constructor: function() {
-        Button.apply(this, arguments);
-        //this.addClass('vjs-chapters-button');
-        this.addClass('icon-angle-left');
-        this.controlText("Previous");
-        },
-    
-        handleClick: function() {
-        // console.log('click', playerObj,  this.player.playlist());
-        console.log('click', playerObj);
-        // this.player.playlist.previous();
-        playerObj.playlist.previous();
-        }
-    });
-    videojs.registerComponent('PrevButton', PrevButton);
-    this.player.getChild('controlBar').addChild('PrevButton', {}, 0);
+    //
+        // var NextButton = videojs.extend(Button, {
+        // //constructor: function(player, options) {
+        // constructor: function() {
+        //     Button.apply(this, arguments);
+        //     //this.addClass('vjs-chapters-button');
+        //     this.addClass('icon-angle-right');
+        //     this.controlText("Next");
+        // },
+        
+        //     handleClick: function() {
+        //     // console.log('click', playerObj,  this.player.playlist());
+        //     console.log('click', playerObj);
+        //     // this.player.playlist.previous();
+        //     playerObj.playlist.next();
+        //     }
+        // });
+        // videojs.registerComponent('NextButton', NextButton);
+        // this.player.getChild('controlBar').addChild('NextButton', {}, 2);
 
 
-    var NextButton = videojs.extend(Button, {
-    //constructor: function(player, options) {
-    constructor: function() {
-        Button.apply(this, arguments);
-        //this.addClass('vjs-chapters-button');
-        this.addClass('icon-angle-right');
-        this.controlText("Next");
-    },
-    
-        handleClick: function() {
-        // console.log('click', playerObj,  this.player.playlist());
-        console.log('click', playerObj);
-        // this.player.playlist.previous();
-        playerObj.playlist.next();
-        }
-    });
-    videojs.registerComponent('NextButton', NextButton);
-    this.player.getChild('controlBar').addChild('NextButton', {}, 2);
-
-
-
+                            //
                                 // // this.testFunc()
                                 // this.player.playlist([{
                                 //     // sources: [{
@@ -170,8 +172,27 @@ shouldComponentUpdate(){
     }
   }
 
-  generateControlButton(playerObj, buttonName, buttonClass, controlText ){
+  generateControlButton(playerObj, buttonName, buttonClass, controlText , position){
 
+    var Button = videojs.getComponent('Button');
+    var newButton = videojs.extend(Button, {
+        //constructor: function(player, options) {
+        constructor: function() {
+        Button.apply(this, arguments);
+        //this.addClass('vjs-chapters-button');
+        this.addClass(buttonClass);
+        this.controlText(controlText);
+        },
+    
+        handleClick: function() {
+        // console.log('click', playerObj,  this.player.playlist());
+        console.log('click', playerObj);
+        // this.player.playlist.previous();
+        playerObj.playlist.previous();
+        }
+    });
+    videojs.registerComponent(buttonName, newButton);
+    this.player.getChild('controlBar').addChild(buttonName, {}, position);
   }
 
   // wrap the player in a div with a `data-vjs-player` attribute
