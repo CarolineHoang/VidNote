@@ -310,7 +310,7 @@ testConsoleLog(message){
                       {/* <button onClick={this.testConsoleLog}> Hello </button> 
                       <button  onMouseDown={e => e.stopPropagation()} onClick={this.testConsoleLog} onFocus={console.log("clicked!") }>Hello2</button> */}
                       {/* <input onClick={console.log("clicked input!") } onChange={console.log("clicked!") } ></input> */}
-                      <DraggablePlayListVideo  className="videoInfoContainerOuter" videoInfo = {item.content.videoInfo} onMouseDown={e => e.stopPropagation()} onClick={this.testConsoleLog}  player= {this.props.player}></DraggablePlayListVideo>
+                      <DraggablePlayListVideo  className="videoInfoContainerOuter" videoInfo = {item.content.videoInfo} onMouseDown={e => e.stopPropagation()} onClick={this.testConsoleLog}  player= {this.props.player}  currentlyPlayingId = {this.props.currentlyPlayingId} ></DraggablePlayListVideo>
                       {/* <DraggablePlayListVideo contenteditable videoInfo = {item.content.videoInfo} onMouseDown={e => e.stopPropagation()} onClick={this.testConsoleLog}  ></DraggablePlayListVideo> */}
                       <div className="delete"> X </div>
                     </div>

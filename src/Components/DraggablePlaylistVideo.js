@@ -53,7 +53,7 @@ export default class DraggablePlayListVideo extends React.Component {
         <div className="videoInfoContainerInner" onClick={(e, player , video )=>this.changeCurrentVideo(e, this.props.player, this.props.videoInfo)} >
             <img  className="thumbnail" src= {video.thumbnail[0].srcset}></img>
             <div className="titleContainer">
-                <div className="now-playing">
+                <div hidden={this.props.currentlyPlayingId !==  video.videoId} className="now-playing">
                     Now Playing
                 </div>
                 <div className="videoTitle">
