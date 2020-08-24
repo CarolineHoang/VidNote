@@ -406,7 +406,7 @@ testConsoleLog(message){
         </Droppable>
        
       </DragDropContext>
-       <button onClick={console.log("clicked button!") }> Hello </button> 
+       {/* <button onClick={console.log("clicked button!") }> Hello </button>  */}
       </div>
     );
   }

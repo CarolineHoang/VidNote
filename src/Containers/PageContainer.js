@@ -960,10 +960,14 @@ export default class PageContainer extends React.Component{
                     {/* {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
                     {this.state.videoRef !== null && this.state.videoRef !== undefined  && <DraggablePlayList key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />} */}
                     {/* {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />} */}
-                    
+
                     {/* {this.state.videoRef !== null && this.state.videoRef !== undefined && {playlistJSON}!== undefined && <DraggablePlayList player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' currentlyPlayingId = {this.state.currPlayingVidId} deleteVideo={this.deleteVideo}/>} */}
                     {this.state.videoRef !== null && this.state.videoRef !== undefined && {playlistJSON}!== undefined && <DraggablePlaylistContainer player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' currentlyPlayingId = {this.state.currPlayingVidId} deleteVideo={this.deleteVideo}/> }
-                    <div onClick={this.printPlayer}>print Player</div>
+                    <div className="playListInputContainer">
+                        <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  placeholder= "video url..."></input> 
+                        <button className="playlistButton" onClick={(e , type) => this.addToPlaylist(e , 'web')} type='submit' >Add to Playlist</button>
+                    </div>
+                    {/* <div onClick={this.printPlayer}>print Player</div> */}
 
                     {/* <button onClick={this.testConsoleLog}> Hellot </button>  */}
                     
@@ -973,19 +977,24 @@ export default class PageContainer extends React.Component{
                 
 
                     <VideoPlayer { ...videoJsOptions } setVidRef = {this.setVideoRef}  test = "hi" />
-                    <button onClick={this.getVideoRef}>getVideoRef</button>
-                    <button onClick={this.getCurrVidTime}>Get current Video Time [PC] </button>
-                    <button onClick={ () => this.setCurrVidTime(180)}>Set current Video Time to 3 min[PC] </button>
+                                        {/* <button onClick={this.getVideoRef}>getVideoRef</button>
+                                        <button onClick={this.getCurrVidTime}>Get current Video Time [PC] </button>
+                                        <button onClick={ () => this.setCurrVidTime(180)}>Set current Video Time to 3 min[PC] </button> */}
                 </div>
                 <div className='playList' >
                     {/* this is how to create an HTML a tag that will download a local app file*/}
-                    <a href={testFile} download="testFile.txt">{testFile}Hiii</a>
-                    <button onClick={downloadNotes}>Download Default Info </button>
+                    {/* <a href={testFile} download="testFile.txt">{testFile}Hiii</a> */}
+                    {/* <button onClick={downloadNotes}>Download Default Info </button> */}
                     <button onClick={this.downloadProject}>Download Info </button>
                     <button onClick={this.loadBackupProject}>Revert to Last Project</button>
                     {/* by including the state variable as a value for the input/textarea field, we make sure it clears out if we set the state variable to be empty because then on the rerender, it repopulates as a empty */}
                     <textarea onChange={(e, note) => this.handleInputChange(e, 'newNote')} onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, 'newNote')} className='NoteInputField' value={this.state.newNote} ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
-                    <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  ></input> 
+
+                    {/* <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  ></input>  */}
+
+
+
+
                     <button onClick={(e , type) => this.addToPlaylist(e , 'web')} type='submit' >Add to Playlist</button>
                 
                     

@@ -78,6 +78,7 @@
         display: grid;
           grid-template-columns: [start-c] 5fr [center] 3fr [end-c];
           /* grid-template-columns: [start-r] 1fr [center] 1fr [end-r]; */
+          /* grid-template-rows: [start-c] 2fr [center] 6fr [end-c]; */
     
           /* grid-template-columns: 1fr 1fr; */
     
@@ -471,3 +472,39 @@
 
 
   
+
+
+
+
+
+  .playListInputContainer{
+      /* flex: 1; */
+      width: 100%;
+      height: 3vw;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      /* justify-content: space-around; */
+      align-items: center;
+      position: relative;
+      margin: .5vw 0;
+  }
+
+  .playlistInputField{
+      position: relative;
+      height: 70%;
+      width: 68%;
+      border-radius: 25px;
+      text-indent: 3rem;
+      font-size: 1.2rem;
+      margin-right: 2%
+      /* kerning: 2px; */
+  }
+
+
+  .playlistButton{
+    height: 80%;
+    width: 15%;
+    border-radius: 25px;
+    /* border-radius: 50%; */
+  }

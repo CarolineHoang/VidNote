@@ -1,5 +1,8 @@
 
-
+:root{
+    /* --playlist-item-height: 7vw; */
+    --playlist-item-height: 5vw;
+}
 .playlistContainer{
     /* padding: grid; */
     height: 100%;
@@ -35,7 +38,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    height: 7vw;
+    height: var(--playlist-item-height);
 }
 .video-dragging-state{
     background-color: lightgreen;

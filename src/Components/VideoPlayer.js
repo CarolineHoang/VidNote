@@ -217,7 +217,7 @@ shouldComponentUpdate(){
         </div>
         {/* <div class="vjs-playlist"></div> */}
         {/* <Playlist player={this.player} test= 'this should APPEAR' /> */}
-        <button onClick={this.getTime}>Get Current Time:</button><span>Time:{this.state.currentTime}</span>
+        {/* <button onClick={this.getTime}>Get Current Time:</button><span>Time:{this.state.currentTime}</span> */}
         {/* {this.props.setVidRef(this.player)} */}
         {/* {this.props.test} */}
       </div>
