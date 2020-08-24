@@ -2,7 +2,7 @@
   "name": "vidnote",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://carolinehoang.github.io/VidNote",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -10,6 +10,7 @@
     "file-saver": "^2.0.2",
     "jszip": "^3.5.0",
     "react": "^16.13.1",
+    "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
     "videojs-playlist": "^4.3.1",

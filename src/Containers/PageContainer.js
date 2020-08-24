@@ -23,6 +23,8 @@ import VideoPlayer from "../Components/VideoPlayer.js";
             // import YoutubeVid from 'videojs-youtube';
 import NoteContainer from "./NoteContainer";
 import Playlist from "../Components/Playlist";
+import DraggableList from "../Components/DraggableList";
+import DraggablePlayList from "../Components/DraggablePlaylist";
 // import 'videojs-youtube';
 
 // const https = require('https');
@@ -278,6 +280,10 @@ export default class PageContainer extends React.Component{
         this.loadProject = this.loadProject.bind(this);
         this.downloadProject = this.downloadProject.bind(this);
         this.loadBackupProject = this.loadBackupProject.bind(this);
+
+
+        this.testConsoleLog = this.testConsoleLog.bind(this)
+        this.printPlayer = this.printPlayer.bind(this)
 
     }
     setVideoRef(ref){
@@ -848,6 +854,13 @@ export default class PageContainer extends React.Component{
     //     // }); 
     // }
 
+    testConsoleLog(message){
+        console.log("clicked button!") 
+    }
+    printPlayer(){
+        console.log(this.state.videoRef)
+    }
+
     render() {
         const videoJsOptions = {
             autoplay: true,
@@ -870,6 +883,7 @@ export default class PageContainer extends React.Component{
         this.state.meta.noteData.forEach((videoJSON) => {
                 // if (videoJSON.category === 'web'){
                     playlistJSON.push({
+                        videoId: videoJSON.videoId,
                         name: videoJSON.videoName,
                         sources: [{
                             src: videoJSON.url,
@@ -902,7 +916,7 @@ export default class PageContainer extends React.Component{
         )
        
 
-
+       
         // console.log("playlistJSON:", playlistJSON, process.env.REACT_APP_TEST_ENV_VAR)
     
         
@@ -914,7 +928,17 @@ export default class PageContainer extends React.Component{
                     {/* using && conditional logic makes sure that the parent has the ref before we try to render the playlist because the playlist doesn't seem to rerender when the videoRef is updated */}
                     {/* alternatively, all the starting playlist info can be set up in the video player component but I want to make the playlist div diffinitively in charge of everything relating playlists */}
                 
-                    {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
+                    {/* {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
+                    {this.state.videoRef !== null && this.state.videoRef !== undefined  && <DraggablePlayList key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />} */}
+                    {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
+                    {this.state.videoRef !== null && this.state.videoRef !== undefined  && <DraggablePlayList player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
+                    <div onClick={this.printPlayer}>print Player</div>
+
+                    {/* <button onClick={this.testConsoleLog}> Hellot </button>  */}
+                    
+                    
+                    {/* <DraggablePlayList/> */}
+
                 
 
                     <VideoPlayer { ...videoJsOptions } setVidRef = {this.setVideoRef}  test = "hi" />
@@ -968,6 +992,13 @@ export default class PageContainer extends React.Component{
                         Source: https://github.com/facebook/react/issues/3468#issuecomment-448336672 
                     */}
                     {/* <input type="file" webkitdirectory mozdirectory /> */}
+
+
+
+
+
+                    {/* <DraggableList/> */}
+                    {/* <DraggablePlayList/> */}
 
                 </div>
                 {/* <div>

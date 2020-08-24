@@ -19,9 +19,10 @@ export default class Playlist extends React.Component {
         super(props);
         this.state= { 
             playerRef : null,
-            currentPlaylist : []
+            currentPlaylist : this.props.playlist
         }
         // this.testFunc = this.testFunc.bind(this);
+        this.printPlayer = this.printPlayer.bind(this);
     }
     shouldComponentUpdate(nextProps, nextState){
         //originally wrote this to prevent rerender because I thought this was what kept resetting the playlist to the start
@@ -39,13 +40,13 @@ export default class Playlist extends React.Component {
         
     }
     componentDidUpdate(prevProps) {
-        if(prevProps.playlist  !== this.props.playlist ) {
-          this.setState({currentPlaylist : this.props.playlist }, ()=> {
+        // if(prevProps.playlist  !== this.props.playlist ) {
+        //   this.setState({currentPlaylist : this.props.playlist }, ()=> {
               console.log("The Current Playlist UPDATED:", this.props.playlist)
               this.props.player.playlist(this.props.playlist, this.props.player.playlist.currentItem()); //this second parameter must be set or the playlist will jump to start once updated (default for the second parameter [index of first video to play] is 0 )
 
-            });
-        }
+        //     });
+        // }
       }
     componentDidMount(){
         // if (this.state.playerRef !== this.props.player || this.state.playerRef == null ){
@@ -89,6 +90,9 @@ export default class Playlist extends React.Component {
         }
         
     }
+    printPlayer(){
+        console.log(this.state.playerRef)
+    }
     
   
 
@@ -105,6 +109,7 @@ export default class Playlist extends React.Component {
     return (
       <div className="playlistContainer">	
         <div className="vjs-playlist"></div>
+        <div onClick={this.printPlayer}>print Player</div>
         {/* {this.props.playlist.map((video, i)=>{
             // return video.name
             playlist
