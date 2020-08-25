@@ -512,3 +512,15 @@
     border-radius: 25px;
     /* border-radius: 50%; */
   }
+
+
+
+
+
+
+
+
+  .lastUpdatedTimestamp{
+      font-size: .9vw;
+      margin: .5rem 0;
+  }

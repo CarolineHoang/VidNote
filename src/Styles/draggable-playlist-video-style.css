@@ -42,7 +42,7 @@
 }
 
 
-.handle{
+/* .handle{
     font-size: 2rem;
     position: absolute;
     left: 0;
@@ -51,9 +51,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    
-
-}
+} */
 
 
 .videoInfoContainerInner{
@@ -80,9 +78,26 @@
 }
 
 .videoTitle{
-    font-size: 1.5rem;
+    font-size: .5rem;
 }
 
 .now-playing{
-    font-size: 1rem;
+    font-size: .2rem;
 }
+@media screen and (min-width: 900px){
+    .videoTitle{
+        font-size: .9rem;
+    }
+    .now-playing{
+        font-size: .5rem;
+    }
+}
+@media screen and (min-width: 1100px){
+    .videoTitle{
+        font-size: 1.5rem;
+    }
+    .now-playing{
+        font-size: 1rem;
+    }
+}
+

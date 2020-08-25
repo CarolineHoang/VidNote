@@ -300,8 +300,8 @@ export default class Note extends React.Component{
                                     onClick={this.handleSave}>
                                         Save
                         </button>
-                        <div>Last Edited: {`${month} ${day}, ${year } at ${hour}:${minute}:${second }`}</div>
-                        <div>{this.state.videoCategory !== null && this.state.videoCategory !== undefined && this.state.videoCategory & "hello"}</div>
+                        <div className="lastUpdatedTimestamp" >Last Edited: {`${month} ${day}, ${year } at ${hour}:${minute}:${second }`}</div>
+                        {/* <div>{this.state.videoCategory !== null && this.state.videoCategory !== undefined && this.state.videoCategory & "hello"}</div> */}
                         
                         {/* <select>
                             <option value="grapefruit">Grapefruit</option>
