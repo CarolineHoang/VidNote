@@ -42,6 +42,7 @@ export default class DraggablePlayListVideo extends React.Component {
 
     changeCurrentVideo(e, player, videoIdxPos){
         // this.props.player.playlist.currentItem(player.playlist.nextIndex())
+        console.log("clicked changed:" ,videoIdxPos  )
         player.playlist.currentItem(videoIdxPos)
         // player.currentItem(2)
         // console.log(player, player.playlist(), video)

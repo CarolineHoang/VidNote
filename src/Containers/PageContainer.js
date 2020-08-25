@@ -84,6 +84,7 @@ const Meta = {
             videoName: 'Dummy YouTube VideoName 1',
             ytVidId : '3WQHDUYk310',
             fileObj : null,
+            currentTime: 0,
             bookmarkTotal: 0,
             notes: 
             [   
@@ -123,6 +124,7 @@ const Meta = {
             videoName: null,
             ytVidId : 'voFRslp8d60',
             fileObj : null,
+            currentTime: 0,
             bookmarkTotal: 0,
             // videoName: 'Dummy YouTube VideoName 2',
             notes: 
@@ -163,6 +165,7 @@ const Meta = {
             videoName: "testVid.mp4",
             ytVidId : null,
             fileObj : null,
+            currentTime: 0,
             bookmarkTotal: 0,
             notes: 
             [   
@@ -260,6 +263,7 @@ export default class PageContainer extends React.Component{
             uploadedVideos: [],
             currPlayingVid : {},
             currPlayingVidId : 0,
+            lastPlayingVidId : 0,
             fileContents: 'blah blah'
             // current
         }
@@ -301,15 +305,32 @@ export default class PageContainer extends React.Component{
         // });
         ref.on('playlistitem', ()=> {
             // ref.playlist();
-            console.log("Playing next video!", ref.playlist()[ref.playlist.currentIndex()])
-            var currIndex = ref.playlist.currentIndex()
-            this.setState({
-                // currPlayingVid : ref.playlist()[ref.playlist.currentIndex()],
-                currPlayingVid : ref.playlist()[currIndex],
-                currPlayingVidId : currIndex
-            },
-            ()=> {console.log("hiiii", this.state.currPlayingVid)}
-            )
+            // console.log("Video switching:")
+            // console.log("Playing next video!111", ref.playlist()[ref.playlist.currentIndex()])
+            
+            // var currIndex = ref.playlist.currentIndex()
+            var metaCopy = this.state.meta
+            // console.log("Video switching:", this.state.ref, metaCopy.noteData[lastIndex].currentTime, this.state.meta.noteData[currIndex].currentTime) 
+            console.log("Video switching:", this.state.ref) 
+                        // if (this.state.ref != undefined && this.state.ref != null){
+                        //     var lastIndex = this.state.lastPlayingVidId
+                        //     var currTime = this.state.ref.playlist.currentTime()
+                        //     console.log("Video Switch values:" ,metaCopy.noteData[lastIndex].currentTime, this.state.meta.noteData[currIndex].currentTime)
+
+                        //     this.state.ref.playlist.currentTime(this.state.meta.noteData[currIndex].currentTime)
+                        //     // metaCopy.noteData[currIndex].currentTime = currTime
+                        //     metaCopy.noteData[lastIndex].currentTime = currTime
+                        // }
+                    
+                        // this.setState({
+                        //     // currPlayingVid : ref.playlist()[ref.playlist.currentIndex()],
+                        //     currPlayingVid : ref.playlist()[currIndex],
+                        //     lastPlayingVidId : this.state.currPlayingVidId,
+                        //     currPlayingVidId : currIndex,
+                        //     meta: metaCopy
+                        // },
+                        // ()=> {console.log("hiiii222", this.state.currPlayingVid)}
+                        // )
           
         });
         // playlistitem
@@ -409,6 +430,7 @@ export default class PageContainer extends React.Component{
         //     idx+=1
         // }
         // if (vId !== -1){ //if the video hasn't been deleted
+        console.log("current playing id:",this.state.currPlayingVidId )
                      
         var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
 
@@ -580,6 +602,7 @@ export default class PageContainer extends React.Component{
                     videoName: vidName,
                     ytVidId : ytVidId,
                     fileObj : fileObj,
+                    currentTime: 0,
                     bookmarkTotal: 0,
                     notes: []
                 }
@@ -973,6 +996,7 @@ export default class PageContainer extends React.Component{
                 // if (videoJSON.category === 'web'){
                     playlistJSON.push({
                         videoId: videoJSON.videoId,
+                        currentTime: videoJSON.currentTime,
                         name: videoJSON.videoName,
                         sources: [{
                             src: videoJSON.url,
