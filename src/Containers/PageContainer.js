@@ -264,7 +264,8 @@ export default class PageContainer extends React.Component{
             currPlayingVid : {},
             currPlayingVidId : 0,
             lastPlayingVidId : 0,
-            fileContents: 'blah blah'
+            fileContents: 'blah blah',
+            lastStartTime: 0
             // current
         }
         this.setVideoRef = this.setVideoRef.bind(this);
@@ -295,7 +296,7 @@ export default class PageContainer extends React.Component{
 
     }
     setVideoRef(ref){
-        console.log("setting the ref")
+        // console.log("setting the ref")
         // ref.on('playlistchange', function() {
         //     // ref.playlist();
         //     console.log("The playlist has changed!")
@@ -303,34 +304,79 @@ export default class PageContainer extends React.Component{
 
           
         // });
+        ref.on('beforeplaylistitem', ()=> {
+            // ref.playlist();
+            // console.log("Video switching:")
+            // console.log("Playing next video!111", ref.playlist()[ref.playlist.currentIndex()])
+            
+            var currIndex = ref.playlist.currentIndex()
+            var metaCopy = this.state.meta
+            // console.log("Video switching:", this.state.videoRef, metaCopy.noteData[lastIndex].currentTime, this.state.meta.noteData[currIndex].currentTime) 
+            console.log("Video before switching:", currIndex,this.state.videoRef.currentTime() ) 
+                        // if (this.state.videoRef != undefined && this.state.videoRef != null){
+                        //     console.log('ref is defined',this.state.videoRef, 'end')
+                        //     var lastIndex = this.state.lastPlayingVidId
+                        //     var currTime = this.state.videoRef.currentTime()
+                        //     // console.log("Video Switch values:" , lastIndex , currIndex, metaCopy.noteData[lastIndex].currentTime, this.state.meta.noteData[currIndex].currentTime)
+                        //     console.log("Video Switch values:" , lastIndex , currIndex, metaCopy.noteData[lastIndex].currentTime, this.state.meta.noteData[currIndex].currentTime)
+
+                        //     // this.state.videoRef.playlist.currentTime(this.state.meta.noteData[currIndex].currentTime)
+                        //     this.setCurrVidTime(this.state.meta.noteData[currIndex].currentTime)
+                        //     // metaCopy.noteData[currIndex].currentTime = currTime
+                        //     metaCopy.noteData[lastIndex].currentTime = currTime
+                        //     console.log("Video Switch values2:" ,currTime , lastIndex , currIndex, metaCopy.noteData[lastIndex].currentTime, metaCopy.noteData[currIndex].currentTime)
+
+                        // }
+                    
+                        this.setState({
+                            lastStartTime: this.state.videoRef.currentTime()
+                            // currPlayingVid : ref.playlist()[ref.playlist.currentIndex()],
+                            // currPlayingVid : ref.playlist()[currIndex],
+                            // lastPlayingVidId : this.state.currPlayingVidId,
+                            // currPlayingVidId : currIndex,
+                            // meta: metaCopy
+                        },
+                        ()=> {console.log("hiiii222", this.state.currPlayingVid, this.state.lastStartTime)}
+                        )
+          
+        });
         ref.on('playlistitem', ()=> {
             // ref.playlist();
             // console.log("Video switching:")
             // console.log("Playing next video!111", ref.playlist()[ref.playlist.currentIndex()])
             
-            // var currIndex = ref.playlist.currentIndex()
+            var currIndex = ref.playlist.currentIndex()
             var metaCopy = this.state.meta
-            // console.log("Video switching:", this.state.ref, metaCopy.noteData[lastIndex].currentTime, this.state.meta.noteData[currIndex].currentTime) 
-            console.log("Video switching:", this.state.ref) 
-                        // if (this.state.ref != undefined && this.state.ref != null){
-                        //     var lastIndex = this.state.lastPlayingVidId
-                        //     var currTime = this.state.ref.playlist.currentTime()
-                        //     console.log("Video Switch values:" ,metaCopy.noteData[lastIndex].currentTime, this.state.meta.noteData[currIndex].currentTime)
+            // console.log("Video switching:", this.state.videoRef, metaCopy.noteData[lastIndex].currentTime, this.state.meta.noteData[currIndex].currentTime) 
+            console.log("Video switching:", this.state.videoRef, this.state.videoRef == null ? "null" : this.state.videoRef, "      last start time:" ,this.state.lastStartTime) 
+                        if (this.state.videoRef != undefined && this.state.videoRef != null){
+                            console.log('ref is defined',this.state.videoRef, 'end')
+                            var lastIndex = this.state.lastPlayingVidId
+                            // var currTime = this.state.videoRef.currentTime()
+                            // var currTime = this.state.lastStartTime
+                            var lastTime = this.state.lastStartTime
+                            // console.log("Video Switch values:" , lastIndex , currIndex, metaCopy.noteData[lastIndex].currentTime, this.state.meta.noteData[currIndex].currentTime)
+                            console.log("Video Switch values:" , lastIndex , currIndex, metaCopy.noteData[lastIndex].currentTime, this.state.meta.noteData[currIndex].currentTime)
 
-                        //     this.state.ref.playlist.currentTime(this.state.meta.noteData[currIndex].currentTime)
-                        //     // metaCopy.noteData[currIndex].currentTime = currTime
-                        //     metaCopy.noteData[lastIndex].currentTime = currTime
-                        // }
+                            // this.state.videoRef.playlist.currentTime(this.state.meta.noteData[currIndex].currentTime)
+                            // this.setCurrVidTime(this.state.meta.noteData[currIndex].currentTime)
+                            // this.setCurrVidTime(4000)
+                            // metaCopy.noteData[currIndex].currentTime = currTime
+                            // metaCopy.noteData[lastIndex].currentTime = currTime
+                            metaCopy.noteData[lastIndex].currentTime = lastTime
+                            console.log("Video Switch values2:" ,lastTime , lastIndex , currIndex, metaCopy.noteData[lastIndex].currentTime, metaCopy.noteData[currIndex].currentTime)
+
+                        }
                     
-                        // this.setState({
-                        //     // currPlayingVid : ref.playlist()[ref.playlist.currentIndex()],
-                        //     currPlayingVid : ref.playlist()[currIndex],
-                        //     lastPlayingVidId : this.state.currPlayingVidId,
-                        //     currPlayingVidId : currIndex,
-                        //     meta: metaCopy
-                        // },
-                        // ()=> {console.log("hiiii222", this.state.currPlayingVid)}
-                        // )
+                        this.setState({
+                            // currPlayingVid : ref.playlist()[ref.playlist.currentIndex()],
+                            currPlayingVid : ref.playlist()[currIndex],
+                            lastPlayingVidId : this.state.currPlayingVidId,
+                            currPlayingVidId : currIndex,
+                            meta: metaCopy
+                        },
+                        ()=> {console.log("hiiii222", this.state.currPlayingVid, this.state.currPlayingVidId); this.setCurrVidTime(400)}
+                        )
           
         });
         // playlistitem
@@ -348,72 +394,20 @@ export default class PageContainer extends React.Component{
         )
     }
     getVideoRef(){
-        console.log(this.state.videoRef)
         return this.state.videoRef
     }
     getCurrVidTime(data){
-        // console.log(data)
         var currentTime = this.state.videoRef.currentTime()
-        console.log("bhaisdbfalifba" , currentTime)
-        console.log("Current Video Info" , this.state.currPlayingVid)
         return currentTime
-        // console.log("bhaisdbfalifba" )
     }
     setCurrVidTime(secs){
-        console.log(secs )
-        // this.setState
+        console.log('setting ref:', this.state.videoRef, secs)
         if (this.state.videoRef != null){
             this.state.videoRef.currentTime(secs)
+            console.log('setting ref2:', this.state.videoRef.currentTime())
+
         }
-        
-        // console.log("bhaisdbfalifba" , currentTime)
-        // return currentTime
-        // console.log("bhaisdbfalifba" )
     }
-
-    // addNote(e ){
-    //     console.log(this.state.newNote)
-    //     var metaCopy = this.state.meta;
-    //     var currentTime  = this.getCurrVidTime()
-    //     var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
-    //     // if arrLength
-    //     var arrLength = notesArr.length
-    //     var index = 0
-    //     if (arrLength  > 0){
-    //         index = this.findNewNoteIdx(currentTime, notesArr, arrLength)
-    //     }
-        
-    //     console.log("currentNoteIndex: ", index)
-    //     // metaCopy.noteData[0].notes.push(
-    //     metaCopy.noteData[this.state.currPlayingVidId].notes.splice(index+1, 0, 
-    //         {   
-    //             noteId: metaCopy.maxNoteId+1,
-
-    //             startTime: currentTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
-    //             endTime: null,
-    //             noteTitle: null,
-    //             text: this.state.newNote,
-    //             bookmarked: false,
-    //             created : Date.now(),
-    //             lastUpdated : Date.now(),
-    //             drawn: false,
-    //             images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-    //         }
-            
-            
-    //     );
-    //     metaCopy.maxNoteId = metaCopy.maxNoteId+1;
-
-
-
-    //     this.setState({
-    //         meta: metaCopy,
-    //         newNote: '',
-    //         info: this.state.newNote
-    //     }, ()=>{console.log(this.state.meta)} )
-
-
-    // }
     addNote(e , videoId, newStartTime, newNoteTitle = null, newText, newBookmarked=false , newDrawn, newImages){
         console.log(this.state.newNote)
         var metaCopy = this.state.meta;
@@ -432,7 +426,7 @@ export default class PageContainer extends React.Component{
         // if (vId !== -1){ //if the video hasn't been deleted
         console.log("current playing id:",this.state.currPlayingVidId )
                      
-        var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
+        var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes // I NEED TO GET this.state.currPlayingVidId UPDATING. It's currenly staying at 0
 
         var arrLength = notesArr.length
         var index = 0
@@ -440,8 +434,7 @@ export default class PageContainer extends React.Component{
             index = this.findNewNoteIdx(newStartTime, notesArr, arrLength)
         }
         
-        console.log("currentNoteIndex: ", index)
-        // metaCopy.noteData[0].notes.push(
+        // console.log("currentNoteIndex: ", index)
         metaCopy.noteData[this.state.currPlayingVidId].notes.splice(index+1, 0, 
             {   
                 noteId: metaCopy.maxNoteId+1,
@@ -475,31 +468,14 @@ export default class PageContainer extends React.Component{
 
     }
     changeNote(noteInfo, newdata , noteIdx, dataToUpdate, videoId ){
-        console.log(noteInfo, newdata, videoId )
+        // console.log(noteInfo, newdata, videoId )
 
 
                 var metaCopy = this.state.meta;
 
-                console.log('videoId: ', videoId , 'noteIdx: ', noteIdx, metaCopy.noteData[videoId].notes[noteIdx], metaCopy.noteData[videoId].notes[noteIdx][dataToUpdate] , newdata)
+                // console.log('videoId: ', videoId , 'noteIdx: ', noteIdx, metaCopy.noteData[videoId].notes[noteIdx], metaCopy.noteData[videoId].notes[noteIdx][dataToUpdate] , newdata)
                 metaCopy.noteData[videoId].notes[noteIdx][dataToUpdate] = newdata
                 metaCopy.noteData[videoId].notes[noteIdx].lastUpdated = Date.now()
-                // metaCopy.noteData[0].notes.push(
-                // metaCopy.noteData[videoId].notes[noteInfo.noteId] = {   
-                //     noteId:         noteInfo.noteId,
-                //     startTime:      noteInfo.startTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
-                //     endTime:        noteInfo.endTime,
-                //     noteTitle:      noteInfo.noteTitle,
-                //     text:           newdata,
-                //     bookmarked:     noteInfo.bookmarked,
-                //     created:        noteInfo.created,
-                //     lastUpdated:    Date.now(),
-                //     drawn:          noteInfo.drawn,
-                //     images:         noteInfo.images //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
-                // }
-                // // debugger;
-
-
-
                 this.setState({
                     meta: metaCopy,
                 }, ()=>{console.log(this.state.meta)} )
@@ -508,7 +484,7 @@ export default class PageContainer extends React.Component{
         
     } 
     deleteNote( noteIdx,  videoId ){
-        console.log(`deleting note: ${noteIdx} ....`, noteIdx, "    video:" ,  videoId )
+        // console.log(`deleting note: ${noteIdx} ....`, noteIdx, "    video:" ,  videoId )
 
 
 
@@ -517,9 +493,6 @@ export default class PageContainer extends React.Component{
                 // console.log('videoId: ', videoId , 'noteIdx: ', noteIdx, metaCopy.noteData[videoId].notes[noteIdx], metaCopy.noteData[videoId].notes[noteIdx][dataToUpdate] , newdata)
                 metaCopy.noteData[videoId].notes.splice(noteIdx, 1);
        
-
-
-
                 this.setState({
                     meta: metaCopy,
                 }, ()=>{console.log(this.state.meta)} )
@@ -528,7 +501,7 @@ export default class PageContainer extends React.Component{
         
     }
     deleteVideo(  e, videoId ){
-        console.log('deleting video: ' ,  videoId )
+        // console.log('deleting video: ' ,  videoId )
 
 
 
@@ -542,30 +515,30 @@ export default class PageContainer extends React.Component{
                         metaCopy.noteData.splice(idx, 1);
                         found = true;
                     }
-                    idx+=1
+                    if (!found){
+                        idx+=1
+                    }
                 }
                 
-                console.log('new deleted meta: ' , metaCopy  )
+                // console.log('new deleted meta: ' , metaCopy  )
 
-
-
-                this.setState({
+                var newState = {
                     meta: metaCopy,
-                }, ()=>{console.log(this.state.meta)} )
+                }
+                //if we delete the one we are on, start at the beggining of the playlist
+                //if the list is empty, set it to 0 arbitrarily
+                if (idx == this.state.currPlayingVidId || metaCopy.noteData.length <= 0 ){
+                    newState.currPlayingVidId = 0
+                }
+                this.setState( newState , ()=>{console.log(this.state.meta)} )
     }
 
 
 
 
     addToPlaylist(e, category, fileTarget ){
-        // let fileName = e.target.value.split('\\').pop();
 
-        //   console.log('fileName :', fileName, e.target.value)
-        //   var ext = fileName.substr(fileName.lastIndexOf('.') + 1);
-        
-        //   console.log('fileName :', fileName, e.target.value, ext)
-
-        console.log("ADD TO PLAYLIST: " ,category ,this.state.newVideoLink)
+        // console.log("ADD TO PLAYLIST: " ,category ,this.state.newVideoLink)
 
         var type = ''
         var src = ''
@@ -587,10 +560,10 @@ export default class PageContainer extends React.Component{
             fileObj = e.target.files[0]
             // src = this.state.newVideoLink
             src = URL.createObjectURL(e.target.files[0])
-            console.log("LOCAL vars: ", type,src)
+            // console.log("LOCAL vars: ", type,src)
             vidName = fileName
         }
-        console.log(this.state.newNote)
+        // console.log(this.state.newNote)
             var metaCopy = this.state.meta;
             // var currentTime  = this.getCurrVidTime()
             metaCopy.noteData.push(
@@ -607,16 +580,16 @@ export default class PageContainer extends React.Component{
                     notes: []
                 }
             )
-            console.log("meta before1: ", this.state.meta , metaCopy.maxVideoId)
+            // console.log("meta before1: ", this.state.meta , metaCopy.maxVideoId)
             metaCopy.maxVideoId = parseInt(metaCopy.maxVideoId)+1;
-            console.log("meta before2: ", this.state.meta , metaCopy.maxVideoId)
+            // console.log("meta before2: ", this.state.meta , metaCopy.maxVideoId)
 
             this.setState({
                 meta: metaCopy,
                 newVideoLink : ''
             }, ()=>{console.log( "meta after: ",  this.state.meta)} )
 
-        console.log("video added: ", this.state.newVideoLink )
+        // console.log("video added: ", this.state.newVideoLink )
 
         //figure out if it's a youtube video or proper url
         //if it is a proper url, add it to the Meta playlist
@@ -627,16 +600,16 @@ export default class PageContainer extends React.Component{
 
     
     uploadFile(e){
-        console.log("UPLOADING:", e.target.value, typeof e.target.value)
+        // console.log("UPLOADING:", e.target.value, typeof e.target.value)
         if (e.target.value !== ""){ //if a file is uploaded and user did not cancel
           // Extract file name from path
           let fileName = e.target.value.split('\\').pop();
 
-          console.log('fileName :', fileName, e.target.value)
+        //   console.log('fileName :', fileName, e.target.value)
           //   var ext = fileName.substr(fileName.lastIndexOf('.') + 1);
           var ext = getFileExtenstion(fileName)
         
-          console.log('fileName :', fileName, e.target.value, ext)
+        //   console.log('fileName :', fileName, e.target.value, ext)
 
         //   let rowNum = e.target.id.split('-').pop();
         //   let arrayBuffer = e.target.files[0].arrayBuffer();
@@ -678,10 +651,10 @@ export default class PageContainer extends React.Component{
             return 0
         }
         while (idx < notesArr.length){
-            console.log("time comparisons: ", notesArr[idx].startTime,  currentTime)
+            // console.log("time comparisons: ", notesArr[idx].startTime,  currentTime)
 
             if(notesArr.length > 1 && idx < notesArr.length-1 ){
-                console.log("time comparisons: ", notesArr[idx].startTime,  currentTime)
+                // console.log("time comparisons: ", notesArr[idx].startTime,  currentTime)
                 if ( notesArr[idx].startTime <= currentTime && notesArr[idx+1].startTime > currentTime ){
                     return idx
                 }
@@ -781,7 +754,7 @@ export default class PageContainer extends React.Component{
         var i =0 ;
         var metaIdx = 0;
         while(i<fileArr.length){
-            console.log("uploaded file: " , e.target.files[i].name )
+            // console.log("uploaded file: " , e.target.files[i].name )
             var fileName = e.target.files[i].name
             var ext = getFileExtenstion(fileName)
             var fileStatus = ACCEPTED_FILE_EXTENSIONS[ext]
@@ -1046,7 +1019,7 @@ export default class PageContainer extends React.Component{
                                         {/* <button onClick={this.getVideoRef}>getVideoRef</button>
                                         <button onClick={this.getCurrVidTime}>Get current Video Time [PC] </button>
                                         <button onClick={ () => this.setCurrVidTime(180)}>Set current Video Time to 3 min[PC] </button> */}
-                    {this.state.videoRef !== null && this.state.videoRef !== undefined && {playlistJSON}!== undefined && <DraggablePlaylistContainer player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' currentlyPlayingId = {this.state.currPlayingVidId} deleteVideo={this.deleteVideo}/> }
+                    {this.state.videoRef !== null && this.state.videoRef !== undefined && {playlistJSON}!== undefined && <DraggablePlaylistContainer player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' currentlyPlayingId = {this.state.currPlayingVidId} deleteVideo={this.deleteVideo} currentTime={400} /> }
                     <div className="playListInputContainer">
                         <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  placeholder= "video url..."></input> 
                         <button className="playlistButton" onClick={(e , type) => this.addToPlaylist(e , 'web')} type='submit' >Add to Playlist</button>
@@ -1074,6 +1047,18 @@ export default class PageContainer extends React.Component{
                             data-filename="My Statement.mp4"
                             data-sitename="My Company Name">
                     </div>
+                    {/* <NoteTaker  setCurrVidTime = {this.setCurrVidTime} 
+                                getCurrVidTime = {this.getCurrVidTime}
+                                addNote ={this.addNote}
+                                videoId = {this.state.currPlayingVidId} 
+                                defaults = {{    noteTitle: '',
+                                                title: '',
+                                                currentNoteTime: null,
+                                                bookmarked: false }}
+                                // hidden= {this.state.meta.noteData.length <= 0}
+                    /> */}
+                    
+                    {this.state.meta.noteData.length > 0 &&
                     <NoteTaker  setCurrVidTime = {this.setCurrVidTime} 
                                 getCurrVidTime = {this.getCurrVidTime}
                                 addNote ={this.addNote}
@@ -1083,7 +1068,7 @@ export default class PageContainer extends React.Component{
                                                 currentNoteTime: null,
                                                 bookmarked: false }}
                     />
-              
+                    }
 
                     {/* <pre className="testerPre" >{this.state.fileContents}</pre> */}
 

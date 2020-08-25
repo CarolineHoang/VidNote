@@ -270,6 +270,7 @@ export default class Note extends React.Component{
                                 className="noteMsgDisplay" >
                                     {noteInfo.text}
                         </pre> 
+                        Video ID: {this.props.videoId} ||| Note ID {noteInfo.noteId}
                         {/* the className must be conditional because display flex undos this hidden attribute */}
                         <div    hidden={this.state.text_disabled } 
                                 className= {!this.state.text_disabled ? "noteMsgEditorContainer" : ''} >

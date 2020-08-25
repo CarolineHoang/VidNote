@@ -57,6 +57,7 @@ shouldComponentUpdate(){
 //   }
   componentDidMount(props) {
     // instantiate Video.js
+    console.log("video mounted")
     this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
     //   console.log('onPlayerReady', this, this.props.test)
       console.log('onPlayerReady', this)

@@ -18,6 +18,13 @@ export default class NoteContainer extends React.Component{
         this.handleShow = this.handleShow.bind(this);
         this.findMostRecentNoteIdx =this.findMostRecentNoteIdx.bind(this)
     }
+    componentDidUpdate(){
+        // console.log("new note list2:", this.props.videoId,  this.props.itemList.videoId)
+
+    }
+    componentDidMount(){
+        // console.log("new note list:", this.props.videoId,  this.props.itemList.videoId)
+    }
 
     findMostRecentNoteIdx(){
         var currentTime = this.props.getCurrVidTime()
@@ -92,6 +99,7 @@ export default class NoteContainer extends React.Component{
                 <div>
                     {notes != null && <div className="noteSectionVideoTitle">{this.props.itemList.videoName != null ? this.props.itemList.videoName : 'Untitled Video'}</div>}
                     {notes != null && this.props.itemList.category === 'web' ? <div className="noteSectionVideoLink">Watch Now: <a href={this.props.itemList.url}>{this.props.itemList.url}</a></div>  : <div className="noteSectionVideoLink">Uploaded File</div>}
+                    {this.props.itemList!= null && this.props.itemList.videoId}
                     {/* {this.state.index} */}
                     {/* this must be a arrow function in order to bind the this so that we can use state in the map function  */}
                     <ul>

@@ -57,7 +57,7 @@ export default class DraggablePlaylistContainer extends React.Component {
         {/* <div  className="playlistBarBlock" > </div> */}
 
         {/* <DraggablePlayList /> */}
-        <DraggablePlayList player={this.props.player} playlist={this.props.playlist} test= {this.props.test} currentlyPlayingId = {this.props.currentlyPlayingId} deleteVideo={this.props.deleteVideo}/>
+        <DraggablePlayList player={this.props.player} playlist={this.props.playlist} test= {this.props.test} currentlyPlayingId = {this.props.currentlyPlayingId} deleteVideo={this.props.deleteVideo} currentTime={this.props.currentTime}/>
       </div>
     )
   }

@@ -103,7 +103,8 @@ export default class DraggablePlayList extends React.Component {
       // if(prevProps.playlist  !== this.props.playlist ) {
       //   this.setState({currentPlaylist : this.props.playlist }, ()=> {
             this.props.player.playlist(this.props.playlist, this.props.player.playlist.currentItem()); //this second parameter must be set or the playlist will jump to start once updated (default for the second parameter [index of first video to play] is 0 )
-            console.log("draggable is updating!4" , this.state.items, this.props.playlist, this.getItems(3, this.props.playlist))
+            this.props.player.currentTime(this.props.currentTime)
+            console.log("draggable is updating!4" , this.props.player.currentTime() , this.props.currentTime ,this.state.items, this.props.playlist, this.getItems(3, this.props.playlist))
             if ( this.state.items == undefined){
               // this.changeListEntries(this.state.items,  this.props.playlist)
               console.log("draggable is updating!5")
@@ -153,7 +154,7 @@ export default class DraggablePlayList extends React.Component {
           console.log("the playlist2: " ,this.props.player.playlist())
             // Play through the playlist automatically.
             this.props.player.playlist.autoadvance(0);
-            this.props.player.playlistUi();
+            // this.props.player.playlistUi();
             
             if (this.state.items == undefined){
 
