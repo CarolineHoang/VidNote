@@ -92,7 +92,7 @@ export default class NoteContainer extends React.Component{
                 <div>
                     {notes != null && <div className="noteSectionVideoTitle">{this.props.itemList.videoName != null ? this.props.itemList.videoName : 'Untitled Video'}</div>}
                     {notes != null && this.props.itemList.category === 'web' ? <div className="noteSectionVideoLink">Watch Now: <a href={this.props.itemList.url}>{this.props.itemList.url}</a></div>  : <div className="noteSectionVideoLink">Uploaded File</div>}
-                    {this.state.index}
+                    {/* {this.state.index} */}
                     {/* this must be a arrow function in order to bind the this so that we can use state in the map function  */}
                     <ul>
                         {notes != null &&  notes.map((item, i) => {

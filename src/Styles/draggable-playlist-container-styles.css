@@ -1,0 +1,55 @@
+:root{
+    --closed-container-height: 5vw;
+    --open-container-height: min(30vw, 40vh );
+
+}
+
+.playlistContainerMaster{
+    /* max-height: 40vw; */
+    /* height:40vw; */
+    overflow-x: hidden;
+    /* overflow-y: scroll; */
+    position: relative;
+}
+
+
+.open{
+    /* flex: 1; */
+    /* max-height: 40vw; */
+    /* height:30vw; */
+    height: var(--open-container-height);
+    overflow-y: scroll;
+
+    transition: all .5s cubic-bezier(0.645, 0.045, 0.355, 1);
+    /* cubic-bezier(0.6, 0.04, 0.98, 0.335); */
+}
+.closed{
+    /* max-height: 40vw; */
+    /* height:7vw; */
+    overflow-y: hidden;
+
+    height:var(--closed-container-height);
+    transition: height .5s;
+}
+
+
+.playlistBar, .playlistBarBlock  {
+    /* height:calc(7vw + 2rem ); */
+    /* height:7vw ; */
+    height:var(--closed-container-height) ;
+    width: 100%;
+    /* position: relative;   */
+}
+.playlistBar{
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100000;
+    background-color: rgba(0, 0, 0, 0.65);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+    
+}

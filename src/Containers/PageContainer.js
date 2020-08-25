@@ -26,6 +26,7 @@ import DraggablePlaylistContainer from "./DraggablePlaylistContainer";
 import Playlist from "../Components/Playlist";
 import DraggableList from "../Components/DraggableList";
 import DraggablePlayList from "../Components/DraggablePlaylist";
+import NoteTaker from "../Components/NoteTaker";
 // import 'videojs-youtube';
 
 // const https = require('https');
@@ -349,16 +350,72 @@ export default class PageContainer extends React.Component{
         // console.log("bhaisdbfalifba" )
     }
 
-    addNote(e){
+    // addNote(e ){
+    //     console.log(this.state.newNote)
+    //     var metaCopy = this.state.meta;
+    //     var currentTime  = this.getCurrVidTime()
+    //     var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
+    //     // if arrLength
+    //     var arrLength = notesArr.length
+    //     var index = 0
+    //     if (arrLength  > 0){
+    //         index = this.findNewNoteIdx(currentTime, notesArr, arrLength)
+    //     }
+        
+    //     console.log("currentNoteIndex: ", index)
+    //     // metaCopy.noteData[0].notes.push(
+    //     metaCopy.noteData[this.state.currPlayingVidId].notes.splice(index+1, 0, 
+    //         {   
+    //             noteId: metaCopy.maxNoteId+1,
+
+    //             startTime: currentTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
+    //             endTime: null,
+    //             noteTitle: null,
+    //             text: this.state.newNote,
+    //             bookmarked: false,
+    //             created : Date.now(),
+    //             lastUpdated : Date.now(),
+    //             drawn: false,
+    //             images: [] //this is an array of image refrences to include in this note, including if the video screen is drawn on// might separate later
+    //         }
+            
+            
+    //     );
+    //     metaCopy.maxNoteId = metaCopy.maxNoteId+1;
+
+
+
+    //     this.setState({
+    //         meta: metaCopy,
+    //         newNote: '',
+    //         info: this.state.newNote
+    //     }, ()=>{console.log(this.state.meta)} )
+
+
+    // }
+    addNote(e , videoId, newStartTime, newNoteTitle = null, newText, newBookmarked=false , newDrawn, newImages){
         console.log(this.state.newNote)
         var metaCopy = this.state.meta;
-        var currentTime  = this.getCurrVidTime()
+                    // var currentTime  = this.getCurrVidTime()
+        // var found  = false
+        // var vId = -1
+        // var idx = 0
+        // while (!found && idx < metaCopy.noteData.length){
+        //     console.log("adding metaCopy: ", metaCopy.noteData[idx].videoId, videoId)
+        //     if (metaCopy.noteData[idx].videoId == videoId){
+        //         vId = idx
+        //         found = true;
+        //     }
+        //     idx+=1
+        // }
+        // if (vId !== -1){ //if the video hasn't been deleted
+                     
         var notesArr = this.state.meta.noteData[this.state.currPlayingVidId].notes
-        // if arrLength
+
         var arrLength = notesArr.length
         var index = 0
         if (arrLength  > 0){
-            index = this.findNewNoteIdx(currentTime, notesArr, arrLength)
+            index = this.findNewNoteIdx(newStartTime, notesArr, arrLength)
         }
         
         console.log("currentNoteIndex: ", index)
@@ -367,11 +424,11 @@ export default class PageContainer extends React.Component{
             {   
                 noteId: metaCopy.maxNoteId+1,
 
-                startTime: currentTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
+                startTime: newStartTime, //this should not be a Date value but instead a count of miliseconds from the start of the video
                 endTime: null,
-                noteTitle: null,
-                text: this.state.newNote,
-                bookmarked: false,
+                noteTitle: newNoteTitle != '' ? newNoteTitle : null,
+                text: newText,
+                bookmarked: newBookmarked,
                 created : Date.now(),
                 lastUpdated : Date.now(),
                 drawn: false,
@@ -390,6 +447,9 @@ export default class PageContainer extends React.Component{
             info: this.state.newNote
         }, ()=>{console.log(this.state.meta)} )
 
+        // }
+
+       
 
     }
     changeNote(noteInfo, newdata , noteIdx, dataToUpdate, videoId ){
@@ -954,25 +1014,7 @@ export default class PageContainer extends React.Component{
         return(
             <div className="tripleColumnContainer" >
                 <div className='videoPlayer' >
-                    {/* using && conditional logic makes sure that the parent has the ref before we try to render the playlist because the playlist doesn't seem to rerender when the videoRef is updated */}
-                    {/* alternatively, all the starting playlist info can be set up in the video player component but I want to make the playlist div diffinitively in charge of everything relating playlists */}
-                
-                    {/* {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />}
-                    {this.state.videoRef !== null && this.state.videoRef !== undefined  && <DraggablePlayList key={this.state.meta} player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />} */}
-                    {/* {this.state.videoRef !== null && this.state.videoRef !== undefined  && <Playlist player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' />} */}
-
-                    {/* {this.state.videoRef !== null && this.state.videoRef !== undefined && {playlistJSON}!== undefined && <DraggablePlayList player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' currentlyPlayingId = {this.state.currPlayingVidId} deleteVideo={this.deleteVideo}/>} */}
-                    {this.state.videoRef !== null && this.state.videoRef !== undefined && {playlistJSON}!== undefined && <DraggablePlaylistContainer player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' currentlyPlayingId = {this.state.currPlayingVidId} deleteVideo={this.deleteVideo}/> }
-                    <div className="playListInputContainer">
-                        <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  placeholder= "video url..."></input> 
-                        <button className="playlistButton" onClick={(e , type) => this.addToPlaylist(e , 'web')} type='submit' >Add to Playlist</button>
-                    </div>
-                    {/* <div onClick={this.printPlayer}>print Player</div> */}
-
-                    {/* <button onClick={this.testConsoleLog}> Hellot </button>  */}
                     
-                    
-                    {/* <DraggablePlayList/> */}
 
                 
 
@@ -980,80 +1022,70 @@ export default class PageContainer extends React.Component{
                                         {/* <button onClick={this.getVideoRef}>getVideoRef</button>
                                         <button onClick={this.getCurrVidTime}>Get current Video Time [PC] </button>
                                         <button onClick={ () => this.setCurrVidTime(180)}>Set current Video Time to 3 min[PC] </button> */}
-                </div>
-                <div className='playList' >
+                    {this.state.videoRef !== null && this.state.videoRef !== undefined && {playlistJSON}!== undefined && <DraggablePlaylistContainer player={this.state.videoRef} playlist={playlistJSON} test= 'this should APPEAR' currentlyPlayingId = {this.state.currPlayingVidId} deleteVideo={this.deleteVideo}/> }
+                    <div className="playListInputContainer">
+                        <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  placeholder= "video url..."></input> 
+                        <button className="playlistButton" onClick={(e , type) => this.addToPlaylist(e , 'web')} type='submit' >Add to Playlist</button>
+                    </div>
+
+                    {/* by including the state variable as a value for the input/textarea field, we make sure it clears out if we set the state variable to be empty because then on the rerender, it repopulates as a empty */}
+                    {/* <textarea onChange={(e, note) => this.handleInputChange(e, 'newNote')} onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, 'newNote')} className='NoteInputField' value={this.state.newNote} ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button> */}
+
+
                     {/* this is how to create an HTML a tag that will download a local app file*/}
                     {/* <a href={testFile} download="testFile.txt">{testFile}Hiii</a> */}
                     {/* <button onClick={downloadNotes}>Download Default Info </button> */}
                     <button onClick={this.downloadProject}>Download Info </button>
                     <button onClick={this.loadBackupProject}>Revert to Last Project</button>
-                    {/* by including the state variable as a value for the input/textarea field, we make sure it clears out if we set the state variable to be empty because then on the rerender, it repopulates as a empty */}
-                    <textarea onChange={(e, note) => this.handleInputChange(e, 'newNote')} onKeyDown={ (e, state) => this.acceptSpecialSymbol(e, 'newNote')} className='NoteInputField' value={this.state.newNote} ></textarea> <button onClick={this.addNote} type='submit' >Submit Note</button>
+                    <input onChange={(e , type) => this.loadProject(e , 'local')} directory="" webkitdirectory="" mozdirectory="" type="file" />
+               
 
-                    {/* <input onChange={(e, note) => this.handleInputChange(e, 'newVideoLink')}  className='playlistInputField' value={this.state.newVideoLink}  ></input>  */}
-
-
-
-
-                    <button onClick={(e , type) => this.addToPlaylist(e , 'web')} type='submit' >Add to Playlist</button>
                 
                     
-                    {/* <input onChange='upload' type='file' accept='.wav, audio/wav'> */}
-                    {/* <input  onChange={(e , type) => this.addToPlaylist(e , 'local')}  type='file' accept='.mp4, video/mp4'></input> */}
-                    <input  onChange={(e , type) => this.addToPlaylist(e , 'local')}  type='file' accept='.mp4, video/mp4'></input>
-
-                    {/* <div>Field Import:<input directory="" webkitdirectory="" mozdirectory="" type="file" /></div> */}
-                    <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} directory="" webkitdirectory="" mozdirectory="" type="file" /></div>
+                    {/* <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} directory="" webkitdirectory="" mozdirectory="" type="file" /></div> */}
                     {/* for some reason, it does accept any file type other than directories if I choose webkitdirectory="" but it works if I only put directory  and moz directory*/}
                     {/* allowdir is something I found here: 'https://stackoverflow.com/questions/42633306/how-to-allow-the-user-to-pick-any-file-or-directory-in-an-input-type-file-ta'    But, I don't think it's needed, actually. */}
-                    {/* <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} type="file"  accept=".zip" directory=""/></div> */}
-                    {/* <div>Field Import:<input onChange={(e , type) => this.loadProject(e , 'local')} type="file"  accept=".zip" directory="" mozdirectory="" allowdirs="" /></div> */}
                     <div    className="g-savetodrive"
                             data-src={testVideo2}
                             data-filename="My Statement.mp4"
                             data-sitename="My Company Name">
                     </div>
-                                    {/* <div>Test Env String: {process.env.REACT_APP_TEST_ENV_VAR}|||{process.env.REACT_APP_TEST}</div> */}
+                    <NoteTaker  setCurrVidTime = {this.setCurrVidTime} 
+                                getCurrVidTime = {this.getCurrVidTime}
+                                addNote ={this.addNote}
+                                videoId = {this.state.currPlayingVidId} 
+                                defaults = {{    noteTitle: '',
+                                                title: '',
+                                                currentNoteTime: null,
+                                                bookmarked: false }}
+                    />
+              
 
-                    {/* <div>Test Env String: %REACT_APP_TEST_ENV_VAR%</div> */}
-                    {/* <div    class="g-savetodrive"
-                            data-src={this.downloadProject(true)}
-                            data-filename="myProject"
-                            data-sitename="My Company Name">
-                    </div> */}
-
-                                    {/* <button onClick={testGet}>Test Get</button> */}
-
-                    <pre className="testerPre" >{this.state.fileContents}</pre>
+                    {/* <pre className="testerPre" >{this.state.fileContents}</pre> */}
 
                     {/* 
                         React as of version 16 STILL has not fully accounte4d for directory imports.
                         One person (bheptinh --- commented on Dec 18, 2018 ) from this github issue has revealed that it works for them if they add empty strings to the properties, however. 
                         Source: https://github.com/facebook/react/issues/3468#issuecomment-448336672 
                     */}
-                    {/* <input type="file" webkitdirectory mozdirectory /> */}
+            
 
 
-
-
-
-                    {/* <DraggableList/> */}
-                    {/* <DraggablePlayList/> */}
 
                 </div>
-                {/* <div>
-                    {this.state.info} 
+                {/* <div className='playList' >
+                
+
+
                 </div> */}
                     
                 <div className='notes'>
-                    <div>HIII{this.state.currPlayingVid !== {} && console.log('current video: ',this.state.currPlayingVid, this.state.currPlayingVid.sources)}</div>
+                    <div>{this.state.currPlayingVid !== {} && console.log('current video: ',this.state.currPlayingVid, this.state.currPlayingVid.sources)}</div>
 
                     {/* Wait until the currPlayingVid has been set to a non-empty name value to show a name and show it as long as it's not null. If it is null, substitute the 'Untitled Video' for null */}
                     {/* <div className="noteSectionVideoTitle">{this.state.currPlayingVid != {} && (this.state.currPlayingVid.name != null ? this.state.currPlayingVid.name : 'Untitled Video') }</div>
                     <div className="noteSectionVideoTitle">{this.state.currPlayingVid != {} &&  this.state.currPlayingVid.sources != undefined && (this.state.currPlayingVid.sources[0].type != 'video/mp4' ? this.state.currPlayingVid.sources[0].src : 'Local File') }</div> */}
                     <NoteContainer id="list" 
-                    // itemList={items} 
-                    // itemList = {this.state.meta.noteData[0]} 
                     itemList = {this.state.meta.noteData[this.state.currPlayingVidId]} 
                     
 

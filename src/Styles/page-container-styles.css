@@ -69,14 +69,15 @@
     }
 }
 
-@media screen and (min-width: 1200px){
+/* @media screen and (min-width: 1200px){ */
+    @media screen and (min-width: 900px){
     .tripleColumnContainer{
         width: 90%;
         max-width: 90vw;
         
         height: 100vh;
         display: grid;
-          grid-template-columns: [start-c] 5fr [center] 3fr [end-c];
+          grid-template-columns: [start-c] 5fr [center] 2fr [end-c];
           /* grid-template-columns: [start-r] 1fr [center] 1fr [end-r]; */
           /* grid-template-rows: [start-c] 2fr [center] 6fr [end-c]; */
     
@@ -84,7 +85,7 @@
     
           grid-template-areas: 
           'video    notes'
-          'playlist notes'
+          /* 'playlist notes' */
           ;
     }
 
@@ -104,7 +105,7 @@
 
 .notes .noteSectionVideoTitle{
     color: black;
-    font-size: 2rem;
+    font-size: 1.5rem;
     width: 100%;
     max-width: 50vw; /* this may change later when I change the widths of all sections */
     /* overflow-x: hidden; */
@@ -226,6 +227,8 @@
       flex: row;
       justify-content: center;
       align-items: center;
+      /* font-size: 1.2rem; */
+      font-size: 1.2vw;
       /* cursor: pointer; */
 
 
@@ -233,6 +236,7 @@
   .noteTitleContainer .noteTitleEditor{
     /* width: 80%; */
     flex: 1;
+    /* max-width: 60%; */
     /* width: fit-content; */
     /* max-width: 20vw;  */
     /* I will make this explicit for now so that the div doesn't stretch too large. This must change when the note section gets a determined width */
@@ -255,7 +259,7 @@
     
 
     /* width: min-content; */
-    max-width: 60%;
+    max-width: 50%;
     white-space: nowrap;
     text-indent: 0%;
 
