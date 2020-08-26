@@ -1,0 +1,96 @@
+
+:root{
+    /* --playlist-item-height: 7vw; */
+    --playlist-item-height: 5vw;
+}
+.playlistContainer{
+    /* padding: grid; */
+    height: 100%;
+    width: 100%
+    /* max-height: 40vw;
+    height:40vw;
+    overflow-x: hidden;
+    overflow-y: scroll; */
+}
+
+
+.dragging-state{
+    background-color: lightblue;
+}
+.not-dragging-state{
+    background-color: lightgrey;
+}
+
+
+
+
+
+
+.videoContainer{
+    user-select: none;
+    padding: (grid * 2) ;
+    margin: 1rem 0;
+    white-space: wrap;
+    flex-wrap: wrap;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: var(--playlist-item-height);
+}
+.video-dragging-state{
+    background-color: lightgreen;
+}
+.video-not-dragging-state{
+    background-color: grey;
+}
+
+
+.handle{
+    font-size: 2rem;
+    position: absolute;
+    left: 0;
+    /* padding: 0 2rem; */
+    padding: 0 2vw;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.delete{
+    font-size: 1.2rem;
+    position: absolute;
+    right: 0;
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    opacity: 0;
+    font-weight: 400;
+    color: white;
+
+
+}
+
+.videoContainer:hover .delete{
+    /* color: red; */
+    opacity: 1;
+    transition: opacity .25s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.delete:hover{
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: darkred;
+    transition: all .25s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.videoInfoContainerOuter{
+    width: 100%;
+    height: 100%;
+}

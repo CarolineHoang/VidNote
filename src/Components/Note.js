@@ -270,6 +270,7 @@ export default class Note extends React.Component{
                                 className="noteMsgDisplay" >
                                     {noteInfo.text}
                         </pre> 
+                        Video ID: {this.props.videoId} ||| Note ID {noteInfo.noteId}
                         {/* the className must be conditional because display flex undos this hidden attribute */}
                         <div    hidden={this.state.text_disabled } 
                                 className= {!this.state.text_disabled ? "noteMsgEditorContainer" : ''} >
@@ -283,7 +284,7 @@ export default class Note extends React.Component{
 
                         <button onClick={(e, updateTimeFunc )=>this.updateTimeStamp(e , this.props.getCurrVidTime)} >Update Timestamp</button>
                         <button     onClick={( e, state ) => this.handleBookmark( e, '')}>
-                                        Bookmark Note <div hidden={!noteInfo.bookmarked}><i class="fas fa-bookmark"></i> </div> <div hidden={noteInfo.bookmarked}><i class="far fa-bookmark"></i></div>
+                                        Bookmark Note <div hidden={!noteInfo.bookmarked}><i className="fas fa-bookmark"></i> </div> <div hidden={noteInfo.bookmarked}><i className="far fa-bookmark"></i></div>
                         </button>
                         <button     onClick={( e, state ) => this.handleDelete( e, '')}>
                                         Delete Note
@@ -300,8 +301,8 @@ export default class Note extends React.Component{
                                     onClick={this.handleSave}>
                                         Save
                         </button>
-                        <div>Last Edited: {`${month} ${day}, ${year } at ${hour}:${minute}:${second }`}</div>
-                        <div>{this.state.videoCategory !== null && this.state.videoCategory !== undefined && this.state.videoCategory & "hello"}</div>
+                        <div className="lastUpdatedTimestamp" >Last Edited: {`${month} ${day}, ${year } at ${hour}:${minute}:${second }`}</div>
+                        {/* <div>{this.state.videoCategory !== null && this.state.videoCategory !== undefined && this.state.videoCategory & "hello"}</div> */}
                         
                         {/* <select>
                             <option value="grapefruit">Grapefruit</option>

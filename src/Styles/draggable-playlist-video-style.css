@@ -1,0 +1,103 @@
+
+
+.playlistContainer{
+    /* padding: grid; */
+    max-height: 40vw;
+    height:40vw;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+
+.dragging-state{
+    background-color: lightblue;
+}
+.not-dragging-state{
+    background-color: lightgrey;
+}
+
+
+
+
+
+
+.videoContainer{
+    user-select: none;
+    padding: (grid * 2) ;
+    margin: 1rem 0;
+    white-space: wrap;
+    flex-wrap: wrap;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.video-dragging-state{
+    background-color: lightgreen;
+}
+.video-not-dragging-state{
+    background-color: grey;
+}
+
+
+/* .handle{
+    font-size: 2rem;
+    position: absolute;
+    left: 0;
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+} */
+
+
+.videoInfoContainerInner{
+    width: 100%;
+    height: 100%;
+    /* height: 20vw; */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.thumbnail{
+    width: 10vw;
+    height: 80%;
+    margin-left: 5rem;
+}
+
+.titleContainer{
+    margin-left: 2rem;
+    flex:1;
+    padding-right: 5rem;
+}
+
+.videoTitle{
+    font-size: .5rem;
+}
+
+.now-playing{
+    font-size: .2rem;
+}
+@media screen and (min-width: 900px){
+    .videoTitle{
+        font-size: .9rem;
+    }
+    .now-playing{
+        font-size: .5rem;
+    }
+}
+@media screen and (min-width: 1100px){
+    .videoTitle{
+        font-size: 1.5rem;
+    }
+    .now-playing{
+        font-size: 1rem;
+    }
+}
+

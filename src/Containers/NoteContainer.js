@@ -18,6 +18,13 @@ export default class NoteContainer extends React.Component{
         this.handleShow = this.handleShow.bind(this);
         this.findMostRecentNoteIdx =this.findMostRecentNoteIdx.bind(this)
     }
+    componentDidUpdate(){
+        // console.log("new note list2:", this.props.videoId,  this.props.itemList.videoId)
+
+    }
+    componentDidMount(){
+        // console.log("new note list:", this.props.videoId,  this.props.itemList.videoId)
+    }
 
     findMostRecentNoteIdx(){
         var currentTime = this.props.getCurrVidTime()
@@ -72,13 +79,13 @@ export default class NoteContainer extends React.Component{
       
       
       render() {
-        var notes = this.props.itemList.notes
+        var notes = this.props.itemList !== undefined ?  this.props.itemList.notes  : null;
         console.log("ITEMMMMS", notes)
 
         var idx = 0;
         var newRef  = null;
         var refArr  = [];
-        while (idx <notes.length){
+        while (notes != null && idx <notes.length){
             newRef = React.createRef()
             refArr.push(newRef)
             idx+=1
@@ -90,12 +97,13 @@ export default class NoteContainer extends React.Component{
         // }
         return(
                 <div>
-                    <div className="noteSectionVideoTitle">{this.props.itemList.videoName != null ? this.props.itemList.videoName : 'Untitled Video'}</div>
-                    {this.props.itemList.category === 'web' ? <div className="noteSectionVideoLink">Watch Now: <a href={this.props.itemList.url}>{this.props.itemList.url}</a></div>  : <div className="noteSectionVideoLink">Uploaded File</div>}
-                    {this.state.index}
+                    {notes != null && <div className="noteSectionVideoTitle">{this.props.itemList.videoName != null ? this.props.itemList.videoName : 'Untitled Video'}</div>}
+                    {notes != null && this.props.itemList.category === 'web' ? <div className="noteSectionVideoLink">Watch Now: <a href={this.props.itemList.url}>{this.props.itemList.url}</a></div>  : <div className="noteSectionVideoLink">Uploaded File</div>}
+                    {this.props.itemList!= null && this.props.itemList.videoId}
+                    {/* {this.state.index} */}
                     {/* this must be a arrow function in order to bind the this so that we can use state in the map function  */}
                     <ul>
-                        {notes.map((item, i) => {
+                        {notes != null &&  notes.map((item, i) => {
                         return (
                             <div ref={refArr[i]} key={"note"+i} >
                                 <Note   _ref={i} note={item} 

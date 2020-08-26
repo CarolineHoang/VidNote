@@ -1,5 +1,41 @@
+/* 
+    Styles were adaped from code from Gino's CodePen: 'Videojs - Playlist 5.16.0'
+    It can be found here: https://codepen.io/onigetoc/pen/wJRyvZ                    */
+
+
 .mainVideo{
     width: 100%;
-    height: 40vh;
+    /* height: 40vh; */
+    height: 30vw;
     /* max-height:70%; */
+}
+
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+  font-size: 1rem;
+}
+
+
+.icon-angle-left:before {
+    content: "\f104";
+}
+.icon-angle-right:before {
+    content: "\f105";
+}
+
+
+
+.video-js .icon-angle-right, .video-js .icon-angle-left {
+    cursor: pointer;
+    -webkit-box-flex: none;
+    -moz-box-flex: none;
+    -webkit-flex: none;
+    -ms-flex: none;
+    flex: none;
 }
