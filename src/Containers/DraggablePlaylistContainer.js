@@ -47,8 +47,7 @@ export default class DraggablePlaylistContainer extends React.Component {
 
     console.log("player3: ", this.player)
     
-    return (
-    //   <div className={`playlistContainerMaster ${!this.state.open ? ' closed ' : ' open '}`}>	
+    return (	
       <div className={`playlistContainerMaster ${!this.state.open ? ' open ':' closed '}`}>	
         <div className="playlistBar" onClick={this.togglePlaylistVisibility} > Playlist </div>
         
