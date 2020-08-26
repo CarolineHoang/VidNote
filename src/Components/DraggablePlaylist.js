@@ -358,32 +358,21 @@ testConsoleLog(message){
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              // style={getListStyle(snapshot.isDraggingOver)}
               className={`playlistContainer ${getListStyle(snapshot.isDraggingOver)}`}
-              // className={`playlistContainer ${getListStyle(snapshot.isDraggingOver)}`}
-              // className="playlistContainer dragging-state"
             >
               {this.state.items !=null && this.state.items.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index} 
-                // onClick={(e)=>{ e.preventDefault; console.log("clicked!"); }}
-                // isDragDisabled = {true}
-                // onMouseDown={e => e.stopPropagation()}
                 >
-                  {/* <div> */}
                   {(provided, snapshot) => (
                     <div  
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      // {...provided.dragHandleProps}
                       style={getItemStyle(
                         snapshot.isDragging,
                         provided.draggableProps.style
                       )}
                       className={`videoContainer ${getItemClass(snapshot.isDragging)}`}
                       onClick={console.log("clicked!")}
-                      // onCl={e => e.stopPropagation()}
-                      // onMouseDown={e => e.stopPropagation()}
-                      // onMouseDown={console.log("clicked!")}
                     >
                       <div className="handle" {...provided.dragHandleProps} > = </div>
                       {/* <button onClick={this.testConsoleLog}> Hello </button> 
