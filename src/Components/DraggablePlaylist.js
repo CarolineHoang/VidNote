@@ -312,14 +312,6 @@ removeListEntry = (sPlaylist, pPlaylist) =>{
     idx+=1
   }
   return null
-  // var pVideoIds = pPlaylist.map((video, idx)=>{ return video.videoId })
-  // Object.fromEntries(
-  //   Object.entries(obj).map(
-  //     ([k, v], i) => [k, v => 2 * v  ]
-  //   )
-  // )
-  // console.log(pVideoIds )
-  // return pPlaylist
 }
 
   
