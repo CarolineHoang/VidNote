@@ -270,6 +270,7 @@ export default class DraggablePlayList extends React.Component {
         }
         else{
             newPlaylist = this.removeListEntry(sPlaylist, pPlaylist)
+            newPlaylist = newPlaylist !== null ? newPlaylist : pPlaylist
         }
         // newPlaylist = pPlaylist
         this.setState({
@@ -310,7 +311,7 @@ removeListEntry = (sPlaylist, pPlaylist) =>{
     }
     idx+=1
   }
-  return
+  return null
   // var pVideoIds = pPlaylist.map((video, idx)=>{ return video.videoId })
   // Object.fromEntries(
   //   Object.entries(obj).map(
